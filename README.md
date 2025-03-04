@@ -7,7 +7,7 @@ This repository contains the frontend codebase for **HackTBD**, built using **Ne
 ## 🚀 Technology Stack
 
 - **Next.js** – React framework for server-side rendering and static site generation
-- **TypeScript** – Statically typed JavaScript for better maintainability
+- **TypeScript** – Statically typed JavaScript for better maintainability. Please refer to [Google Style Guide](https://google.github.io/styleguide/tsguide.html)
 - **ESLint** – Linter for code consistency and best practices
 - **Tailwind CSS** – Utility-first CSS framework for styling
 
