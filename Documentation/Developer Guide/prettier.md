@@ -1,10 +1,6 @@
-Here’s your **prettier.md** file:
+# Prettier Guide
 
----
-
-# 📖 Prettier Guide
-
-## 🆚 **Prettier vs. ESLint**
+## **Prettier vs. ESLint**
 
 ### **ESLint**
 
@@ -22,7 +18,7 @@ Here’s your **prettier.md** file:
 
 ---
 
-## 🔧 **Integrating Prettier into Your IDE**
+## **Integrating Prettier into Your IDE**
 
 For the best experience, configure your IDE to run **Prettier on save**:
 
@@ -55,7 +51,7 @@ Refer to the [Prettier Docs](https://prettier.io/docs/editors) for setup instruc
 
 ---
 
-## 🚀 **Manually Running Prettier**
+## **Manually Running Prettier**
 
 If you need to format all files manually, run:
 
@@ -63,10 +59,4 @@ If you need to format all files manually, run:
 pnpm format
 ```
 
-This will apply Prettier formatting across the entire project.
-
-💡 **Pro Tip:** Set up a Git pre-commit hook to auto-format files before committing!
-
----
-
-This ensures our codebase stays clean and readable without manual effort. 🎉
+This will apply Prettier formatting across the entire project. This ensures our codebase stays clean and readable without manual effort. Make sure to run this before committing your changes!

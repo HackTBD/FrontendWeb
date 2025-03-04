@@ -17,6 +17,10 @@ This repository contains the frontend codebase for **HackTBD**, built using **Ne
 
 ```
 /FrontendWeb
+│── Documentation/  # Project documentation and guides
+    │── Bugs Fixed Log/ # Log of bugs fixed in the project
+    │── Developer Guide/ # Guides for setting up and developing the project
+        |── prettier.md # Guide for integrating code formatter into your IDE
 │── public/       # Static assets like images, icons, and fonts
 │── src/
 │   ├── app/      # Main application logic and components
@@ -111,6 +115,8 @@ This will install all necessary **node_modules** for the project.
 - Use `pnpm` for all commands instead of `npm` or `yarn`.
 - Make sure **Node.js** and **pnpm** are installed and updated before running the project.
 - Tailwind CSS is used for styling—refer to `postcss.config.mjs` for customization.
+- **ESLint** is used for code consistency and best practices. Run `pnpm lint` before committing changes.
+- **Prettier** is used for code formatting. Refer to the [Prettier Guide](Documentation/Developer%20Guide/prettier.md) for setup instructions.
 
 ---
 
