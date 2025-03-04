@@ -37,7 +37,7 @@ This repository contains the frontend codebase for **HackTBD**, built using **Ne
 
 ## 🛠 Getting Started
 
-### 1️⃣ Install Package Manager: **pnpm**
+### 1. Install Package Manager: **pnpm**
 
 We use **pnpm** instead of **npm** or **yarn** because:
 
@@ -61,7 +61,7 @@ pnpm self-update
 
 ---
 
-### 2️⃣ Install **Node.js**
+### 2. Install **Node.js**
 
 Make sure you have an up-to-date version of **Node.js** installed.
 
@@ -81,15 +81,9 @@ nvm install-latest-npm
 
 ---
 
-### 3️⃣ Clone the Repository
+### 3. Install Dependencies
 
-```sh
-git clone git@github.com:HackTBD/FrontendWeb.git
-```
-
-### 3️⃣ Install Dependencies
-
-After cloning the repo, run:
+At the root level of this repository, run:
 
 ```sh
 pnpm install
