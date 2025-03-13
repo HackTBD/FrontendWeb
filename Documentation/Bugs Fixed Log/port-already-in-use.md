@@ -11,11 +11,13 @@ It means that the port `3000` is already in use. You can either kill the process
 To kill the process, run the following command:
 
 List all IDs that is using port `3000`
+
 ```bash
 lsof -t -i:3000
 ```
 
 Kill the process using the ID
+
 ```bash
 sudo kill -9 <ID>
 ```

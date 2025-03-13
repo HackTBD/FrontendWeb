@@ -1,18 +1,22 @@
-# FrontendWeb Testing Guide  
+# FrontendWeb Testing Guide
 
-## 📌 **Overview**  
+## 📌 **Overview**
+
 This project uses **Vitest** for unit and integration testing. Tests ensure our **Next.js + TypeScript** frontend works as expected, maintains stability, and prevents regressions.
 
 ---
 
-## 📋 **Testing Plan**  
+## 📋 **Testing Plan**
 
-### ✅ **1. Unit Tests**  
-**Purpose:** Test individual components and utility functions.  
-- Ensure components render correctly.  
-- Verify props, state, and event handlers.  
+### ✅ **1. Unit Tests**
+
+**Purpose:** Test individual components and utility functions.
+
+- Ensure components render correctly.
+- Verify props, state, and event handlers.
 
 **Example:** `src/components/Button.spec.tsx` in the same folder as `src/components/Button.tsx`
+
 ```tsx
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -33,45 +37,51 @@ test('calls onClick when clicked', async () => {
 
 ---
 
-### 🔄 **2. Integration Tests**  
-**Purpose:** Test multiple components working together.  
-- Verify form interactions, API calls, and routing.  
+### 🔄 **2. Integration Tests**
+
+**Purpose:** Test multiple components working together.
+
+- Verify form interactions, API calls, and routing.
 
 **Example:** `src/pages/home.spec.tsx` in the same folder as `src/pages/home.tsx`
+
 ```tsx
 import { render, screen } from '@testing-library/react';
 import Home from '@/app/page';
 
 test('displays homepage title', () => {
   render(<Home />);
-  expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Welcome to HackTBD');
+  expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
+    'Welcome to HackTBD'
+  );
 });
 ```
 
 ---
 
-## 🚀 **Running Tests**  
+## 🚀 **Running Tests**
 
-- **Run all tests:**  
+- **Run all tests:**
   ```sh
   pnpm test
   ```
-- **Run tests in watch mode:**  
+- **Run tests in watch mode:**
   ```sh
   pnpm test:watch
   ```
-- **Run coverage report:**  
+- **Run coverage report:**
   ```sh
   pnpm test:coverage
   ```
 
 ---
 
-## 📌 **Best Practices**  
+## 📌 **Best Practices**
+
 ✅ Keep tests **isolated and fast**
 ✅ The `spec` file should be placed right next to the one that is tested for
 ✅ Only test **LOGIC**. Example: don't test if a Typescript function works the way it should.
 ✅ Try mocking things yourself instead of installing new libs
 ✅ **Mock API requests** to avoid real network calls  
 ✅ Use **Testing Library** to mimic user interactions  
-✅ **Run tests before commits** (`pnpm test`)  
+✅ **Run tests before commits** (`pnpm test`)
