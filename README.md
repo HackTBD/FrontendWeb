@@ -25,12 +25,12 @@ This repository contains the frontend codebase for **HackTBD**, built using **Ne
 │── src/
 │   ├── app/      # Main application logic and components
 │── README.md     # This README file
-│── eslint.config.mjs  # ESLint configuration
+│── eslint.config.mts  # ESLint configuration
 │── next.config.js # Next.js configuration
 │── next-env.d.ts  # Next.js TypeScript definitions
 │── tsconfig.json  # TypeScript configuration
 │── package.json   # Project dependencies and scripts
-│── postcss.config.mjs  # PostCSS configuration
+│── postcss.config.mts  # PostCSS configuration
 ```
 
 ---
@@ -108,7 +108,7 @@ This will install all necessary **node_modules** for the project.
 
 - Use `pnpm` for all commands instead of `npm` or `yarn`.
 - Make sure **Node.js** and **pnpm** are installed and updated before running the project.
-- Tailwind CSS is used for styling—refer to `postcss.config.mjs` for customization.
+- Tailwind CSS is used for styling—refer to `postcss.config.mts` for customization.
 - **ESLint** is used for code consistency and best practices. Run `pnpm lint` before committing changes.
 - **Prettier** is used for code formatting. Refer to the [Prettier Guide](Documentation/Developer%20Guide/prettier.md) for setup instructions.
 

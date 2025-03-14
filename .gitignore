@@ -6,6 +6,9 @@ node_modules/
 .next/
 out/
 
+# code coverage
+coverage/
+
 # Locked files
 yarn.lock
 package-lock.json
