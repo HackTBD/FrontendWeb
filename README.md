@@ -15,23 +15,37 @@ This repository contains the frontend codebase for **HackTBD**, built using **Ne
 
 ## 📁 Repository Layout
 
+Architecture Design follow by: [Next.js Clean Architecture] (https://github.com/nikolovlazar/nextjs-clean-architecture?tab=readme-ov-file)
+
 ```
 /FrontendWeb
-│── Documentation/  # Project documentation and guides
-    │── Bugs Fixed Log/ # Log of bugs fixed in the project
-    │── Developer Guide/ # Guides for setting up and developing the project
-        |── prettier.md # Guide for integrating code formatter into your IDE
-│── public/       # Static assets like images, icons, and fonts
-│── src/
-│   ├── app/      # Main application logic and components
-│── README.md     # This README file
-│── eslint.config.mjs  # ESLint configuration
-│── next.config.js # Next.js configuration
-│── next-env.d.ts  # Next.js TypeScript definitions
-│── tsconfig.json  # TypeScript configuration
-│── package.json   # Project dependencies and scripts
-│── postcss.config.mjs  # PostCSS configuration
+│── Documentation/        # Project documentation and guides
+    │── Bugs Fixed Log/   # Log of bugs fixed in the project
+    │── Developer Guide/  # Guides for setting up and developing the project
+        |── prettier.md   # Guide for integrating code formatter into your IDE
+│── public/               # Static assets like images, icons, and fonts
+|── app/                  # **Frameworks & Drivers Layer** - basically everything Next.js (pages, server actions, components, styles etc...) or whatever "consumes" the app's logic
+  ── landing/
+     ── page.tsx          # Landing page content
+  ── components
+    ── ui/                 # Low-level UI components (atomic)
+      ── aurora_background.tsx 
+      ── button.tsx 
+    ── utils.ts           # Utility functions for UI components
+  ── login/  
+  ── page.tsx             # Website's root for navigation
+  ── global.css           # Global styles   
+│── src/                  # The "root" of the system that store applications, entities, infrastructure and interface-adapters
+│── README.md             # This README file
+│── eslint.config.mjs     # ESLint configuration
+│── next.config.js        # Next.js configuration
+│── next-env.d.ts         # Next.js TypeScript definitions
+│── tsconfig.json         # TypeScript configuration
+│── package.json          # Project dependencies and scripts
+│── postcss.config.mjs    # PostCSS configuration
 ```
+
+Project strucutre strategy: stores all application code in shared folders in the root of the app directory.
 
 ---
 
