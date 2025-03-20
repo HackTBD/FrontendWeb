@@ -152,3 +152,22 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+### NamingConvention
+   (Airbnb Guide) [https://github.com/airbnb/javascript] or (Rajitha's Medium) [https://rajithasanjayamal.medium.com/naming-conventions-best-practices-in-react-37624d020288] 
+   - **Pascal Case**
+     - Components files, files that part of rendering unit of the website
+     - Interfaces
+     - Type Alias
+     - Enum name
+   - **Camel Case**
+     - Folders
+     - Non-components files
+     - Function name
+     - Variables name
+     - Constant (initialized in run-time)
+     - Enum name that describe value
+   - **Screaming Snake Case**
+     - Hard-coded Constant
+     - Enum value
