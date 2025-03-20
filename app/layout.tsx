@@ -1,9 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
-import { AuroraBackground } from './_components/ui/aurora_background';
-import "@radix-ui/themes/styles.css";
-import { Button } from './_components/ui/button';
+import { AuroraBackground } from './_components/ui/AuroraBackground';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
