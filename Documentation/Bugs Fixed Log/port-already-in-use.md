@@ -16,8 +16,14 @@ List all IDs that is using port `3000`
 lsof -t -i:3000
 ```
 
-Kill the process using the ID
+If problem still persists, try the following command to retrieve the PID this way:
 
 ```bash
-sudo kill -9 <ID>
+sudo ss -lptn 'sport = :3000'
+```
+
+Kill the process using the PID
+
+```bash
+sudo kill -9 <PID>
 ```
