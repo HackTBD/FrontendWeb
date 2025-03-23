@@ -77,8 +77,6 @@ npm install -g pnpm
 pnpm self-update
 ```
 
----
-
 ### 2. Install **Node.js**
 
 Make sure you have an up-to-date version of **Node.js** installed.
@@ -156,7 +154,7 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-### Learn More
+## Learn More
 
 To learn more about Next.js, take a look at the following resources:
 
@@ -171,7 +169,7 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-### NamingConvention
+## Naming Convention
 
 (Airbnb Guide) [https://github.com/airbnb/javascript] or (Rajitha's Medium) [https://rajithasanjayamal.medium.com/naming-conventions-best-practices-in-react-37624d020288]
 
