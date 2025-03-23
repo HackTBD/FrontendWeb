@@ -25,9 +25,9 @@ Architecture Design follow by: [Next.js Clean Architecture] (https://github.com/
 • public/                   # Static assets like images, icons, and fonts
   • images/                 # Images files
 • app/                      # Frameworks & Drivers Layer - basically everything Next.js (pages, server actions, components, styles etc...) or whatever "consumes" the app's logic
-  • landing/      
+  • landing/
      • themes/              # Theme context and toggle components
-        • ThemeProvider.tsx # Context for managing theme state     
+        • ThemeProvider.tsx # Context for managing theme state
         • ThemeToggle.tsx   # Toggle button component
   • components              # Shared UI components
     • ui/                   # UI primitives and elements
@@ -61,7 +61,8 @@ Project structure strategy: stores all application code in shared folders in the
 HackTBD offers two landing page designs to accommodate different user preferences:
 
 ### Light Theme (Default)
-- **Path**: `/` 
+
+- **Path**: `/`
 - **Component**: `app/light_landing/LandingPage.tsx`
 - **Features**:
   - Colorful gradient background image
@@ -71,6 +72,7 @@ HackTBD offers two landing page designs to accommodate different user preference
   - Easy navigation to the dark theme version
 
 ### Dark Theme
+
 - **Path**: `/dark`
 - **Component**: `app/dark/LandingPage.tsx`
 - **Features**:
