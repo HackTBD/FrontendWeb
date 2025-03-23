@@ -25,11 +25,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="h-full">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-full h-full overflow-y-auto`}
       >
-        <AuroraBackground>{children}</AuroraBackground>
+        <main className="relative h-full w-full overflow-auto">
+          <AuroraBackground>{children}</AuroraBackground>
+        </main>
       </body>
     </html>
   );
