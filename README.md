@@ -18,38 +18,69 @@ This repository contains the frontend codebase for **HackTBD**, built using **Ne
 Architecture Design follow by: [Next.js Clean Architecture] (https://github.com/nikolovlazar/nextjs-clean-architecture?tab=readme-ov-file)
 
 ```
-• Documentation/          # Project documentation and guides
-  • Bugs Fixed Log/       # Log of bugs fixed in the project
-  • Developer Guide/      # Guides for setting up and developing the project
-    • prettier.md         # Guide for integrating code formatter into your IDE
-• public/                 # Static assets like images, icons, and fonts
-• app/                    # Frameworks & Drivers Layer - basically everything Next.js (pages, server actions, components, styles etc...) or whatever "consumes" the app's logic
-  • landing/
-    • page.tsx            # Landing page content
-  • components
-    • ui/                 # Low-level UI components (atomic)
+• Documentation/            # Project documentation and guides
+  • Bugs Fixed Log/         # Log of bugs fixed in the project
+  • Developer Guide/        # Guides for setting up and developing the project
+    • prettier.md           # Guide for integrating code formatter into your IDE
+• public/                   # Static assets like images, icons, and fonts
+  • images/                 # Images files
+• app/                      # Frameworks & Drivers Layer - basically everything Next.js (pages, server actions, components, styles etc...) or whatever "consumes" the app's logic
+  • landing/      
+     • themes/              # Theme context and toggle components
+        • ThemeProvider.tsx # Context for managing theme state     
+        • ThemeToggle.tsx   # Toggle button component
+  • components              # Shared UI components
+    • ui/                   # UI primitives and elements
       • aurora_background.tsx
       • button.tsx
-    • utils.ts            # Utility functions for UI components
+    • utils.ts              # Utility functions for UI components
   • login/
-  • page.tsx              # Website's root for navigation
-  • global.css            # Global styles
-• src/                    # The "root" of the system that store applications, entities, infrastructure and interface-adapters
-  • application           # Application Layer - holds use cases and interfaces for repositories and services
-  • entities              # Entities Layer - holds models and custom errors
-  • infrastructre         # Infrastructure Layer - holds implementations of repositories and services, and pulls in the interfaces from application
-  • interface-adapters    # Interface Adapters Layer - holds controllers that serve as an entry point to the system (used in Frameworks & Drivers layer to interact with the system)
-• tests/                  # Unit tests live here - the unit subfolder's structure matches src
-• README.md               # This README file
-• eslint.config.mjs       # ESLint configuration
-• next.config.js          # Next.js configuration
-• next-env.d.ts           # Next.js TypeScript definitions
-• tsconfig.json           # TypeScript configuration
-• package.json            # Project dependencies and scripts
-• postcss.config.mjs      # PostCSS configuration
+  • page.tsx                # Website's root for navigation
+  • global.css              # Global styles
+• src/                      # The "root" of the system that store applications, entities, infrastructure and interface-adapters
+  • application             # Application Layer - holds use cases and interfaces for repositories and services
+  • entities                # Entities Layer - holds models and custom errors
+  • infrastructre           # Infrastructure Layer - holds implementations of repositories and services, and pulls in the interfaces from application
+  • interface-adapters      # Interface Adapters Layer - holds controllers that serve as an entry point to the system (used in Frameworks & Drivers layer to interact with the system)
+• tests/                    # Unit tests live here - the unit subfolder's structure matches src
+• README.md                 # This README file
+• eslint.config.mjs         # ESLint configuration
+• next.config.js            # Next.js configuration
+• next-env.d.ts             # Next.js TypeScript definitions
+• tsconfig.json             # TypeScript configuration
+• package.json              # Project dependencies and scripts
+• postcss.config.mjs        # PostCSS configuration
 ```
 
 Project structure strategy: stores all application code in shared folders in the root of the app directory.
+
+---
+
+## 🎨 Landing Pages
+
+HackTBD offers two landing page designs to accommodate different user preferences:
+
+### Light Theme (Default)
+- **Path**: `/` 
+- **Component**: `app/light_landing/LandingPage.tsx`
+- **Features**:
+  - Colorful gradient background image
+  - Clean, modern light interface
+  - Vibrant image gallery with geometric shapes
+  - Responsive design that works on all devices
+  - Easy navigation to the dark theme version
+
+### Dark Theme
+- **Path**: `/dark`
+- **Component**: `app/dark/LandingPage.tsx`
+- **Features**:
+  - Dark background with elegant gradients
+  - High contrast text for better readability
+  - Same content structure as the light theme
+  - Modern UI with attention-grabbing text effects
+  - Easy navigation back to the light theme version
+
+Both landing pages share the same core functionality and content, offering users the flexibility to choose their preferred visual style. The UI components are built to ensure a consistent experience across both themes.
 
 ---
 
