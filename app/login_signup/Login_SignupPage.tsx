@@ -32,42 +32,17 @@ function LoginContent() {
         )}
         
         {/* Creative elements resembling the image */}
-<div className="absolute inset-0 flex items-center justify-center">
-  <div className="relative w-full h-full">
-    <Image
-      src="/images/loginleftlogo.png"
-      fill
-      priority
-      alt="Login logo"
-      className="object-cover"
-      sizes="50vw"
-    />
-  </div>
-</div>
-        
-        {/* Branding */}
-        <div className="absolute top-6 left-8 flex items-center space-x-2 z-10">
-          <div className="relative w-8 h-8">
-            <div className="absolute inset-0">
-              <Image
-                src="/images/logo-polygon.svg"
-                alt="Logo polygon"
-                width={32}
-                height={32}
-              />
-            </div>
-            <div className="absolute inset-0">
-              <Image
-                src="/images/logo-ellipse.svg"
-                alt="Logo ellipse"
-                width={32}
-                height={32}
-              />
-            </div>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="relative w-full h-full">
+            <Image
+              src="/images/loginleftlogo.png"
+              fill
+              priority
+              alt="Login logo"
+              className="object-cover"
+              sizes="50vw"
+            />
           </div>
-          <span className={`font-sans text-sm font-extrabold ${isDark ? 'text-white' : 'text-gray-600'}`}>
-            hacktbd
-          </span>
         </div>
       </div>
       
