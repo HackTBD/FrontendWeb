@@ -36,6 +36,11 @@ Architecture Design follow by: [Next.js Clean Architecture] (https://github.com/
   ── page.tsx             # Website's root for navigation
   ── global.css           # Global styles   
 │── src/                  # The "root" of the system that store applications, entities, infrastructure and interface-adapters
+    │── application       # **Application Layer** - holds use cases and interfaces for repositories and services  
+    │── entities          # **Entities Layer** - holds models and custom errors
+    │── infrastructre     # ** Infrastructure Layer** - holds implementations of repositories and services, and pulls in the interfaces from application
+    │── interface-adapters # **Interface Adapters Layer** - holds controllers that serve as an entry point to the system (used in Frameworks & Drivers layer to interact with the system)
+│── tests/                # Unit tests live here - the unit subfolder's structure matches src
 │── README.md             # This README file
 │── eslint.config.mjs     # ESLint configuration
 │── next.config.js        # Next.js configuration
