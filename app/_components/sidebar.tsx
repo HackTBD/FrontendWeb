@@ -1,24 +1,19 @@
 'use client';
 
-import { useState, useCallback, useEffect, MouseEventHandler } from 'react';
+import { useState, useCallback, useEffect, ReactNode } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { Logo } from './ui/logo';
 
 interface SidebarItemProps {
-  icon: React.ReactNode;
+  icon: ReactNode;
   label: string;
   isActive: boolean;
   href: string;
   isCollapsed: boolean;
 }
 
-const SidebarItem = ({
-  icon,
-  label,
-  isActive,
-  href,
-  isCollapsed,
-}: SidebarItemProps) => {
+const SidebarItem = ({ icon, label, isActive, href, isCollapsed }: SidebarItemProps) => {
   return (
     <Link
       href={href}
@@ -40,29 +35,29 @@ const SidebarItem = ({
 };
 
 interface SidebarSectionProps {
-  title: string;
-  children: React.ReactNode;
+  title?: string;
+  children: ReactNode;
   isCollapsed: boolean;
 }
 
-const SidebarSection = ({
-  title,
-  children,
-  isCollapsed,
-}: SidebarSectionProps) => {
+const SidebarSection = ({ title, children, isCollapsed }: SidebarSectionProps) => {
   return (
     <div className="mt-5">
-      {!isCollapsed ? (
-          <Logo size="md" linkTo="/" isDarkOverride={false} />
-        ) : (
-          <Logo size="sm" showText={false} linkTo="/" isDarkOverride={false} />
+      {title && !isCollapsed && (
+        <h3 className="px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+          {title}
+        </h3>
       )}
       <div className="mt-2 space-y-1">{children}</div>
     </div>
   );
 };
 
-export default function Sidebar({ activePath = '/' }) {
+interface SidebarProps {
+  activePath?: string;
+}
+
+export default function Sidebar({ activePath = '/' }: SidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
   const [sidebarWidth, setSidebarWidth] = useState(256);
@@ -73,16 +68,15 @@ export default function Sidebar({ activePath = '/' }) {
     setIsCollapsed(!isCollapsed);
   };
 
-  const startResizing = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      setIsResizing(true);
-      const startX = e.clientX;
-      const startWidth = sidebarWidth;
+  const startResizing = useCallback((e: React.MouseEvent) => {
+    setIsResizing(true);
+    const startX = e.clientX;
+    const startWidth = sidebarWidth;
 
-      const handleMouseMove = (e: MouseEvent) => {
-        const newWidth = startWidth + e.clientX - startX;
-        setSidebarWidth(Math.min(Math.max(64, newWidth), 384));
-      };
+    const handleMouseMove = (e: MouseEvent) => {
+      const newWidth = startWidth + e.clientX - startX;
+      setSidebarWidth(Math.min(Math.max(64, newWidth), 384));
+    };
 
       const handleMouseUp = () => {
         setIsResizing(false);
@@ -271,8 +265,17 @@ export default function Sidebar({ activePath = '/' }) {
         <div className="absolute right-1 top-1/2 -translate-y-1/2 w-1 h-6 bg-gray-300 rounded-full opacity-0 hover:opacity-100 transition-opacity" />
       </div>
 
-      <div className="flex items-center h-16 px-4 border-b border-gray-100 relative">
-        <button
+      <div className="h-16 border-b border-gray-100 relative">
+        <div className="h-full flex items-center justify-center">
+          <Logo 
+            size={isCollapsed ? "sm" : "md"} 
+            showText={!isCollapsed} 
+            linkTo="/" 
+            isDarkOverride={false} 
+          />
+        </div>
+        
+        <button 
           onClick={toggleSidebar}
           className="absolute -right-3 top-1/2 -translate-y-1/2 bg-white text-gray-600 rounded-full p-1.5 hover:bg-gray-100 focus:outline-none z-30 shadow-md border border-gray-200"
           aria-label={isCollapsed ? 'Expand' : 'Collapse'}
