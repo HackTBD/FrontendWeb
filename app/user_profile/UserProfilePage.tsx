@@ -43,9 +43,9 @@ function UserProfileContent() {
           className={`sticky top-0 z-10 ${isDark ? 'bg-zinc-800' : 'bg-white'} border-b ${isDark ? 'border-zinc-700' : 'border-gray-200'} shadow-sm`}
         >
           <div className="flex items-center justify-between px-6 py-4">
-            {/* Left side - Logo and Title */}
+            {/* Left side - Title */}
             <div className="flex items-center space-x-4">
-              <Logo size="lg" isDarkOverride={isDark} />
+              <h1 className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>Profile</h1>
             </div>
 
             {/* Middle - Search Bar */}
