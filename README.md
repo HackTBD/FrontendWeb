@@ -15,23 +15,74 @@ This repository contains the frontend codebase for **HackTBD**, built using **Ne
 
 ## 📁 Repository Layout
 
+Architecture Design follow by: [Next.js Clean Architecture] (https://github.com/nikolovlazar/nextjs-clean-architecture?tab=readme-ov-file)
+
 ```
-/FrontendWeb
-│── Documentation/  # Project documentation and guides
-    │── Bugs Fixed Log/ # Log of bugs fixed in the project
-    │── Developer Guide/ # Guides for setting up and developing the project
-        |── prettier.md # Guide for integrating code formatter into your IDE
-│── public/       # Static assets like images, icons, and fonts
-│── src/
-│   ├── app/      # Main application logic and components
-│── README.md     # This README file
-│── eslint.config.mts  # ESLint configuration
-│── next.config.js # Next.js configuration
-│── next-env.d.ts  # Next.js TypeScript definitions
-│── tsconfig.json  # TypeScript configuration
-│── package.json   # Project dependencies and scripts
-│── postcss.config.mts  # PostCSS configuration
+• Documentation/            # Project documentation and guides
+  • Bugs Fixed Log/         # Log of bugs fixed in the project
+  • Developer Guide/        # Guides for setting up and developing the project
+    • prettier.md           # Guide for integrating code formatter into your IDE
+• public/                   # Static assets like images, icons, and fonts
+  • images/                 # Images files
+• app/                      # Frameworks & Drivers Layer - basically everything Next.js (pages, server actions, components, styles etc...) or whatever "consumes" the app's logic
+  • landing/
+     • themes/              # Theme context and toggle components
+        • ThemeProvider.tsx # Context for managing theme state
+        • ThemeToggle.tsx   # Toggle button component
+  • components              # Shared UI components
+    • ui/                   # UI primitives and elements
+      • aurora_background.tsx
+      • button.tsx
+    • utils.ts              # Utility functions for UI components
+  • login/
+  • page.tsx                # Website's root for navigation
+  • global.css              # Global styles
+• src/                      # The "root" of the system that store applications, entities, infrastructure and interface-adapters
+  • application             # Application Layer - holds use cases and interfaces for repositories and services
+  • entities                # Entities Layer - holds models and custom errors
+  • infrastructre           # Infrastructure Layer - holds implementations of repositories and services, and pulls in the interfaces from application
+  • interface-adapters      # Interface Adapters Layer - holds controllers that serve as an entry point to the system (used in Frameworks & Drivers layer to interact with the system)
+• tests/                    # Unit tests live here - the unit subfolder's structure matches src
+• README.md                 # This README file
+• eslint.config.mjs         # ESLint configuration
+• next.config.js            # Next.js configuration
+• next-env.d.ts             # Next.js TypeScript definitions
+• tsconfig.json             # TypeScript configuration
+• package.json              # Project dependencies and scripts
+• postcss.config.mjs        # PostCSS configuration
 ```
+
+Project structure strategy: stores all application code in shared folders in the root of the app directory.
+
+---
+
+## 🎨 Landing Pages
+
+HackTBD offers two landing page designs to accommodate different user preferences:
+
+### Light Theme (Default)
+
+- **Path**: `/`
+- **Component**: `app/light_landing/LandingPage.tsx`
+- **Features**:
+  - Colorful gradient background image
+  - Clean, modern light interface
+  - Vibrant image gallery with geometric shapes
+  - Responsive design that works on all devices
+  - Easy navigation to the dark theme version
+
+### Dark Theme
+
+- **Path**: `/dark`
+- **Component**: `app/dark/LandingPage.tsx`
+- **Features**:
+  - Dark background with elegant gradients
+  - High contrast text for better readability
+  - Same content structure as the light theme
+  - Modern UI with attention-grabbing text effects
+  - Easy navigation back to the light theme version
+
+Both landing pages share the same core functionality and content, offering users the flexibility to choose their preferred visual style. The UI components are built to ensure a consistent experience across both themes.
 
 ---
 
@@ -58,8 +109,6 @@ npm install -g pnpm
 ```sh
 pnpm self-update
 ```
-
----
 
 ### 2. Install **Node.js**
 
@@ -108,7 +157,7 @@ This will install all necessary **node_modules** for the project.
 
 - Use `pnpm` for all commands instead of `npm` or `yarn`.
 - Make sure **Node.js** and **pnpm** are installed and updated before running the project.
-- Tailwind CSS is used for styling—refer to `postcss.config.mts` for customization.
+- Tailwind CSS is used for styling—refer to `postcss.config.mjs` for customization.
 - **ESLint** is used for code consistency and best practices. Run `pnpm lint` before committing changes.
 - **Prettier** is used for code formatting. Refer to the [Prettier Guide](Documentation/Developer%20Guide/prettier.md) for setup instructions.
 
@@ -138,7 +187,7 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-### Learn More
+## Learn More
 
 To learn more about Next.js, take a look at the following resources:
 
@@ -152,3 +201,23 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Naming Convention
+
+(Airbnb Guide) [https://github.com/airbnb/javascript] or (Rajitha's Medium) [https://rajithasanjayamal.medium.com/naming-conventions-best-practices-in-react-37624d020288]
+
+- **Pascal Case**
+  - Components files, files that part of rendering unit of the website
+  - Interfaces
+  - Type Alias
+  - Enum name
+- **Camel Case**
+  - Folders
+  - Non-components files
+  - Function name
+  - Variables name
+  - Constant (initialized in run-time)
+  - Enum name that describe value
+- **Screaming Snake Case**
+  - Hard-coded Constant
+  - Enum value
