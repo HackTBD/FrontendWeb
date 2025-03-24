@@ -1,6 +1,12 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from 'react';
 
 type Theme = 'light' | 'dark' | 'system';
 
@@ -24,9 +30,9 @@ interface ThemeProviderProps {
   defaultTheme?: Theme;
 }
 
-export function ThemeProvider({ 
-  children, 
-  defaultTheme = 'light' 
+export function ThemeProvider({
+  children,
+  defaultTheme = 'light',
 }: ThemeProviderProps) {
   // Initialize with defaultTheme, but we'll check for user preference
   const [theme, setTheme] = useState<Theme>(defaultTheme);
@@ -35,14 +41,16 @@ export function ThemeProvider({
   // Set mounted to true after hydration and check for user preferences
   useEffect(() => {
     setMounted(true);
-    
+
     // Check if user has a preference in local storage
     const savedTheme = localStorage.getItem('hacktbd-theme') as Theme | null;
     if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
       setTheme(savedTheme);
     } else if (defaultTheme === 'system' && window.matchMedia) {
       // Check system preference if no saved preference and defaultTheme is 'system'
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const prefersDark = window.matchMedia(
+        '(prefers-color-scheme: dark)'
+      ).matches;
       setTheme(prefersDark ? 'dark' : 'light');
     }
   }, [defaultTheme]);
@@ -64,4 +72,4 @@ export function ThemeProvider({
       {children}
     </ThemeContext.Provider>
   );
-} 
+}

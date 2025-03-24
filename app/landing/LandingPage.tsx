@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import Image from 'next/image';
 import { Button } from '../_components/ui/Button';
 import { ThemeProvider, useTheme } from './themes/ThemeProvider';
@@ -29,7 +28,7 @@ function LandingContent() {
       )}
 
       {/* Navigation bar - styled based on theme */}
-      <div 
+      <div
         className={`
           sticky top-0 z-50 w-full py-4 px-4 md:px-8 lg:px-28
           ${isDark ? 'bg-black/80 backdrop-blur-sm' : 'bg-white/80 backdrop-blur-sm shadow-md'}
@@ -56,23 +55,22 @@ function LandingContent() {
                 />
               </div>
             </div>
-            <span className={`font-sans text-sm font-extrabold ${isDark ? 'text-white' : 'text-gray-600'}`}>
+            <span
+              className={`font-sans text-sm font-extrabold ${isDark ? 'text-white' : 'text-gray-600'}`}
+            >
               hacktbd
             </span>
           </div>
 
           {/* Sign Up/Sign In buttons */}
           <div className="flex space-x-3">
-            <Button 
+            <Button
               variant="secondary"
               className="px-4 py-2 text-sm rounded-lg"
             >
               Sign in
             </Button>
-            <Button 
-              variant="default"
-              className="px-4 py-2 text-sm rounded-lg"
-            >
+            <Button variant="default" className="px-4 py-2 text-sm rounded-lg">
               Sign up
             </Button>
           </div>
@@ -90,7 +88,7 @@ function LandingContent() {
                 <p className="py-1 px-3 bg-zinc-800/60 backdrop-blur-sm font-light rounded-full text-white inline-block">
                   Join 7.000+ Hackers
                 </p>
-                
+
                 <div className="space-y-3">
                   <h1 className="text-5xl sm:text-6xl md:text-7xl tracking-tight bg-clip-text bg-gradient-to-r from-pink-500 via-purple-400 to-blue-500 text-transparent font-semibold">
                     HackTBD
@@ -107,23 +105,30 @@ function LandingContent() {
                   </span>
                   and
                   <span className="bg-clip-text bg-gradient-to-r from-rose-500 to-purple-500 text-transparent font-semibold">
-                    {' '}sponsored{' '}
+                    {' '}
+                    sponsored{' '}
                   </span>
                   hackathons from around the world.
                 </p>
-                
+
                 <div className="space-y-4">
-                  <Button 
+                  <Button
                     variant="default"
                     className="w-full md:w-auto rounded-lg"
                   >
                     Find Your Perfect Team
                   </Button>
-                  
+
                   <div className="flex flex-wrap justify-center md:justify-start gap-2">
-                    <span className="px-3 py-1 bg-zinc-800 text-xs text-gray-300 rounded-full">Tech Matching</span>
-                    <span className="px-3 py-1 bg-zinc-800 text-xs text-gray-300 rounded-full">Custom Profiles</span>
-                    <span className="px-3 py-1 bg-zinc-800 text-xs text-gray-300 rounded-full">Team Formation</span>
+                    <span className="px-3 py-1 bg-zinc-800 text-xs text-gray-300 rounded-full">
+                      Tech Matching
+                    </span>
+                    <span className="px-3 py-1 bg-zinc-800 text-xs text-gray-300 rounded-full">
+                      Custom Profiles
+                    </span>
+                    <span className="px-3 py-1 bg-zinc-800 text-xs text-gray-300 rounded-full">
+                      Team Formation
+                    </span>
                   </div>
                 </div>
               </div>
@@ -134,11 +139,23 @@ function LandingContent() {
               {/* First column */}
               <div className="flex flex-col space-y-2">
                 <div className="w-24 h-24 sm:w-28 sm:h-28 lg:w-40 lg:h-40 bg-pink-800 rounded-3xl flex items-center justify-center">
-                  <Image src="/images/portal.svg" alt="Portal" width={60} height={60} className="w-1/2 h-auto invert" />
+                  <Image
+                    src="/images/portal.svg"
+                    alt="Portal"
+                    width={60}
+                    height={60}
+                    className="w-1/2 h-auto invert"
+                  />
                 </div>
                 <div className="w-24 h-24 sm:w-28 sm:h-28 lg:w-40 lg:h-40 bg-amber-900 rounded-3xl"></div>
                 <div className="w-24 h-28 sm:w-28 sm:h-32 lg:w-40 lg:h-44 bg-zinc-800 rounded-3xl flex items-center justify-center">
-                  <Image src="/images/chess-symbol.svg" alt="Chess Symbol" width={40} height={40} className="w-1/2 h-auto invert" />
+                  <Image
+                    src="/images/chess-symbol.svg"
+                    alt="Chess Symbol"
+                    width={40}
+                    height={40}
+                    className="w-1/2 h-auto invert"
+                  />
                 </div>
               </div>
 
@@ -146,7 +163,13 @@ function LandingContent() {
               <div className="flex flex-col space-y-2">
                 <div className="w-24 h-24 sm:w-28 sm:h-28 lg:w-40 lg:h-40 bg-blue-900 rounded-3xl"></div>
                 <div className="w-24 h-24 sm:w-28 sm:h-28 lg:w-40 lg:h-40 bg-teal-900 rounded-3xl flex items-center justify-center">
-                  <Image src="/images/message-square.svg" alt="Message Square" width={40} height={40} className="w-1/2 h-auto invert" />
+                  <Image
+                    src="/images/message-square.svg"
+                    alt="Message Square"
+                    width={40}
+                    height={40}
+                    className="w-1/2 h-auto invert"
+                  />
                 </div>
                 <div className="w-24 h-28 sm:w-28 sm:h-32 lg:w-40 lg:h-44 bg-rose-900/60 rounded-3xl"></div>
               </div>
@@ -155,10 +178,22 @@ function LandingContent() {
               <div className="flex flex-col space-y-2">
                 <div className="w-24 h-24 sm:w-28 sm:h-28 lg:w-40 lg:h-40 bg-purple-900/70 rounded-3xl"></div>
                 <div className="w-24 h-24 sm:w-28 sm:h-28 lg:w-40 lg:h-40 bg-cyan-900/60 rounded-3xl flex items-center justify-center">
-                  <Image src="/images/chess-symbol-2.svg" alt="Chess Symbol 2" width={40} height={40} className="w-1/2 h-auto invert" />
+                  <Image
+                    src="/images/chess-symbol-2.svg"
+                    alt="Chess Symbol 2"
+                    width={40}
+                    height={40}
+                    className="w-1/2 h-auto invert"
+                  />
                 </div>
                 <div className="w-24 h-28 sm:w-28 sm:h-32 lg:w-40 lg:h-44 bg-yellow-900/60 rounded-3xl flex items-center justify-center">
-                  <Image src="/images/butterfly.svg" alt="Butterfly" width={60} height={60} className="w-2/3 h-auto invert" />
+                  <Image
+                    src="/images/butterfly.svg"
+                    alt="Butterfly"
+                    width={60}
+                    height={60}
+                    className="w-2/3 h-auto invert"
+                  />
                 </div>
               </div>
             </div>
@@ -172,7 +207,7 @@ function LandingContent() {
                 <p className="py-1 px-3 bg-white/40 backdrop-blur-sm font-light rounded-full text-gray-800 inline-block">
                   Join 7.000+ Hackers
                 </p>
-                
+
                 <div className="space-y-3">
                   <h1 className="text-5xl sm:text-6xl md:text-7xl tracking-tight bg-clip-text bg-gradient-to-r from-[#B9225C] via-[#428295] to-[#63CAAA] text-transparent font-semibold">
                     HackTBD
@@ -189,23 +224,30 @@ function LandingContent() {
                   </span>
                   and
                   <span className="bg-clip-text bg-gradient-to-r from-[#B9225C] to-[#428295] text-transparent font-semibold">
-                    {' '}sponsored{' '}
+                    {' '}
+                    sponsored{' '}
                   </span>
                   hackathons from around the world.
                 </p>
-                
+
                 <div className="space-y-4">
-                  <Button 
+                  <Button
                     variant="default"
                     className="w-full md:w-auto rounded-lg"
                   >
                     Find Your Perfect Team
                   </Button>
-                  
+
                   <div className="flex flex-wrap justify-center md:justify-start gap-2">
-                    <span className="px-3 py-1 bg-white/40 text-xs text-gray-700 rounded-full">Tech Matching</span>
-                    <span className="px-3 py-1 bg-white/40 text-xs text-gray-700 rounded-full">Custom Profiles</span>
-                    <span className="px-3 py-1 bg-white/40 text-xs text-gray-700 rounded-full">Team Formation</span>
+                    <span className="px-3 py-1 bg-white/40 text-xs text-gray-700 rounded-full">
+                      Tech Matching
+                    </span>
+                    <span className="px-3 py-1 bg-white/40 text-xs text-gray-700 rounded-full">
+                      Custom Profiles
+                    </span>
+                    <span className="px-3 py-1 bg-white/40 text-xs text-gray-700 rounded-full">
+                      Team Formation
+                    </span>
                   </div>
                 </div>
               </div>
@@ -216,11 +258,23 @@ function LandingContent() {
               {/* First column */}
               <div className="flex flex-col space-y-2">
                 <div className="w-24 h-24 sm:w-28 sm:h-28 lg:w-40 lg:h-40 bg-[#B9225C] rounded-3xl flex items-center justify-center">
-                  <Image src="/images/portal.svg" alt="Portal" width={60} height={60} className="w-1/2 h-auto" />
+                  <Image
+                    src="/images/portal.svg"
+                    alt="Portal"
+                    width={60}
+                    height={60}
+                    className="w-1/2 h-auto"
+                  />
                 </div>
                 <div className="w-24 h-24 sm:w-28 sm:h-28 lg:w-40 lg:h-40 bg-[#FFBD6B] rounded-3xl"></div>
                 <div className="w-24 h-28 sm:w-28 sm:h-32 lg:w-40 lg:h-44 bg-white rounded-3xl flex items-center justify-center">
-                  <Image src="/images/chess-symbol.svg" alt="Chess Symbol" width={40} height={40} className="w-1/2 h-auto" />
+                  <Image
+                    src="/images/chess-symbol.svg"
+                    alt="Chess Symbol"
+                    width={40}
+                    height={40}
+                    className="w-1/2 h-auto"
+                  />
                 </div>
               </div>
 
@@ -228,7 +282,13 @@ function LandingContent() {
               <div className="flex flex-col space-y-2">
                 <div className="w-24 h-24 sm:w-28 sm:h-28 lg:w-40 lg:h-40 bg-[#036CA0] rounded-3xl"></div>
                 <div className="w-24 h-24 sm:w-28 sm:h-28 lg:w-40 lg:h-40 bg-[#63CAAA] rounded-3xl flex items-center justify-center">
-                  <Image src="/images/message-square.svg" alt="Message Square" width={40} height={40} className="w-1/2 h-auto" />
+                  <Image
+                    src="/images/message-square.svg"
+                    alt="Message Square"
+                    width={40}
+                    height={40}
+                    className="w-1/2 h-auto"
+                  />
                 </div>
                 <div className="w-24 h-28 sm:w-28 sm:h-32 lg:w-40 lg:h-44 bg-[#F2D4DC] rounded-3xl"></div>
               </div>
@@ -237,10 +297,22 @@ function LandingContent() {
               <div className="flex flex-col space-y-2">
                 <div className="w-24 h-24 sm:w-28 sm:h-28 lg:w-40 lg:h-40 bg-[#D1CDEE] rounded-3xl"></div>
                 <div className="w-24 h-24 sm:w-28 sm:h-28 lg:w-40 lg:h-40 bg-[#D5E4E8] rounded-3xl flex items-center justify-center">
-                  <Image src="/images/chess-symbol-2.svg" alt="Chess Symbol 2" width={40} height={40} className="w-1/2 h-auto" />
+                  <Image
+                    src="/images/chess-symbol-2.svg"
+                    alt="Chess Symbol 2"
+                    width={40}
+                    height={40}
+                    className="w-1/2 h-auto"
+                  />
                 </div>
                 <div className="w-24 h-28 sm:w-28 sm:h-32 lg:w-40 lg:h-44 bg-[#FFDD81] rounded-3xl flex items-center justify-center">
-                  <Image src="/images/butterfly.svg" alt="Butterfly" width={60} height={60} className="w-2/3 h-auto" />
+                  <Image
+                    src="/images/butterfly.svg"
+                    alt="Butterfly"
+                    width={60}
+                    height={60}
+                    className="w-2/3 h-auto"
+                  />
                 </div>
               </div>
             </div>
@@ -248,49 +320,113 @@ function LandingContent() {
         )}
 
         {/* Feature highlights section */}
-        <div className={`relative z-10 w-full mt-12 md:mt-24 px-4 md:px-8 lg:px-28 ${isDark ? 'text-white' : ''}`}>
+        <div
+          className={`relative z-10 w-full mt-12 md:mt-24 px-4 md:px-8 lg:px-28 ${isDark ? 'text-white' : ''}`}
+        >
           <div className="max-w-7xl mx-auto">
-            <h2 className={`text-2xl md:text-3xl font-bold mb-8 text-center ${isDark ? 'text-white' : 'text-gray-800'}`}>
+            <h2
+              className={`text-2xl md:text-3xl font-bold mb-8 text-center ${isDark ? 'text-white' : 'text-gray-800'}`}
+            >
               Streamline Your Hackathon Experience
             </h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Feature 1 */}
-              <div className={`rounded-xl p-6 ${isDark ? 'bg-zinc-900' : 'bg-white/70 backdrop-blur-sm'} shadow-lg`}>
-                <div className={`w-12 h-12 rounded-full mb-4 flex items-center justify-center ${isDark ? 'bg-purple-900' : 'bg-purple-100'}`}>
-                  <svg xmlns="http://www.w3.org/2000/svg" className={`h-6 w-6 ${isDark ? 'text-purple-200' : 'text-purple-600'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              <div
+                className={`rounded-xl p-6 ${isDark ? 'bg-zinc-900' : 'bg-white/70 backdrop-blur-sm'} shadow-lg`}
+              >
+                <div
+                  className={`w-12 h-12 rounded-full mb-4 flex items-center justify-center ${isDark ? 'bg-purple-900' : 'bg-purple-100'}`}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={`h-6 w-6 ${isDark ? 'text-purple-200' : 'text-purple-600'}`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    />
                   </svg>
                 </div>
-                <h3 className={`text-xl font-semibold mb-2 ${isDark ? 'text-white' : 'text-gray-800'}`}>Create Custom Profiles</h3>
+                <h3
+                  className={`text-xl font-semibold mb-2 ${isDark ? 'text-white' : 'text-gray-800'}`}
+                >
+                  Create Custom Profiles
+                </h3>
                 <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-                  Showcase your skills, goals, and past experience to find the perfect team match for each hackathon.
+                  Showcase your skills, goals, and past experience to find the
+                  perfect team match for each hackathon.
                 </p>
               </div>
-              
+
               {/* Feature 2 */}
-              <div className={`rounded-xl p-6 ${isDark ? 'bg-zinc-900' : 'bg-white/70 backdrop-blur-sm'} shadow-lg`}>
-                <div className={`w-12 h-12 rounded-full mb-4 flex items-center justify-center ${isDark ? 'bg-blue-900' : 'bg-blue-100'}`}>
-                  <svg xmlns="http://www.w3.org/2000/svg" className={`h-6 w-6 ${isDark ? 'text-blue-200' : 'text-blue-600'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              <div
+                className={`rounded-xl p-6 ${isDark ? 'bg-zinc-900' : 'bg-white/70 backdrop-blur-sm'} shadow-lg`}
+              >
+                <div
+                  className={`w-12 h-12 rounded-full mb-4 flex items-center justify-center ${isDark ? 'bg-blue-900' : 'bg-blue-100'}`}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={`h-6 w-6 ${isDark ? 'text-blue-200' : 'text-blue-600'}`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
                   </svg>
                 </div>
-                <h3 className={`text-xl font-semibold mb-2 ${isDark ? 'text-white' : 'text-gray-800'}`}>Smart Team Matching</h3>
+                <h3
+                  className={`text-xl font-semibold mb-2 ${isDark ? 'text-white' : 'text-gray-800'}`}
+                >
+                  Smart Team Matching
+                </h3>
                 <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-                  Filter potential teammates based on skills, goals, and experience to find the right people quickly.
+                  Filter potential teammates based on skills, goals, and
+                  experience to find the right people quickly.
                 </p>
               </div>
-              
+
               {/* Feature 3 */}
-              <div className={`rounded-xl p-6 ${isDark ? 'bg-zinc-900' : 'bg-white/70 backdrop-blur-sm'} shadow-lg`}>
-                <div className={`w-12 h-12 rounded-full mb-4 flex items-center justify-center ${isDark ? 'bg-teal-900' : 'bg-teal-100'}`}>
-                  <svg xmlns="http://www.w3.org/2000/svg" className={`h-6 w-6 ${isDark ? 'text-teal-200' : 'text-teal-600'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              <div
+                className={`rounded-xl p-6 ${isDark ? 'bg-zinc-900' : 'bg-white/70 backdrop-blur-sm'} shadow-lg`}
+              >
+                <div
+                  className={`w-12 h-12 rounded-full mb-4 flex items-center justify-center ${isDark ? 'bg-teal-900' : 'bg-teal-100'}`}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={`h-6 w-6 ${isDark ? 'text-teal-200' : 'text-teal-600'}`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                    />
                   </svg>
                 </div>
-                <h3 className={`text-xl font-semibold mb-2 ${isDark ? 'text-white' : 'text-gray-800'}`}>Team Management</h3>
+                <h3
+                  className={`text-xl font-semibold mb-2 ${isDark ? 'text-white' : 'text-gray-800'}`}
+                >
+                  Team Management
+                </h3>
                 <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-                  Join teams, manage your participation, and customize tags for each hackathon you participate in.
+                  Join teams, manage your participation, and customize tags for
+                  each hackathon you participate in.
                 </p>
               </div>
             </div>
@@ -300,7 +436,9 @@ function LandingContent() {
 
       {/* Footer */}
       <div className="relative z-10 w-full mt-16 md:mt-24">
-        <div className={`w-full ${isDark ? 'bg-zinc-900' : 'bg-[#696969]'} py-6 md:py-8`}>
+        <div
+          className={`w-full ${isDark ? 'bg-zinc-900' : 'bg-[#696969]'} py-6 md:py-8`}
+        >
           <div className="text-center">
             <p className="text-white text-lg md:text-xl font-medium">
               Built for hackers with 🤍
@@ -317,7 +455,7 @@ function LandingContent() {
 
 // Wrap the landing page with the theme provider
 export default function LandingPage({
-  defaultTheme = 'light' // Default theme can be set by the page that imports this component
+  defaultTheme = 'light', // Default theme can be set by the page that imports this component
 }: {
   defaultTheme?: 'light' | 'dark';
 }) {
