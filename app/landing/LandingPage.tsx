@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Button } from '../_components/ui/Button';
 import { ThemeProvider, useTheme } from './themes/ThemeProvider';
 import { ThemeToggle } from './themes/ThemeToggle';
+import { Logo } from '../_components/ui/Logo';
 
 // The main content component that changes based on theme
 function LandingContent() {
@@ -37,29 +38,7 @@ function LandingContent() {
       >
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           {/* Logo */}
-          <div className="flex items-center space-x-2">
-            <div className="relative w-8 h-8">
-              <div className="absolute inset-0">
-                <Image
-                  src="/images/logo-polygon.svg"
-                  alt="Logo polygon"
-                  width={32}
-                  height={32}
-                />
-              </div>
-              <div className="absolute inset-0">
-                <Image
-                  src="/images/logo-ellipse.svg"
-                  alt="Logo ellipse"
-                  width={32}
-                  height={32}
-                />
-              </div>
-            </div>
-            <span className={`font-sans text-sm font-extrabold ${isDark ? 'text-white' : 'text-gray-600'}`}>
-              hacktbd
-            </span>
-          </div>
+          <Logo size="md" isDarkOverride={isDark} />
 
           {/* Sign Up/Sign In buttons */}
           <div className="flex space-x-3">

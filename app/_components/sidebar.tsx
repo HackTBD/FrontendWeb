@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Logo } from './ui/Logo';
 
 const SidebarItem = ({ icon, label, isActive, href, isCollapsed }) => {
   return (
@@ -176,6 +177,11 @@ export default function Sidebar({ activePath = '/' }) {
       </div>
 
       <div className="flex items-center h-16 px-4 border-b border-gray-100 relative">
+        {!isCollapsed ? (
+          <Logo size="md" linkTo="/" isDarkOverride={false} />
+        ) : (
+          <Logo size="sm" showText={false} linkTo="/" isDarkOverride={false} />
+        )}
         <button 
           onClick={toggleSidebar}
           className="absolute -right-3 top-1/2 -translate-y-1/2 bg-white text-gray-600 rounded-full p-1.5 hover:bg-gray-100 focus:outline-none z-30 shadow-md border border-gray-200"
