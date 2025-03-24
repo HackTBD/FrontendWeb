@@ -31,8 +31,9 @@ Architecture Design follow by: [Next.js Clean Architecture] (https://github.com/
         • ThemeToggle.tsx   # Toggle button component
   • components              # Shared UI components
     • ui/                   # UI primitives and elements
-      • aurora_background.tsx
+      • auroraBackground.tsx
       • button.tsx
+      • logo.tsx
     • utils.ts              # Utility functions for UI components
   • login/
   • page.tsx                # Website's root for navigation
@@ -221,3 +222,6 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 - **Screaming Snake Case**
   - Hard-coded Constant
   - Enum value
+
+## Extra Tools/ Resources
+1. (Svg Path Editor)[https://yqnn.github.io/svg-path-editor/]: use to visualize svg files

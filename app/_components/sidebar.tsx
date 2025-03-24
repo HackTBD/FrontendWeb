@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect, MouseEventHandler } from 'react';
 import Link from 'next/link';
+import { Logo } from './ui/logo';
 
 interface SidebarItemProps {
   icon: React.ReactNode;
@@ -51,10 +52,10 @@ const SidebarSection = ({
 }: SidebarSectionProps) => {
   return (
     <div className="mt-5">
-      {!isCollapsed && (
-        <h3 className="px-4 text-xs font-medium text-gray-400 uppercase tracking-wider">
-          {title}
-        </h3>
+      {!isCollapsed ? (
+          <Logo size="md" linkTo="/" isDarkOverride={false} />
+        ) : (
+          <Logo size="sm" showText={false} linkTo="/" isDarkOverride={false} />
       )}
       <div className="mt-2 space-y-1">{children}</div>
     </div>
