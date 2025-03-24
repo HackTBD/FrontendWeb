@@ -15,114 +15,74 @@ This repository contains the frontend codebase for **HackTBD**, built using **Ne
 
 ## 📁 Repository Layout
 
+Architecture Design follow by: [Next.js Clean Architecture] (https://github.com/nikolovlazar/nextjs-clean-architecture?tab=readme-ov-file)
+
 ```
-FrontendWeb/
-├── app/           # Next.js app directory (App Router)
-│   ├── landing/   # Unified landing page with theme switching
-│   │   ├── themes/  # Theme context and toggle components
-│   │   │   ├── ThemeProvider.tsx  # Context for managing theme state
-│   │   │   └── ThemeToggle.tsx  # Toggle button component
-│   │   ├── LandingPage.tsx  # Main landing page component
-│   │   └── page.tsx  # Landing page route
-│   ├── _components/ # Shared UI components
-│   │   └── ui/      # UI primitives and elements
-│   │       ├── Logo.tsx  # Unified logo component with theme support
-│   │       └── Button.tsx # Button component with variants
-│   ├── page.tsx   # Main app page (redirects to landing)
-│   └── ...
-├── public/        # Static assets
-│   └── images/    # Image files for the landing page
-├── ...
+• Documentation/            # Project documentation and guides
+  • Bugs Fixed Log/         # Log of bugs fixed in the project
+  • Developer Guide/        # Guides for setting up and developing the project
+    • prettier.md           # Guide for integrating code formatter into your IDE
+• public/                   # Static assets like images, icons, and fonts
+  • images/                 # Images files
+• app/                      # Frameworks & Drivers Layer - basically everything Next.js (pages, server actions, components, styles etc...) or whatever "consumes" the app's logic
+  • landing/
+     • themes/              # Theme context and toggle components
+        • ThemeProvider.tsx # Context for managing theme state
+        • ThemeToggle.tsx   # Toggle button component
+  • components              # Shared UI components
+    • ui/                   # UI primitives and elements
+      • aurora_background.tsx
+      • button.tsx
+    • utils.ts              # Utility functions for UI components
+  • login/
+  • page.tsx                # Website's root for navigation
+  • global.css              # Global styles
+• src/                      # The "root" of the system that store applications, entities, infrastructure and interface-adapters
+  • application             # Application Layer - holds use cases and interfaces for repositories and services
+  • entities                # Entities Layer - holds models and custom errors
+  • infrastructre           # Infrastructure Layer - holds implementations of repositories and services, and pulls in the interfaces from application
+  • interface-adapters      # Interface Adapters Layer - holds controllers that serve as an entry point to the system (used in Frameworks & Drivers layer to interact with the system)
+• tests/                    # Unit tests live here - the unit subfolder's structure matches src
+• README.md                 # This README file
+• eslint.config.mjs         # ESLint configuration
+• next.config.js            # Next.js configuration
+• next-env.d.ts             # Next.js TypeScript definitions
+• tsconfig.json             # TypeScript configuration
+• package.json              # Project dependencies and scripts
+• postcss.config.mjs        # PostCSS configuration
 ```
+
+Project structure strategy: stores all application code in shared folders in the root of the app directory.
 
 ---
 
-## 🎨 UI Components
+## 🎨 Landing Pages
 
-### Logo Component
+HackTBD offers two landing page designs to accommodate different user preferences:
 
-The platform uses a unified Logo component across all pages for consistent branding:
+### Light Theme (Default)
 
-```tsx
-import { Logo } from '../_components/ui/Logo';
+- **Path**: `/`
+- **Component**: `app/light_landing/LandingPage.tsx`
+- **Features**:
+  - Colorful gradient background image
+  - Clean, modern light interface
+  - Vibrant image gallery with geometric shapes
+  - Responsive design that works on all devices
+  - Easy navigation to the dark theme version
 
-// Basic usage
-<Logo />
+### Dark Theme
 
-// With different sizes
-<Logo size="sm" />  // Small
-<Logo size="md" />  // Medium (default)
-<Logo size="lg" />  // Large
+- **Path**: `/dark`
+- **Component**: `app/dark/LandingPage.tsx`
+- **Features**:
+  - Dark background with elegant gradients
+  - High contrast text for better readability
+  - Same content structure as the light theme
+  - Modern UI with attention-grabbing text effects
+  - Easy navigation back to the light theme version
 
-// With or without text
-<Logo showText={false} />  // Icon only
-
-// As a link
-<Logo linkTo="/dashboard" />  // Clickable logo
-
-// With explicit theme
-<Logo isDarkOverride={true} />  // Force dark theme colors
-```
-
-#### Features
-
-- **Theme Adaptability**: Automatically adjusts text and shape colors based on explicit theme override
-- **Size Options**: Small, medium, and large variants for different contexts
-- **Navigation Support**: Can function as a link to any route
-- **Flexible Display**: Can show icon only or icon with text
-- **Decoupled from ThemeProvider**: Works independently of any ThemeProvider context to prevent cross-context errors
-
-#### Implementation
-
-The Logo component is implemented as an SVG with separate paths for different parts of the logo. It accepts an explicit theme override parameter to determine its styling, rather than depending on ThemeContext directly, which prevents errors when used across different pages with their own ThemeProvider implementations.
-
-```tsx
-// Example usage - explicitly passing the theme
-const { theme } = useTheme(); // Get theme from your context
-const isDark = theme === 'dark';
-
-<Logo isDarkOverride={isDark} />
-
-// In components without ThemeProvider context
-<Logo isDarkOverride={false} /> // Force light theme
-<Logo isDarkOverride={true} />  // Force dark theme
-```
-
-This approach ensures the Logo can be used anywhere in the application without causing "useTheme must be used within a ThemeProvider" errors.
-
----
-
-## 🎨 Landing Page
-
-The landing page features a responsive, modern design with theme switching capabilities:
-
-- **Unified Theme Management**: Single component that handles both light and dark themes
-- **Client-side Theme Switching**: Toggle between light and dark modes without page refresh
-- **Persistent Theme Preference**: User's theme preference is saved to localStorage
-- **Responsive Design**: Optimized for all device sizes with proper scrolling behavior
-- **Feature Highlights**: Showcases key platform features with visual cards
-- **SEO-friendly**: Proper metadata and semantic HTML structure
-- **Consistent Branding**: Uses the shared Logo component across all pages
-
-### Light Theme Features:
-- Colorful gradient background
-- Side-by-side layout on larger screens
-- Interactive color blocks with images
-- Clean navigation with translucent backdrop
-
-### Dark Theme Features:
-- Dark background with elegant gradients
-- High contrast text for better readability
-- Matching layout with dark-themed imagery
-- Modern UI with attention-grabbing text effects
-
-### Theme System Implementation:
-- **React Context API**: Central state management for theme
-- **Theme Toggle**: Accessible button for switching themes
-- **System Preference Detection**: Ability to detect user's system preference
-- **Seamless Transitions**: Smooth transitions between theme states
-
-The landing page is fully responsive and optimized for all devices, with proper scrolling behavior to ensure all content is accessible regardless of screen size or device type.
+Both landing pages share the same core functionality and content, offering users the flexibility to choose their preferred visual style. The UI components are built to ensure a consistent experience across both themes.
 
 ---
 
