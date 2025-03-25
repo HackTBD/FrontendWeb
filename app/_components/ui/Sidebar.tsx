@@ -14,9 +14,16 @@ interface SidebarItemProps {
   isCollapsed: boolean;
 }
 
-const SidebarItem = ({ icon, label, isActive, href, isCollapsed }: SidebarItemProps) => {
+const SidebarItem = ({
+  icon,
+  label,
+  isActive,
+  href,
+  isCollapsed,
+}: SidebarItemProps) => {
   const { theme } = useTheme();
-  const isDark = theme === 'dark' ||
+  const isDark =
+    theme === 'dark' ||
     (theme === 'system' &&
       typeof window !== 'undefined' &&
       window.matchMedia('(prefers-color-scheme: dark)').matches);
@@ -37,15 +44,17 @@ const SidebarItem = ({ icon, label, isActive, href, isCollapsed }: SidebarItemPr
       }`}
       title={isCollapsed ? label : ''}
     >
-      <span className={
-        isActive 
-          ? isDark 
-            ? 'text-pink-400' 
-            : 'text-blue-600' 
-          : isDark 
-            ? 'text-zinc-400' 
-            : 'text-gray-500'
-      }>
+      <span
+        className={
+          isActive
+            ? isDark
+              ? 'text-pink-400'
+              : 'text-blue-600'
+            : isDark
+              ? 'text-zinc-400'
+              : 'text-gray-500'
+        }
+      >
         {icon}
       </span>
       {!isCollapsed && <span className="ml-3">{label}</span>}
@@ -59,9 +68,14 @@ interface SidebarSectionProps {
   isCollapsed: boolean;
 }
 
-const SidebarSection = ({ title, children, isCollapsed }: SidebarSectionProps) => {
+const SidebarSection = ({
+  title,
+  children,
+  isCollapsed,
+}: SidebarSectionProps) => {
   const { theme } = useTheme();
-  const isDark = theme === 'dark' ||
+  const isDark =
+    theme === 'dark' ||
     (theme === 'system' &&
       typeof window !== 'undefined' &&
       window.matchMedia('(prefers-color-scheme: dark)').matches);
@@ -69,9 +83,11 @@ const SidebarSection = ({ title, children, isCollapsed }: SidebarSectionProps) =
   return (
     <div className="mt-5">
       {title && !isCollapsed && (
-        <h3 className={`px-4 text-xs font-semibold uppercase tracking-wider ${
-          isDark ? 'text-zinc-500' : 'text-gray-500'
-        }`}>
+        <h3
+          className={`px-4 text-xs font-semibold uppercase tracking-wider ${
+            isDark ? 'text-zinc-500' : 'text-gray-500'
+          }`}
+        >
           {title}
         </h3>
       )}
@@ -86,12 +102,13 @@ interface SidebarProps {
   hideLogo?: boolean;
 }
 
-export default function Sidebar({ 
+export default function Sidebar({
   activePath = '/',
-  hideLogo = false
+  hideLogo = false,
 }: SidebarProps) {
   const { theme } = useTheme();
-  const isDark = theme === 'dark' ||
+  const isDark =
+    theme === 'dark' ||
     (theme === 'system' &&
       typeof window !== 'undefined' &&
       window.matchMedia('(prefers-color-scheme: dark)').matches);
@@ -105,15 +122,16 @@ export default function Sidebar({
     setIsCollapsed(!isCollapsed);
   };
 
-  const startResizing = useCallback((e: React.MouseEvent) => {
-    setIsResizing(true);
-    const startX = e.clientX;
-    const startWidth = sidebarWidth;
+  const startResizing = useCallback(
+    (e: React.MouseEvent) => {
+      setIsResizing(true);
+      const startX = e.clientX;
+      const startWidth = sidebarWidth;
 
-    const handleMouseMove = (e: MouseEvent) => {
-      const newWidth = startWidth + e.clientX - startX;
-      setSidebarWidth(Math.min(Math.max(64, newWidth), 384));
-    };
+      const handleMouseMove = (e: MouseEvent) => {
+        const newWidth = startWidth + e.clientX - startX;
+        setSidebarWidth(Math.min(Math.max(64, newWidth), 384));
+      };
 
       const handleMouseUp = () => {
         setIsResizing(false);
@@ -157,7 +175,9 @@ export default function Sidebar({
                 : 'bg-gray-50 border-transparent focus:bg-white focus:border-gray-200 placeholder:text-gray-400'
             }`}
           />
-          <div className={`absolute left-3 top-2.5 ${isDark ? 'text-zinc-500' : 'text-gray-400'}`}>
+          <div
+            className={`absolute left-3 top-2.5 ${isDark ? 'text-zinc-500' : 'text-gray-400'}`}
+          >
             <SearchIcon />
           </div>
         </>
@@ -309,26 +329,30 @@ export default function Sidebar({
         className="absolute right-0 top-0 bottom-0 w-2 cursor-ew-resize z-20"
         onMouseDown={startResizing}
       >
-        <div className={`absolute right-1 top-1/2 -translate-y-1/2 w-1 h-6 rounded-full opacity-0 hover:opacity-100 transition-opacity ${
-          isDark ? 'bg-pink-500/50' : 'bg-gray-300'
-        }`} />
+        <div
+          className={`absolute right-1 top-1/2 -translate-y-1/2 w-1 h-6 rounded-full opacity-0 hover:opacity-100 transition-opacity ${
+            isDark ? 'bg-pink-500/50' : 'bg-gray-300'
+          }`}
+        />
       </div>
 
-      <div className={`h-16 relative border-b ${
-        isDark ? 'border-zinc-800/80' : 'border-gray-100'
-      }`}>
+      <div
+        className={`h-16 relative border-b ${
+          isDark ? 'border-zinc-800/80' : 'border-gray-100'
+        }`}
+      >
         <div className="h-full flex items-center justify-center">
           {!hideLogo && (
-            <Logo 
-              size={isCollapsed ? "sm" : "md"} 
-              showText={!isCollapsed} 
-              linkTo="/" 
-              isDarkOverride={isDark} 
+            <Logo
+              size={isCollapsed ? 'sm' : 'md'}
+              showText={!isCollapsed}
+              linkTo="/"
+              isDarkOverride={isDark}
             />
           )}
         </div>
-        
-        <button 
+
+        <button
           onClick={toggleSidebar}
           className={`absolute -right-3 top-1/2 -translate-y-1/2 rounded-full p-1.5 focus:outline-none z-30 shadow-md ${
             isDark
