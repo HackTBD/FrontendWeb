@@ -1,10 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import { Button } from '../_components/ui/button';
+import { Button } from '../_components/ui/Button';
 import { ThemeProvider, useTheme } from './themes/ThemeProvider';
 import { ThemeToggle } from './themes/ThemeToggle';
-import { Logo } from '../_components/ui/logo';
+import { Logo } from '../_components/ui/Logo';
 // The main content component that changes based on theme
 function LandingContent() {
   const { theme } = useTheme();

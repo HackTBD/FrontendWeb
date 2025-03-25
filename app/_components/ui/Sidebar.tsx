@@ -3,7 +3,7 @@
 import { useState, useCallback, useEffect, ReactNode } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Logo } from './ui/logo';
+import { Logo } from './Logo';
 
 interface SidebarItemProps {
   icon: ReactNode;

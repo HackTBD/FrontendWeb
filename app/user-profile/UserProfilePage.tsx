@@ -3,11 +3,11 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { Button } from '../_components/ui/Button';
-import { ThemeProvider, useTheme } from '../landing/themes/ThemeProvider';
-import { ThemeToggle } from '../landing/themes/ThemeToggle';
+import { useTheme } from '../_components/ui/ThemeProvider';
 import Sidebar from '../_components/ui/Sidebar';
+import { Header } from '../_components/ui/Header';
 
-function UserProfileContent() {
+export default function UserProfilePage() {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
   const [isEditing, setIsEditing] = useState(false);
@@ -33,78 +33,29 @@ function UserProfileContent() {
   };
 
   return (
-    <div className={`flex h-screen ${isDark ? 'bg-zinc-900' : 'bg-gray-50'}`}>
-      <Sidebar activePath="/profile" />
+    <div
+      className={`flex h-screen ${isDark ? 'bg-zinc-900/40' : 'bg-gray-50/40'}`}
+    >
+      <Sidebar activePath="/profile" hideLogo={true} />
 
       <div className="flex-1 overflow-auto">
         {/* Header */}
-        <div
-          className={`sticky top-0 z-10 ${isDark ? 'bg-zinc-800' : 'bg-white'} border-b ${isDark ? 'border-zinc-700' : 'border-gray-200'} shadow-sm`}
-        >
-          <div className="flex items-center justify-between px-6 py-4">
-            {/* Left side - Title */}
-            <div className="flex items-center space-x-4">
-              <h1 className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>Profile</h1>
-            </div>
-
-            {/* Middle - Search Bar */}
-            <div className="flex-1 mx-4 max-w-2xl">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  className={`w-full px-4 py-2 rounded-lg border transition-colors ${
-                    isDark
-                      ? 'bg-zinc-700 border-zinc-600 text-white placeholder-gray-400'
-                      : 'bg-gray-100 border-gray-300 text-gray-900 placeholder-gray-500'
-                  } focus:outline-none focus:ring-2 ${
-                    isDark ? 'focus:ring-indigo-500' : 'focus:ring-blue-500'
-                  }`}
-                />
-                <svg
-                  className={`absolute right-3 top-3 h-5 w-5 ${
-                    isDark ? 'text-gray-400' : 'text-gray-500'
-                  }`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
-              </div>
-            </div>
-
-            {/* Right side - Theme Toggle and Profile */}
-            <div className="flex items-center space-x-4">
-              <ThemeToggle />
-              <div className="h-8 w-8 rounded-full overflow-hidden">
-                <Image
-                  src="https://i.pravatar.cc/150?img=10"
-                  alt="Profile"
-                  width={32}
-                  height={32}
-                  className="object-cover"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+        <Header />
 
         {/* Profile content */}
         <div className="max-w-5xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
           <div
-            className={`overflow-hidden rounded-2xl shadow-xl ${isDark ? 'bg-zinc-800' : 'bg-white'}`}
+            className={`overflow-hidden rounded-2xl shadow-xl ${isDark ? 'bg-zinc-800/90 border border-pink-500/20' : 'bg-white'}`}
           >
             {/* Profile header */}
-            <div className="relative h-48 bg-gradient-to-r from-blue-400 to-indigo-500">
+            <div
+              className={`relative h-48 ${isDark ? 'bg-gradient-to-r from-pink-500/80 via-purple-500/80 to-blue-500/80' : 'bg-gradient-to-r from-blue-400 to-indigo-500'}`}
+            >
               <div className="absolute left-0 right-0 -bottom-16 flex justify-between items-end px-8">
                 <div className="flex items-end">
-                  <div className="h-32 w-32 rounded-full border-4 border-white overflow-hidden bg-white shadow-lg">
+                  <div
+                    className={`h-32 w-32 rounded-full border-4 ${isDark ? 'border-purple-300' : 'border-white'} overflow-hidden bg-white shadow-lg`}
+                  >
                     <Image
                       src="https://i.pravatar.cc/150?img=10"
                       alt="Alexa Rawles"
@@ -115,23 +66,19 @@ function UserProfileContent() {
                   </div>
                   <div className="ml-6 mb-4">
                     <h2
-                      className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}
+                      className={`text-2xl font-bold ${isDark ? 'text-theme-gradient-primary' : 'text-theme-primary'}`}
                     >
                       {userData.firstName} {userData.lastName}
                     </h2>
-                    <p
-                      className={`${isDark ? 'text-gray-300' : 'text-gray-600'}`}
-                    >
-                      {userData.pronouns}
-                    </p>
+                    <p className="text-theme-secondary">{userData.pronouns}</p>
                   </div>
                 </div>
                 <div className="mb-6">
                   <Button
-                    variant={isDark ? 'outline' : 'default'}
+                    variant={isDark ? 'outline' : 'primary'}
                     className={`rounded-lg px-6 py-3 transition-all ${
                       isDark
-                        ? 'hover:bg-zinc-700 border-zinc-600'
+                        ? 'hover:bg-zinc-700 border-pink-500/30 hover:border-pink-500/50 text-theme-primary'
                         : 'hover:bg-blue-500 hover:text-white'
                     }`}
                     onClick={isEditing ? handleSave : () => setIsEditing(true)}
@@ -154,9 +101,7 @@ function UserProfileContent() {
                   { label: 'Password', field: 'password', type: 'password' },
                 ].map(({ label, field, type }) => (
                   <div key={field}>
-                    <label
-                      className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}
-                    >
+                    <label className="block text-sm font-medium mb-2 text-theme-secondary">
                       {label}
                     </label>
                     <input
@@ -166,8 +111,8 @@ function UserProfileContent() {
                       disabled={!isEditing && field !== 'password'}
                       className={`w-full p-3 rounded-lg border transition-colors ${
                         isDark
-                          ? `bg-zinc-800 border-zinc-700 text-white ${isEditing ? 'hover:bg-zinc-700 focus:bg-zinc-700' : ''}`
-                          : `bg-white border-gray-300 ${isEditing ? 'hover:bg-gray-50 focus:bg-gray-50' : ''}`
+                          ? `bg-zinc-800 border-pink-500/30 text-theme-primary placeholder:text-pink-300/40 ${isEditing ? 'hover:bg-zinc-700 focus:bg-zinc-700 focus:border-pink-500/50' : ''}`
+                          : `bg-white border-gray-300 text-theme-primary ${isEditing ? 'hover:bg-gray-50 focus:bg-gray-50' : ''}`
                       } ${!isEditing ? 'cursor-not-allowed opacity-80' : ''}`}
                       placeholder={
                         type === 'password' && isEditing
@@ -192,21 +137,17 @@ function UserProfileContent() {
                   },
                 ].map(({ label, field, prefix }) => (
                   <div key={field}>
-                    <label
-                      className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}
-                    >
+                    <label className="block text-sm font-medium mb-2 text-theme-secondary">
                       {label}
                     </label>
                     <div
                       className={`w-full p-3 rounded-lg border flex items-center transition-colors ${
                         isDark
-                          ? `bg-zinc-800 border-zinc-700 ${isEditing ? 'hover:bg-zinc-700' : ''}`
+                          ? `bg-zinc-800 border-purple-500/30 ${isEditing ? 'hover:bg-zinc-700 focus-within:border-purple-500/50' : ''}`
                           : `bg-white border-gray-300 ${isEditing ? 'hover:bg-gray-50' : ''}`
                       }`}
                     >
-                      <span
-                        className={`shrink-0 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
-                      >
+                      <span className="shrink-0 text-theme-tertiary font-medium opacity-70">
                         {prefix}
                       </span>
                       <input
@@ -216,7 +157,7 @@ function UserProfileContent() {
                           handleInputChange(field, e.target.value)
                         }
                         disabled={!isEditing}
-                        className={`flex-1 bg-transparent focus:outline-none ml-2 ${
+                        className={`flex-1 bg-transparent focus:outline-none ml-2 text-theme-primary ${
                           !isEditing ? 'cursor-not-allowed opacity-80' : ''
                         }`}
                       />
@@ -229,17 +170,5 @@ function UserProfileContent() {
         </div>
       </div>
     </div>
-  );
-}
-
-export default function UserProfilePage({
-  defaultTheme = 'light',
-}: {
-  defaultTheme?: 'light' | 'dark';
-}) {
-  return (
-    <ThemeProvider defaultTheme={defaultTheme}>
-      <UserProfileContent />
-    </ThemeProvider>
   );
 }

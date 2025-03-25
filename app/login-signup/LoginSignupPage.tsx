@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { Button } from '../_components/ui/Button';
-import { ThemeProvider, useTheme } from './themes/ThemeProvider';
-import { ThemeToggle } from './themes/ThemeToggle';
+import { ThemeProvider, useTheme } from '../_components/ui/ThemeProvider';
+import { ThemeToggle } from '../_components/ui/ThemeToggle';
 
 // The main login component that changes based on theme
 function LoginContent() {
@@ -199,7 +199,7 @@ function LoginContent() {
               </div>
 
               <Button
-                variant="default"
+                variant="primary"
                 className="w-full py-3 text-center rounded-lg"
               >
                 Create an account
@@ -318,7 +318,7 @@ function LoginContent() {
               </div>
 
               <Button
-                variant="default"
+                variant="primary"
                 className="w-full py-3 text-center rounded-lg"
               >
                 Sign in
