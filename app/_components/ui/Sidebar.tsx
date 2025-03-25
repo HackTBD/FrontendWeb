@@ -4,6 +4,7 @@ import { useState, useCallback, useEffect, ReactNode } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Logo } from './Logo';
+import { useTheme } from './ThemeProvider';
 
 interface SidebarItemProps {
   icon: ReactNode;
@@ -14,6 +15,12 @@ interface SidebarItemProps {
 }
 
 const SidebarItem = ({ icon, label, isActive, href, isCollapsed }: SidebarItemProps) => {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark' ||
+    (theme === 'system' &&
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches);
+
   return (
     <Link
       href={href}
@@ -21,12 +28,24 @@ const SidebarItem = ({ icon, label, isActive, href, isCollapsed }: SidebarItemPr
         isCollapsed ? 'justify-center px-2' : 'px-4'
       } rounded-lg text-sm font-medium transition-colors ${
         isActive
-          ? 'bg-blue-50 text-blue-600'
-          : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
+          ? isDark
+            ? 'bg-zinc-800/90 text-pink-400'
+            : 'bg-blue-50 text-blue-600'
+          : isDark
+            ? 'text-zinc-400 hover:bg-zinc-800/70 hover:text-pink-400'
+            : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
       }`}
       title={isCollapsed ? label : ''}
     >
-      <span className={isActive ? 'text-blue-600' : 'text-gray-500'}>
+      <span className={
+        isActive 
+          ? isDark 
+            ? 'text-pink-400' 
+            : 'text-blue-600' 
+          : isDark 
+            ? 'text-zinc-400' 
+            : 'text-gray-500'
+      }>
         {icon}
       </span>
       {!isCollapsed && <span className="ml-3">{label}</span>}
@@ -41,10 +60,18 @@ interface SidebarSectionProps {
 }
 
 const SidebarSection = ({ title, children, isCollapsed }: SidebarSectionProps) => {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark' ||
+    (theme === 'system' &&
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches);
+
   return (
     <div className="mt-5">
       {title && !isCollapsed && (
-        <h3 className="px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+        <h3 className={`px-4 text-xs font-semibold uppercase tracking-wider ${
+          isDark ? 'text-zinc-500' : 'text-gray-500'
+        }`}>
           {title}
         </h3>
       )}
@@ -55,9 +82,19 @@ const SidebarSection = ({ title, children, isCollapsed }: SidebarSectionProps) =
 
 interface SidebarProps {
   activePath?: string;
+  /** Whether to hide the logo in the sidebar (useful when there's already a logo in the header) */
+  hideLogo?: boolean;
 }
 
-export default function Sidebar({ activePath = '/' }: SidebarProps) {
+export default function Sidebar({ 
+  activePath = '/',
+  hideLogo = false
+}: SidebarProps) {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark' ||
+    (theme === 'system' &&
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
   const [sidebarWidth, setSidebarWidth] = useState(256);
@@ -102,7 +139,9 @@ export default function Sidebar({ activePath = '/' }: SidebarProps) {
   const SearchBar = () => (
     <div className={`relative ${isCollapsed ? 'mx-1' : 'mx-3'}`}>
       {isCollapsed ? (
-        <button className="w-full flex items-center justify-center text-gray-500 hover:text-gray-600">
+        <button
+          className={`w-full flex items-center justify-center ${isDark ? 'text-zinc-400 hover:text-pink-400' : 'text-gray-500 hover:text-gray-600'}`}
+        >
           <SearchIcon />
         </button>
       ) : (
@@ -112,9 +151,13 @@ export default function Sidebar({ activePath = '/' }: SidebarProps) {
             placeholder="Search..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-3 py-2 rounded-lg bg-gray-50 text-sm border border-transparent focus:bg-white focus:border-gray-200 focus:ring-0"
+            className={`w-full pl-10 pr-3 py-2 rounded-lg text-sm border focus:ring-0 transition-colors ${
+              isDark
+                ? 'bg-zinc-800/60 text-white border-zinc-700/50 focus:border-pink-500/30 placeholder:text-zinc-500'
+                : 'bg-gray-50 border-transparent focus:bg-white focus:border-gray-200 placeholder:text-gray-400'
+            }`}
           />
-          <div className="absolute left-3 top-2.5 text-gray-400">
+          <div className={`absolute left-3 top-2.5 ${isDark ? 'text-zinc-500' : 'text-gray-400'}`}>
             <SearchIcon />
           </div>
         </>
@@ -252,7 +295,11 @@ export default function Sidebar({ activePath = '/' }: SidebarProps) {
 
   return (
     <div
-      className="flex flex-col h-full bg-white border-r border-gray-100 relative transition-all"
+      className={`flex flex-col h-full relative transition-all ${
+        isDark
+          ? 'bg-zinc-900 border-r border-zinc-800/60'
+          : 'bg-white border-r border-gray-100'
+      }`}
       style={{
         width: `${sidebarWidth}px`,
         transition: isResizing ? 'none' : 'width 300ms ease',
@@ -262,22 +309,32 @@ export default function Sidebar({ activePath = '/' }: SidebarProps) {
         className="absolute right-0 top-0 bottom-0 w-2 cursor-ew-resize z-20"
         onMouseDown={startResizing}
       >
-        <div className="absolute right-1 top-1/2 -translate-y-1/2 w-1 h-6 bg-gray-300 rounded-full opacity-0 hover:opacity-100 transition-opacity" />
+        <div className={`absolute right-1 top-1/2 -translate-y-1/2 w-1 h-6 rounded-full opacity-0 hover:opacity-100 transition-opacity ${
+          isDark ? 'bg-pink-500/50' : 'bg-gray-300'
+        }`} />
       </div>
 
-      <div className="h-16 border-b border-gray-100 relative">
+      <div className={`h-16 relative border-b ${
+        isDark ? 'border-zinc-800/80' : 'border-gray-100'
+      }`}>
         <div className="h-full flex items-center justify-center">
-          <Logo 
-            size={isCollapsed ? "sm" : "md"} 
-            showText={!isCollapsed} 
-            linkTo="/" 
-            isDarkOverride={false} 
-          />
+          {!hideLogo && (
+            <Logo 
+              size={isCollapsed ? "sm" : "md"} 
+              showText={!isCollapsed} 
+              linkTo="/" 
+              isDarkOverride={isDark} 
+            />
+          )}
         </div>
         
         <button 
           onClick={toggleSidebar}
-          className="absolute -right-3 top-1/2 -translate-y-1/2 bg-white text-gray-600 rounded-full p-1.5 hover:bg-gray-100 focus:outline-none z-30 shadow-md border border-gray-200"
+          className={`absolute -right-3 top-1/2 -translate-y-1/2 rounded-full p-1.5 focus:outline-none z-30 shadow-md ${
+            isDark
+              ? 'bg-zinc-800 text-gray-300 hover:bg-zinc-700 border border-zinc-700'
+              : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
+          }`}
           aria-label={isCollapsed ? 'Expand' : 'Collapse'}
         >
           <svg
@@ -333,7 +390,7 @@ export default function Sidebar({ activePath = '/' }: SidebarProps) {
       </nav>
 
       <div
-        className={`border-t border-gray-100 ${isCollapsed ? 'px-2' : 'px-3'} py-4 space-y-2`}
+        className={`border-t ${isDark ? 'border-zinc-800/80' : 'border-gray-100'} ${isCollapsed ? 'px-2' : 'px-3'} py-4 space-y-2`}
       >
         <SidebarItem
           icon={<HelpIcon />}
