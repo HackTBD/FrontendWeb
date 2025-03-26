@@ -110,7 +110,9 @@ const mockHackathons = [
 ];
 
 // Get unique organizers for filter
-const uniqueOrganizers = [...new Set(mockHackathons.map(hackathon => hackathon.organizer))];
+const uniqueOrganizers = [
+  ...new Set(mockHackathons.map((hackathon) => hackathon.organizer)),
+];
 
 /**
  * Main Hackathons Page component
@@ -118,8 +120,12 @@ const uniqueOrganizers = [...new Set(mockHackathons.map(hackathon => hackathon.o
  */
 export default function HackathonsPage() {
   const { theme } = useTheme();
-  const isDark = theme === 'dark' || (theme === 'system' && typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-  
+  const isDark =
+    theme === 'dark' ||
+    (theme === 'system' &&
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches);
+
   const [hackathons, setHackathons] = useState(mockHackathons);
   const [activeFilter, setActiveFilter] = useState('all'); // all, open, closed, happening, etc.
   const [searchQuery, setSearchQuery] = useState('');
@@ -133,50 +139,91 @@ export default function HackathonsPage() {
   });
 
   // Filter hackathons based on active filter, search query, and advanced filters
-  const filteredHackathons = hackathons.filter(hackathon => {
+  const filteredHackathons = hackathons.filter((hackathon) => {
     // First apply status filter
     if (activeFilter !== 'all' && hackathon.status !== activeFilter) {
       return false;
     }
-    
+
     // Then apply search query filter
-    if (searchQuery && !hackathon.title.toLowerCase().includes(searchQuery.toLowerCase())) {
+    if (
+      searchQuery &&
+      !hackathon.title.toLowerCase().includes(searchQuery.toLowerCase())
+    ) {
       return false;
     }
-    
+
     // Apply organization filter
-    if (advancedFilters.organizations.length > 0 && !advancedFilters.organizations.includes(hackathon.organizer)) {
+    if (
+      advancedFilters.organizations.length > 0 &&
+      !advancedFilters.organizations.includes(hackathon.organizer)
+    ) {
       return false;
     }
-    
+
     // Apply experience level filter
     if (advancedFilters.experience.length > 0) {
-      const experienceMatch = advancedFilters.experience.some(exp => {
-        if (exp === 'Beginner-friendly' && hackathon.tags.includes('beginner-friendly')) return true;
-        if (exp === 'Intermediate' && hackathon.tags.includes('intermediate')) return true;
-        if (exp === 'Advanced' && hackathon.tags.includes('advanced')) return true;
-        if (exp === 'All Levels' && hackathon.tags.includes('all-levels')) return true;
+      const experienceMatch = advancedFilters.experience.some((exp) => {
+        if (
+          exp === 'Beginner-friendly' &&
+          hackathon.tags.includes('beginner-friendly')
+        )
+          return true;
+        if (exp === 'Intermediate' && hackathon.tags.includes('intermediate'))
+          return true;
+        if (exp === 'Advanced' && hackathon.tags.includes('advanced'))
+          return true;
+        if (exp === 'All Levels' && hackathon.tags.includes('all-levels'))
+          return true;
         return false;
       });
-      
+
       if (!experienceMatch) return false;
     }
-    
+
     // Apply location filter
     if (advancedFilters.location !== 'any') {
-      if (advancedFilters.location === 'in-person' && !hackathon.tags.includes('in-person')) return false;
-      if (advancedFilters.location === 'remote' && !hackathon.tags.includes('remote')) return false;
-      if (advancedFilters.location === 'hybrid' && !hackathon.tags.includes('hybrid')) return false;
+      if (
+        advancedFilters.location === 'in-person' &&
+        !hackathon.tags.includes('in-person')
+      )
+        return false;
+      if (
+        advancedFilters.location === 'remote' &&
+        !hackathon.tags.includes('remote')
+      )
+        return false;
+      if (
+        advancedFilters.location === 'hybrid' &&
+        !hackathon.tags.includes('hybrid')
+      )
+        return false;
     }
-    
+
     // Apply team size filter (using the teamSize property for simple filtering)
     if (advancedFilters.teamSize !== 'any') {
-      if (advancedFilters.teamSize === 'solo' && !hackathon.teamSize.includes('1')) return false;
-      if (advancedFilters.teamSize === 'small' && !(hackathon.teamSize.includes('2') || hackathon.teamSize.includes('3'))) return false;
-      if (advancedFilters.teamSize === 'medium' && !(hackathon.teamSize.includes('4') || hackathon.teamSize.includes('5'))) return false;
-      if (advancedFilters.teamSize === 'large' && parseInt(hackathon.teamSize.split('-')[1] || '0') < 6) return false;
+      if (
+        advancedFilters.teamSize === 'solo' &&
+        !hackathon.teamSize.includes('1')
+      )
+        return false;
+      if (
+        advancedFilters.teamSize === 'small' &&
+        !(hackathon.teamSize.includes('2') || hackathon.teamSize.includes('3'))
+      )
+        return false;
+      if (
+        advancedFilters.teamSize === 'medium' &&
+        !(hackathon.teamSize.includes('4') || hackathon.teamSize.includes('5'))
+      )
+        return false;
+      if (
+        advancedFilters.teamSize === 'large' &&
+        parseInt(hackathon.teamSize.split('-')[1] || '0') < 6
+      )
+        return false;
     }
-    
+
     return true;
   });
 
@@ -197,10 +244,14 @@ export default function HackathonsPage() {
           {/* Page title and actions */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
             <div>
-              <h1 className={`text-3xl font-bold ${isDark ? 'text-theme-gradient-primary' : 'text-theme-gradient-primary'}`}>
+              <h1
+                className={`text-3xl font-bold ${isDark ? 'text-theme-gradient-primary' : 'text-theme-gradient-primary'}`}
+              >
                 All Hackathons
               </h1>
-              <p className={`mt-2 ${isDark ? 'text-zinc-400' : 'text-theme-secondary'}`}>
+              <p
+                className={`mt-2 ${isDark ? 'text-zinc-400' : 'text-theme-secondary'}`}
+              >
                 Discover upcoming hackathons and find your next challenge
               </p>
             </div>
@@ -236,67 +287,79 @@ export default function HackathonsPage() {
                       : 'bg-white border-gray-200 focus:border-[#036CA0]/30 focus:ring-[#036CA0]/20 placeholder:text-gray-400'
                   }`}
                 />
-                <div className={`absolute left-3 top-2.5 ${isDark ? 'text-zinc-500' : 'text-gray-400'}`}>
+                <div
+                  className={`absolute left-3 top-2.5 ${isDark ? 'text-zinc-500' : 'text-gray-400'}`}
+                >
                   <SearchIcon />
                 </div>
               </div>
               <div className="flex flex-wrap space-x-2">
-                {['all', 'open', 'happening', 'coming-soon', 'ended'].map((filter) => (
-                  <button
-                    key={filter}
-                    onClick={() => setActiveFilter(filter)}
-                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      activeFilter === filter
-                        ? isDark
-                          ? 'bg-zinc-800 text-pink-400 border border-pink-500/30'
-                          : 'bg-[#036CA0]/10 text-[#036CA0] border border-[#036CA0]/20'
-                        : isDark
-                          ? 'text-zinc-400 hover:text-white hover:bg-zinc-800/70'
-                          : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
-                    }`}
-                  >
-                    {filter.charAt(0).toUpperCase() + filter.slice(1).replace('-', ' ')}
-                  </button>
-                ))}
+                {['all', 'open', 'happening', 'coming-soon', 'ended'].map(
+                  (filter) => (
+                    <button
+                      key={filter}
+                      onClick={() => setActiveFilter(filter)}
+                      className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                        activeFilter === filter
+                          ? isDark
+                            ? 'bg-zinc-800 text-pink-400 border border-pink-500/30'
+                            : 'bg-[#036CA0]/10 text-[#036CA0] border border-[#036CA0]/20'
+                          : isDark
+                            ? 'text-zinc-400 hover:text-white hover:bg-zinc-800/70'
+                            : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
+                      }`}
+                    >
+                      {filter.charAt(0).toUpperCase() +
+                        filter.slice(1).replace('-', ' ')}
+                    </button>
+                  )
+                )}
               </div>
             </div>
           </div>
 
           {/* Filter panel (collapsible) */}
           {isFiltersVisible && (
-            <FilterPanel 
-              isDark={isDark} 
+            <FilterPanel
+              isDark={isDark}
               organizers={uniqueOrganizers}
               currentFilters={advancedFilters}
               onApplyFilters={handleApplyFilters}
-              onClose={() => setIsFiltersVisible(false)} 
+              onClose={() => setIsFiltersVisible(false)}
             />
           )}
 
           {/* Hackathon cards grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredHackathons.map((hackathon) => (
-              <HackathonCard 
+              <HackathonCard
                 key={hackathon.id}
                 hackathon={hackathon}
                 isDark={isDark}
               />
             ))}
-            
+
             {filteredHackathons.length === 0 && (
-              <div 
+              <div
                 className={`col-span-3 p-8 rounded-lg text-center ${
-                  isDark ? 'bg-zinc-800/50 text-zinc-400' : 'bg-gray-50 text-gray-500'
+                  isDark
+                    ? 'bg-zinc-800/50 text-zinc-400'
+                    : 'bg-gray-50 text-gray-500'
                 }`}
               >
                 <div className="mx-auto w-20 h-20 mb-4 flex items-center justify-center rounded-full bg-opacity-20">
                   <SearchIcon className="w-10 h-10 opacity-30" />
                 </div>
-                <h3 className={`text-xl font-semibold mb-2 ${isDark ? 'text-white' : 'text-theme-primary'}`}>
+                <h3
+                  className={`text-xl font-semibold mb-2 ${isDark ? 'text-white' : 'text-theme-primary'}`}
+                >
                   No hackathons found
                 </h3>
-                <p className={isDark ? 'text-zinc-400' : 'text-theme-secondary'}>
-                  Try adjusting your filters or search query to find more hackathons.
+                <p
+                  className={isDark ? 'text-zinc-400' : 'text-theme-secondary'}
+                >
+                  Try adjusting your filters or search query to find more
+                  hackathons.
                 </p>
               </div>
             )}
@@ -356,4 +419,4 @@ const FilterIconSmall = ({ className = '' }) => (
     <line x1="8" y1="12" x2="16" y2="12" />
     <line x1="10" y1="17" x2="14" y2="17" />
   </svg>
-); 
+);

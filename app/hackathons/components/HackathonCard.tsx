@@ -32,7 +32,7 @@ interface HackathonCardProps {
 
 /**
  * HackathonCard component
- * 
+ *
  * Displays a card for an individual hackathon with key information including:
  * - Title, organizer, and location
  * - Dates and status
@@ -40,20 +40,26 @@ interface HackathonCardProps {
  * - Tags relevant to the hackathon
  * - Team size information
  * - Link to view details
- * 
+ *
  * The component handles image fallbacks gracefully and adjusts styling based on theme.
- * 
+ *
  * @param {HackathonCardProps} props - The component props
  * @returns {JSX.Element} Rendered HackathonCard component
  */
-export default function HackathonCard({ hackathon, isDark }: HackathonCardProps) {
+export default function HackathonCard({
+  hackathon,
+  isDark,
+}: HackathonCardProps) {
   // State to track if images have loaded
   const [coverImageFailed, setCoverImageFailed] = useState(false);
   const [logoImageFailed, setLogoImageFailed] = useState(false);
 
   // Format date to readable format
   const formatDate = (dateString: string) => {
-    const options: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' };
+    const options: Intl.DateTimeFormatOptions = {
+      month: 'short',
+      day: 'numeric',
+    };
     return new Date(dateString).toLocaleDateString('en-US', options);
   };
 
@@ -64,31 +70,31 @@ export default function HackathonCard({ hackathon, isDark }: HackathonCardProps)
         return {
           bgColor: isDark ? 'bg-green-500/20' : 'bg-green-100',
           textColor: isDark ? 'text-green-400' : 'text-green-800',
-          label: 'Registration Open'
+          label: 'Registration Open',
         };
       case 'happening':
         return {
           bgColor: isDark ? 'bg-purple-500/20' : 'bg-purple-100',
           textColor: isDark ? 'text-purple-400' : 'text-purple-800',
-          label: 'Happening Now'
+          label: 'Happening Now',
         };
       case 'coming-soon':
         return {
           bgColor: isDark ? 'bg-blue-500/20' : 'bg-blue-100',
           textColor: isDark ? 'text-blue-400' : 'text-blue-800',
-          label: 'Coming Soon'
+          label: 'Coming Soon',
         };
       case 'ended':
         return {
           bgColor: isDark ? 'bg-gray-500/20' : 'bg-gray-100',
           textColor: isDark ? 'text-gray-400' : 'text-gray-800',
-          label: 'Ended'
+          label: 'Ended',
         };
       default:
         return {
           bgColor: isDark ? 'bg-gray-500/20' : 'bg-gray-100',
           textColor: isDark ? 'text-gray-400' : 'text-gray-800',
-          label: 'Unknown Status'
+          label: 'Unknown Status',
         };
     }
   };
@@ -98,20 +104,26 @@ export default function HackathonCard({ hackathon, isDark }: HackathonCardProps)
   return (
     <div
       className={`group rounded-xl overflow-hidden shadow-sm transition-all hover:shadow-md ${
-        isDark ? 'bg-zinc-800/90 border border-zinc-700/50 hover:border-zinc-600/80' : 'bg-white border border-gray-200 hover:border-[#036CA0]/20'
+        isDark
+          ? 'bg-zinc-800/90 border border-zinc-700/50 hover:border-zinc-600/80'
+          : 'bg-white border border-gray-200 hover:border-[#036CA0]/20'
       }`}
     >
       {/* Card header with cover image */}
       <div className="relative h-40">
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/10 z-10" />
-        
+
         {/* Default fallback image handling */}
-        <div className={`absolute inset-0 flex items-center justify-center ${isDark ? 'bg-zinc-700' : 'bg-gray-100'} ${!coverImageFailed && hackathon.coverImage ? 'hidden' : ''}`}>
-          <span className={`text-4xl font-bold ${isDark ? 'text-zinc-600' : 'text-gray-300'}`}>
+        <div
+          className={`absolute inset-0 flex items-center justify-center ${isDark ? 'bg-zinc-700' : 'bg-gray-100'} ${!coverImageFailed && hackathon.coverImage ? 'hidden' : ''}`}
+        >
+          <span
+            className={`text-4xl font-bold ${isDark ? 'text-zinc-600' : 'text-gray-300'}`}
+          >
             {hackathon.title.substring(0, 2)}
           </span>
         </div>
-        
+
         {/* Cover image (if available) */}
         {hackathon.coverImage && (
           <Image
@@ -123,10 +135,12 @@ export default function HackathonCard({ hackathon, isDark }: HackathonCardProps)
             onError={() => setCoverImageFailed(true)}
           />
         )}
-        
+
         {/* Logo */}
         <div className="absolute left-4 bottom-0 transform translate-y-1/2 z-20">
-          <div className={`flex items-center justify-center w-16 h-16 rounded-xl shadow-md ${isDark ? 'bg-zinc-900' : 'bg-white'}`}>
+          <div
+            className={`flex items-center justify-center w-16 h-16 rounded-xl shadow-md ${isDark ? 'bg-zinc-900' : 'bg-white'}`}
+          >
             {hackathon.logo && !logoImageFailed ? (
               <Image
                 src={hackathon.logo}
@@ -138,17 +152,21 @@ export default function HackathonCard({ hackathon, isDark }: HackathonCardProps)
               />
             ) : (
               <div className="flex items-center justify-center w-full h-full">
-                <span className={`text-lg font-bold ${isDark ? 'text-pink-400' : 'text-[#036CA0]'}`}>
+                <span
+                  className={`text-lg font-bold ${isDark ? 'text-pink-400' : 'text-[#036CA0]'}`}
+                >
                   {hackathon.title.substring(0, 2)}
                 </span>
               </div>
             )}
           </div>
         </div>
-        
+
         {/* Status badge */}
         <div className="absolute top-4 right-4 z-20">
-          <span className={`px-3 py-1 rounded-full text-sm font-medium ${statusStyles.bgColor} ${statusStyles.textColor}`}>
+          <span
+            className={`px-3 py-1 rounded-full text-sm font-medium ${statusStyles.bgColor} ${statusStyles.textColor}`}
+          >
             {statusStyles.label}
           </span>
         </div>
@@ -156,26 +174,34 @@ export default function HackathonCard({ hackathon, isDark }: HackathonCardProps)
 
       {/* Card body */}
       <div className="px-4 pt-10 pb-5">
-        <h3 className={`text-xl font-bold mb-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+        <h3
+          className={`text-xl font-bold mb-1 ${isDark ? 'text-white' : 'text-gray-900'}`}
+        >
           {hackathon.title}
         </h3>
-        <p className={`text-sm mb-2 ${isDark ? 'text-zinc-400' : 'text-gray-500'}`}>
+        <p
+          className={`text-sm mb-2 ${isDark ? 'text-zinc-400' : 'text-gray-500'}`}
+        >
           {hackathon.organizer}
         </p>
-        
+
         {/* Event details */}
-        <div className={`flex items-center text-sm mb-3 ${isDark ? 'text-zinc-300' : 'text-gray-600'}`}>
+        <div
+          className={`flex items-center text-sm mb-3 ${isDark ? 'text-zinc-300' : 'text-gray-600'}`}
+        >
           <CalendarIcon className="mr-2 w-4 h-4 opacity-70" />
           <span>
             {formatDate(hackathon.startDate)} - {formatDate(hackathon.endDate)}
           </span>
         </div>
-        
-        <div className={`flex items-center text-sm mb-3 ${isDark ? 'text-zinc-300' : 'text-gray-600'}`}>
+
+        <div
+          className={`flex items-center text-sm mb-3 ${isDark ? 'text-zinc-300' : 'text-gray-600'}`}
+        >
           <LocationIcon className="mr-2 w-4 h-4 opacity-70" />
           <span>{hackathon.location}</span>
         </div>
-        
+
         {/* Tags */}
         <div className="mt-4 mb-5 flex flex-wrap gap-2">
           {hackathon.tags.slice(0, 3).map((tag, index) => (
@@ -205,15 +231,19 @@ export default function HackathonCard({ hackathon, isDark }: HackathonCardProps)
       </div>
 
       {/* Card footer */}
-      <div className={`px-4 py-4 flex items-center justify-between border-t ${
-        isDark ? 'border-zinc-700/80' : 'border-gray-100'
-      }`}>
-        <div className={`text-sm ${isDark ? 'text-zinc-400' : 'text-gray-500'}`}>
+      <div
+        className={`px-4 py-4 flex items-center justify-between border-t ${
+          isDark ? 'border-zinc-700/80' : 'border-gray-100'
+        }`}
+      >
+        <div
+          className={`text-sm ${isDark ? 'text-zinc-400' : 'text-gray-500'}`}
+        >
           Teams: {hackathon.teamSize}
         </div>
         <Link href={`/hackathons/${hackathon.id}`}>
           <Button
-            variant={isDark ? "outline" : "primary"}
+            variant={isDark ? 'outline' : 'primary'}
             className={`py-1.5 px-3 text-sm rounded-lg ${
               isDark ? 'border-pink-500/30 hover:border-pink-500/50' : ''
             }`}
@@ -260,4 +290,4 @@ const LocationIcon = ({ className = '' }) => (
     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
     <circle cx="12" cy="10" r="3" />
   </svg>
-); 
+);

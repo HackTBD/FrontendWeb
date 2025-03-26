@@ -3,10 +3,10 @@ import AllHackathonsPage from '../components/AllHackathonsPage';
 
 /**
  * All Hackathons Event page component - Entry point for the /hackathons/all route
- * 
+ *
  * This component serves as the main page for displaying all available hackathons events
  * with a UI that matches the provided Figma design.
- * 
+ *
  * @returns {React.ReactNode} The rendered all hackathons events page
  */
 export const metadata: Metadata = {
@@ -17,4 +17,4 @@ export const metadata: Metadata = {
 
 export default function AllHackathonsEvents() {
   return <AllHackathonsPage />;
-} 
+}
