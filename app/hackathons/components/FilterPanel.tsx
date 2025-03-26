@@ -21,19 +21,19 @@ interface FilterPanelProps {
 
 /**
  * FilterPanel component for advanced hackathon filtering
- * 
+ *
  * Provides a comprehensive set of filtering options for hackathons including:
  * - Organization filters (UC Berkeley, MIT, etc.)
  * - Experience level filters
  * - Location type (in-person, remote, hybrid)
  * - Timing preferences
  * - Team size options
- * 
+ *
  * @param {FilterPanelProps} props - Component props
  * @returns {JSX.Element} Rendered FilterPanel component
  */
-export default function FilterPanel({ 
-  isDark, 
+export default function FilterPanel({
+  isDark,
   organizers = [],
   currentFilters = {
     organizations: [],
@@ -43,7 +43,7 @@ export default function FilterPanel({
     teamSize: 'any',
   },
   onApplyFilters,
-  onClose 
+  onClose,
 }: FilterPanelProps) {
   const [filters, setFilters] = useState({
     organizations: currentFilters.organizations || [],
@@ -55,29 +55,29 @@ export default function FilterPanel({
 
   // Helper function to toggle filters in an array
   const toggleFilter = (category: string, value: string) => {
-    setFilters(prev => {
+    setFilters((prev) => {
       const currentArray = prev[category as keyof typeof prev] as string[];
-      
+
       if (!Array.isArray(currentArray)) {
         return prev;
       }
-      
+
       const updatedArray = currentArray.includes(value)
-        ? currentArray.filter(item => item !== value)
+        ? currentArray.filter((item) => item !== value)
         : [...currentArray, value];
-        
+
       return {
         ...prev,
-        [category]: updatedArray
+        [category]: updatedArray,
       };
     });
   };
 
   // Update single value filters
   const updateFilter = (category: string, value: string) => {
-    setFilters(prev => ({
+    setFilters((prev) => ({
       ...prev,
-      [category]: value
+      [category]: value,
     }));
   };
 
@@ -93,12 +93,16 @@ export default function FilterPanel({
   };
 
   return (
-    <div className={`mb-8 p-5 rounded-lg ${isDark ? 'bg-zinc-800/90 border border-zinc-700/50' : 'bg-white border border-gray-200'}`}>
+    <div
+      className={`mb-8 p-5 rounded-lg ${isDark ? 'bg-zinc-800/90 border border-zinc-700/50' : 'bg-white border border-gray-200'}`}
+    >
       <div className="flex justify-between items-center mb-4">
-        <h3 className={`font-medium ${isDark ? 'text-white' : 'text-theme-primary'}`}>
+        <h3
+          className={`font-medium ${isDark ? 'text-white' : 'text-theme-primary'}`}
+        >
           Advanced Filters
         </h3>
-        <button 
+        <button
           onClick={onClose}
           className={`p-1 rounded-full ${isDark ? 'text-zinc-400 hover:text-white hover:bg-zinc-700' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'}`}
         >
@@ -109,16 +113,18 @@ export default function FilterPanel({
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Organizations Section */}
         <div>
-          <h4 className={`text-sm font-medium mb-3 ${isDark ? 'text-zinc-300' : 'text-theme-primary'}`}>
+          <h4
+            className={`text-sm font-medium mb-3 ${isDark ? 'text-zinc-300' : 'text-theme-primary'}`}
+          >
             Organizations
           </h4>
           <div className="space-y-2">
-            {organizers.map(org => (
-              <label 
-                key={org} 
+            {organizers.map((org) => (
+              <label
+                key={org}
                 className={`flex items-center space-x-2 cursor-pointer ${isDark ? 'text-zinc-300' : 'text-theme-secondary'}`}
               >
-                <input 
+                <input
                   type="checkbox"
                   checked={(filters.organizations as string[]).includes(org)}
                   onChange={() => toggleFilter('organizations', org)}
@@ -132,16 +138,23 @@ export default function FilterPanel({
 
         {/* Participant Experience */}
         <div>
-          <h4 className={`text-sm font-medium mb-3 ${isDark ? 'text-zinc-300' : 'text-theme-primary'}`}>
+          <h4
+            className={`text-sm font-medium mb-3 ${isDark ? 'text-zinc-300' : 'text-theme-primary'}`}
+          >
             Experience Level
           </h4>
           <div className="space-y-2">
-            {['Beginner-friendly', 'Intermediate', 'Advanced', 'All Levels'].map(level => (
-              <label 
-                key={level} 
+            {[
+              'Beginner-friendly',
+              'Intermediate',
+              'Advanced',
+              'All Levels',
+            ].map((level) => (
+              <label
+                key={level}
                 className={`flex items-center space-x-2 cursor-pointer ${isDark ? 'text-zinc-300' : 'text-theme-secondary'}`}
               >
-                <input 
+                <input
                   type="checkbox"
                   checked={(filters.experience as string[]).includes(level)}
                   onChange={() => toggleFilter('experience', level)}
@@ -157,7 +170,9 @@ export default function FilterPanel({
         <div className="space-y-4">
           {/* Location */}
           <div>
-            <h4 className={`text-sm font-medium mb-2 ${isDark ? 'text-zinc-300' : 'text-theme-primary'}`}>
+            <h4
+              className={`text-sm font-medium mb-2 ${isDark ? 'text-zinc-300' : 'text-theme-primary'}`}
+            >
               Location
             </h4>
             <select
@@ -178,7 +193,9 @@ export default function FilterPanel({
 
           {/* Timing */}
           <div>
-            <h4 className={`text-sm font-medium mb-2 ${isDark ? 'text-zinc-300' : 'text-theme-primary'}`}>
+            <h4
+              className={`text-sm font-medium mb-2 ${isDark ? 'text-zinc-300' : 'text-theme-primary'}`}
+            >
               Timing
             </h4>
             <select
@@ -201,7 +218,9 @@ export default function FilterPanel({
 
           {/* Team Size */}
           <div>
-            <h4 className={`text-sm font-medium mb-2 ${isDark ? 'text-zinc-300' : 'text-theme-primary'}`}>
+            <h4
+              className={`text-sm font-medium mb-2 ${isDark ? 'text-zinc-300' : 'text-theme-primary'}`}
+            >
               Team Size
             </h4>
             <select
@@ -226,9 +245,11 @@ export default function FilterPanel({
       {/* Action buttons */}
       <div className="flex justify-end mt-6 space-x-3">
         <Button
-          variant={isDark ? "outline" : "secondary"}
+          variant={isDark ? 'outline' : 'secondary'}
           className={`py-1.5 px-4 text-sm rounded-lg ${
-            isDark ? 'text-zinc-300 border-zinc-600' : 'text-gray-700 border-gray-200 hover:bg-gray-50'
+            isDark
+              ? 'text-zinc-300 border-zinc-600'
+              : 'text-gray-700 border-gray-200 hover:bg-gray-50'
           }`}
           onClick={resetFilters}
         >
@@ -264,4 +285,4 @@ const CloseIcon = ({ className = '' }) => (
     <line x1="18" y1="6" x2="6" y2="18" />
     <line x1="6" y1="6" x2="18" y2="18" />
   </svg>
-); 
+);
