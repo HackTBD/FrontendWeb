@@ -1,18 +1,77 @@
 'use client';
 import { cn } from '../utils';
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
+import { useTheme } from './ThemeProvider';
 
 interface AuroraBackgroundProps extends React.HTMLProps<HTMLDivElement> {
+  /** Child elements to render inside the aurora background */
   children: ReactNode;
+  /** Whether to show the radial gradient mask on the aurora effect */
   showRadialGradient?: boolean;
 }
 
-export const AuroraBackground = ({
+/**
+ * AuroraBackground component creates a dynamic animated gradient background
+ *
+ * Renders differently based on the current theme (light/dark)
+ * Handles server-side rendering appropriately with mounting checks
+ */
+export const AuroraBackground: React.FC<AuroraBackgroundProps> = ({
   className,
   children,
   showRadialGradient = true,
   ...props
-}: AuroraBackgroundProps) => {
+}) => {
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // Ensure component only renders after mounting to avoid hydration mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Server-side or pre-mount rendering fallback
+  if (!mounted) {
+    return (
+      <div className="h-full w-full">
+        <div className="relative flex min-h-full w-full flex-col items-center justify-start bg-zinc-50 dark:bg-zinc-900">
+          <div className="relative w-full h-full">{children}</div>
+        </div>
+      </div>
+    );
+  }
+
+  // Determine if dark mode based on theme and system preference
+  const isDark =
+    theme === 'dark' ||
+    (theme === 'system' &&
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+  // CSS variables for the aurora effect
+  const auroraVariables = {
+    '--dark-aurora':
+      'repeating-linear-gradient(100deg,rgba(59,130,246,0.5) 10%,rgba(165,180,252,0.5) 15%,rgba(147,197,253,0.5) 20%,rgba(221,214,254,0.5) 25%,rgba(96,165,250,0.5) 30%)',
+    '--light-aurora':
+      'repeating-linear-gradient(100deg,rgba(3,108,160,0.5) 10%,rgba(65,157,197,0.5) 15%,rgba(99,202,170,0.5) 20%,rgba(99,202,170,0.5) 25%,rgba(59,130,246,0.5) 30%)',
+    '--dark-gradient':
+      'repeating-linear-gradient(100deg,#000 0%,#000 7%,transparent 10%,transparent 12%,#000 16%)',
+    '--white-gradient':
+      'repeating-linear-gradient(100deg,#fff 0%,#fff 7%,transparent 10%,transparent 12%,#fff 16%)',
+  } as React.CSSProperties;
+
+  // Class names for the aurora effect based on theme
+  const auroraEffectClasses = cn(
+    'after:animate-aurora pointer-events-none absolute -inset-[10px] opacity-50 blur-[10px] filter will-change-transform after:absolute after:inset-0 after:mix-blend-difference after:content-[""]',
+    isDark
+      ? // Dark theme styling
+        '[background-image:var(--dark-gradient),var(--dark-aurora)] [background-size:300%,_200%] [background-position:50%_50%,50%_50%] invert-0 after:[background-image:var(--dark-gradient),var(--dark-aurora)] after:[background-size:200%,_100%] after:[background-attachment:fixed]'
+      : // Light theme styling
+        '[background-image:var(--white-gradient),var(--light-aurora)] [background-size:300%,_200%] [background-position:50%_50%,50%_50%] invert after:[background-image:var(--white-gradient),var(--light-aurora)] after:[background-size:200%,_100%] after:[background-attachment:fixed]',
+    showRadialGradient &&
+      `[mask-image:radial-gradient(ellipse_at_100%_0%,black_10%,transparent_70%)]`
+  );
+
   return (
     <div className="h-full w-full">
       <div
@@ -24,34 +83,10 @@ export const AuroraBackground = ({
       >
         <div
           className="absolute inset-0 overflow-hidden pointer-events-none"
-          style={
-            {
-              '--aurora':
-                'repeating-linear-gradient(100deg,#3b82f6_10%,#a5b4fc_15%,#93c5fd_20%,#ddd6fe_25%,#60a5fa_30%)',
-              '--dark-gradient':
-                'repeating-linear-gradient(100deg,#000_0%,#000_7%,transparent_10%,transparent_12%,#000_16%)',
-              '--white-gradient':
-                'repeating-linear-gradient(100deg,#fff_0%,#fff_7%,transparent_10%,transparent_12%,#fff_16%)',
-
-              '--blue-300': '#93c5fd',
-              '--blue-400': '#60a5fa',
-              '--blue-500': '#3b82f6',
-              '--indigo-300': '#a5b4fc',
-              '--violet-200': '#ddd6fe',
-              '--black': '#000',
-              '--white': '#fff',
-              '--transparent': 'transparent',
-            } as React.CSSProperties
-          }
+          style={auroraVariables}
         >
-          <div
-            className={cn(
-              `after:animate-aurora pointer-events-none absolute -inset-[10px] [background-image:var(--white-gradient),var(--aurora)] [background-size:300%,_200%] [background-position:50%_50%,50%_50%] opacity-50 blur-[10px] invert filter will-change-transform [--aurora:repeating-linear-gradient(100deg,var(--blue-500)_10%,var(--indigo-300)_15%,var(--blue-300)_20%,var(--violet-200)_25%,var(--blue-400)_30%)] [--dark-gradient:repeating-linear-gradient(100deg,var(--black)_0%,var(--black)_7%,var(--transparent)_10%,var(--transparent)_12%,var(--black)_16%)] [--white-gradient:repeating-linear-gradient(100deg,var(--white)_0%,var(--white)_7%,var(--transparent)_10%,var(--transparent)_12%,var(--white)_16%)] after:absolute after:inset-0 after:[background-image:var(--white-gradient),var(--aurora)] after:[background-size:200%,_100%] after:[background-attachment:fixed] after:mix-blend-difference after:content-[""] dark:[background-image:var(--dark-gradient),var(--aurora)] dark:invert-0 after:dark:[background-image:var(--dark-gradient),var(--aurora)]`,
-
-              showRadialGradient &&
-                `[mask-image:radial-gradient(ellipse_at_100%_0%,black_10%,var(--transparent)_70%)]`
-            )}
-          ></div>
+          {/* Only show the aurora effect if mounted to prevent hydration mismatch */}
+          {mounted && <div className={auroraEffectClasses}></div>}
         </div>
         <div className="relative w-full h-full">{children}</div>
       </div>

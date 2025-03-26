@@ -2,16 +2,19 @@
 
 import Image from 'next/image';
 import { Button } from '../_components/ui/Button';
-import { ThemeProvider, useTheme } from './themes/ThemeProvider';
-import { ThemeToggle } from './themes/ThemeToggle';
+import { useTheme } from '../_components/ui/ThemeProvider';
+import { ThemeToggle } from '../_components/ui/ThemeToggle';
+import { Logo } from '../_components/ui/Logo';
 
 // The main content component that changes based on theme
-function LandingContent() {
+export default function LandingPage() {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
   return (
-    <div className={`w-full overflow-y-auto ${isDark ? 'bg-black' : ''}`}>
+    <div
+      className={`w-full overflow-y-auto ${isDark ? 'bg-black/40 backdrop-blur-sm' : ''}`}
+    >
       {/* Background - only shown in light theme */}
       {!isDark && (
         <div className="fixed inset-0 w-full h-full z-0">
@@ -21,7 +24,7 @@ function LandingContent() {
             quality={100}
             priority
             alt="Colorful gradient background"
-            className="object-cover"
+            className="object-cover opacity-90"
             sizes="100vw"
           />
         </div>
@@ -31,46 +34,26 @@ function LandingContent() {
       <div
         className={`
           sticky top-0 z-50 w-full py-4 px-4 md:px-8 lg:px-28
-          ${isDark ? 'bg-black/80 backdrop-blur-sm' : 'bg-white/80 backdrop-blur-sm shadow-md'}
+          ${isDark ? 'bg-zinc-900/70 backdrop-blur-sm border-b border-pink-500/10' : 'bg-white/80 backdrop-blur-sm shadow-md'}
         `}
       >
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           {/* Logo */}
-          <div className="flex items-center space-x-2">
-            <div className="relative w-8 h-8">
-              <div className="absolute inset-0">
-                <Image
-                  src="/images/logo-polygon.svg"
-                  alt="Logo polygon"
-                  width={32}
-                  height={32}
-                />
-              </div>
-              <div className="absolute inset-0">
-                <Image
-                  src="/images/logo-ellipse.svg"
-                  alt="Logo ellipse"
-                  width={32}
-                  height={32}
-                />
-              </div>
-            </div>
-            <span
-              className={`font-sans text-sm font-extrabold ${isDark ? 'text-white' : 'text-gray-600'}`}
-            >
-              hacktbd
-            </span>
-          </div>
+          <Logo size="md" isDarkOverride={isDark} />
 
           {/* Sign Up/Sign In buttons */}
-          <div className="flex space-x-3">
+          <div className="flex items-center space-x-3">
+            <ThemeToggle className="mr-3" />
             <Button
               variant="secondary"
-              className="px-4 py-2 text-sm rounded-lg"
+              className={`px-4 py-2 text-sm rounded-lg ${isDark ? 'border-purple-500/30 hover:border-purple-500/50' : ''}`}
             >
               Sign in
             </Button>
-            <Button variant="default" className="px-4 py-2 text-sm rounded-lg">
+            <Button
+              variant="primary"
+              className={`px-4 py-2 text-sm rounded-lg ${isDark ? 'bg-pink-600/80 hover:bg-pink-600' : ''}`}
+            >
               Sign up
             </Button>
           </div>
@@ -85,51 +68,43 @@ function LandingContent() {
             {/* Left content - Text and CTA */}
             <div className="max-w-lg mb-10 md:mb-0 text-center md:text-left">
               <div className="space-y-6">
-                <p className="py-1 px-3 bg-zinc-800/60 backdrop-blur-sm font-light rounded-full text-white inline-block">
+                <p
+                  className={`py-1 px-3 ${isDark ? 'bg-zinc-900/60' : 'bg-white/40'} backdrop-blur-sm font-light rounded-full text-theme-primary inline-block`}
+                >
                   Join 7.000+ Hackers
                 </p>
-
-                <div className="space-y-3">
-                  <h1 className="text-5xl sm:text-6xl md:text-7xl tracking-tight bg-clip-text bg-gradient-to-r from-pink-500 via-purple-400 to-blue-500 text-transparent font-semibold">
-                    HackTBD
-                  </h1>
-                  <h3 className="text-4xl sm:text-5xl md:text-6xl tracking-tight bg-clip-text bg-gradient-to-r from-purple-500 via-pink-400 to-blue-500 text-transparent font-semibold">
-                    Hackathon&apos;s Matching
-                  </h3>
-                </div>
-
-                <p className="text-gray-300 text-lg text-pretty">
-                  50+{' '}
-                  <span className="bg-clip-text bg-gradient-to-r from-purple-500 to-rose-500 text-transparent font-semibold">
-                    free{' '}
-                  </span>
-                  and
-                  <span className="bg-clip-text bg-gradient-to-r from-rose-500 to-purple-500 text-transparent font-semibold">
-                    {' '}
-                    sponsored{' '}
-                  </span>
-                  hackathons from around the world.
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-theme-gradient-primary">
+                  Find Your Perfect{' '}
+                  <span className="text-theme-gradient-secondary">
+                    Hackathon
+                  </span>{' '}
+                  Team
+                </h1>
+                <p className="text-lg text-theme-secondary">
+                  HackTBD matches you with teammates that complement your skills
+                  and goals. Collaborate to build winning projects.
                 </p>
-
-                <div className="space-y-4">
+                <div className="flex justify-center md:justify-start space-x-4">
                   <Button
-                    variant="default"
-                    className="w-full md:w-auto rounded-lg"
+                    variant="primary"
+                    className={`px-8 py-3 rounded-lg ${
+                      isDark
+                        ? 'bg-purple-600/80 hover:bg-purple-600 text-white'
+                        : 'bg-[#036CA0] hover:bg-[#036CA0]/90 text-white'
+                    }`}
                   >
-                    Find Your Perfect Team
+                    Get Started
                   </Button>
-
-                  <div className="flex flex-wrap justify-center md:justify-start gap-2">
-                    <span className="px-3 py-1 bg-zinc-800 text-xs text-gray-300 rounded-full">
-                      Tech Matching
-                    </span>
-                    <span className="px-3 py-1 bg-zinc-800 text-xs text-gray-300 rounded-full">
-                      Custom Profiles
-                    </span>
-                    <span className="px-3 py-1 bg-zinc-800 text-xs text-gray-300 rounded-full">
-                      Team Formation
-                    </span>
-                  </div>
+                  <Button
+                    variant="outline"
+                    className={`px-8 py-3 rounded-lg text-theme-primary bg-transparent ${
+                      isDark
+                        ? 'border-pink-500/30 hover:border-pink-500/50 hover:bg-zinc-800'
+                        : 'border-[#036CA0]/30 hover:border-[#036CA0]/50 hover:bg-gray-50'
+                    }`}
+                  >
+                    Learn More
+                  </Button>
                 </div>
               </div>
             </div>
@@ -204,51 +179,43 @@ function LandingContent() {
             {/* Left content - Text and CTA */}
             <div className="max-w-lg mb-10 md:mb-0 text-center md:text-left">
               <div className="space-y-6">
-                <p className="py-1 px-3 bg-white/40 backdrop-blur-sm font-light rounded-full text-gray-800 inline-block">
+                <p
+                  className={`py-1 px-3 ${isDark ? 'bg-zinc-900/60' : 'bg-white/40'} backdrop-blur-sm font-light rounded-full text-theme-primary inline-block`}
+                >
                   Join 7.000+ Hackers
                 </p>
-
-                <div className="space-y-3">
-                  <h1 className="text-5xl sm:text-6xl md:text-7xl tracking-tight bg-clip-text bg-gradient-to-r from-[#B9225C] via-[#428295] to-[#63CAAA] text-transparent font-semibold">
-                    HackTBD
-                  </h1>
-                  <h3 className="text-4xl sm:text-5xl md:text-6xl tracking-tight bg-clip-text bg-gradient-to-r from-[#428295] via-[#B9225C] to-[#63CAAA] text-transparent font-semibold">
-                    Hackathon&apos;s Matching
-                  </h3>
-                </div>
-
-                <p className="text-gray-800 text-lg text-pretty">
-                  50+{' '}
-                  <span className="bg-clip-text bg-gradient-to-r from-[#428295] to-[#B9225C] text-transparent font-semibold">
-                    free{' '}
-                  </span>
-                  and
-                  <span className="bg-clip-text bg-gradient-to-r from-[#B9225C] to-[#428295] text-transparent font-semibold">
-                    {' '}
-                    sponsored{' '}
-                  </span>
-                  hackathons from around the world.
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-theme-gradient-primary">
+                  Find Your Perfect{' '}
+                  <span className="text-theme-gradient-secondary">
+                    Hackathon
+                  </span>{' '}
+                  Team
+                </h1>
+                <p className="text-lg text-theme-secondary">
+                  HackTBD matches you with teammates that complement your skills
+                  and goals. Collaborate to build winning projects.
                 </p>
-
-                <div className="space-y-4">
+                <div className="flex justify-center md:justify-start space-x-4">
                   <Button
-                    variant="default"
-                    className="w-full md:w-auto rounded-lg"
+                    variant="primary"
+                    className={`px-8 py-3 rounded-lg ${
+                      isDark
+                        ? 'bg-purple-600/80 hover:bg-purple-600 text-white'
+                        : 'bg-[#036CA0] hover:bg-[#036CA0]/90 text-white'
+                    }`}
                   >
-                    Find Your Perfect Team
+                    Get Started
                   </Button>
-
-                  <div className="flex flex-wrap justify-center md:justify-start gap-2">
-                    <span className="px-3 py-1 bg-white/40 text-xs text-gray-700 rounded-full">
-                      Tech Matching
-                    </span>
-                    <span className="px-3 py-1 bg-white/40 text-xs text-gray-700 rounded-full">
-                      Custom Profiles
-                    </span>
-                    <span className="px-3 py-1 bg-white/40 text-xs text-gray-700 rounded-full">
-                      Team Formation
-                    </span>
-                  </div>
+                  <Button
+                    variant="outline"
+                    className={`px-8 py-3 rounded-lg text-theme-primary bg-transparent ${
+                      isDark
+                        ? 'border-pink-500/30 hover:border-pink-500/50 hover:bg-zinc-800'
+                        : 'border-[#036CA0]/30 hover:border-[#036CA0]/50 hover:bg-gray-50'
+                    }`}
+                  >
+                    Learn More
+                  </Button>
                 </div>
               </div>
             </div>
@@ -320,27 +287,23 @@ function LandingContent() {
         )}
 
         {/* Feature highlights section */}
-        <div
-          className={`relative z-10 w-full mt-12 md:mt-24 px-4 md:px-8 lg:px-28 ${isDark ? 'text-white' : ''}`}
-        >
+        <div className="relative z-10 w-full mt-12 md:mt-24 px-4 md:px-8 lg:px-28">
           <div className="max-w-7xl mx-auto">
-            <h2
-              className={`text-2xl md:text-3xl font-bold mb-8 text-center ${isDark ? 'text-white' : 'text-gray-800'}`}
-            >
+            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center text-theme-gradient-primary">
               Streamline Your Hackathon Experience
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Feature 1 */}
               <div
-                className={`rounded-xl p-6 ${isDark ? 'bg-zinc-900' : 'bg-white/70 backdrop-blur-sm'} shadow-lg`}
+                className={`rounded-xl p-6 ${isDark ? 'bg-zinc-900/90 border border-pink-500/20' : 'bg-white/70 backdrop-blur-sm border border-[#63CAAA]/20'} shadow-lg`}
               >
                 <div
-                  className={`w-12 h-12 rounded-full mb-4 flex items-center justify-center ${isDark ? 'bg-purple-900' : 'bg-purple-100'}`}
+                  className={`w-12 h-12 rounded-full mb-4 flex items-center justify-center ${isDark ? 'bg-pink-500/20' : 'bg-[#63CAAA]/20'}`}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className={`h-6 w-6 ${isDark ? 'text-purple-200' : 'text-purple-600'}`}
+                    className={`h-6 w-6 ${isDark ? 'text-pink-400' : 'text-[#036CA0]'}`}
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -353,12 +316,10 @@ function LandingContent() {
                     />
                   </svg>
                 </div>
-                <h3
-                  className={`text-xl font-semibold mb-2 ${isDark ? 'text-white' : 'text-gray-800'}`}
-                >
+                <h3 className="text-xl font-semibold mb-2 text-theme-gradient-primary">
                   Create Custom Profiles
                 </h3>
-                <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                <p className="text-theme-secondary">
                   Showcase your skills, goals, and past experience to find the
                   perfect team match for each hackathon.
                 </p>
@@ -366,14 +327,14 @@ function LandingContent() {
 
               {/* Feature 2 */}
               <div
-                className={`rounded-xl p-6 ${isDark ? 'bg-zinc-900' : 'bg-white/70 backdrop-blur-sm'} shadow-lg`}
+                className={`rounded-xl p-6 ${isDark ? 'bg-zinc-900/90 border border-purple-500/20' : 'bg-white/70 backdrop-blur-sm border border-[#036CA0]/20'} shadow-lg`}
               >
                 <div
-                  className={`w-12 h-12 rounded-full mb-4 flex items-center justify-center ${isDark ? 'bg-blue-900' : 'bg-blue-100'}`}
+                  className={`w-12 h-12 rounded-full mb-4 flex items-center justify-center ${isDark ? 'bg-purple-500/20' : 'bg-[#036CA0]/20'}`}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className={`h-6 w-6 ${isDark ? 'text-blue-200' : 'text-blue-600'}`}
+                    className={`h-6 w-6 ${isDark ? 'text-purple-400' : 'text-[#036CA0]'}`}
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -386,12 +347,10 @@ function LandingContent() {
                     />
                   </svg>
                 </div>
-                <h3
-                  className={`text-xl font-semibold mb-2 ${isDark ? 'text-white' : 'text-gray-800'}`}
-                >
+                <h3 className="text-xl font-semibold mb-2 text-theme-gradient-secondary">
                   Smart Team Matching
                 </h3>
-                <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                <p className="text-theme-secondary">
                   Filter potential teammates based on skills, goals, and
                   experience to find the right people quickly.
                 </p>
@@ -399,14 +358,14 @@ function LandingContent() {
 
               {/* Feature 3 */}
               <div
-                className={`rounded-xl p-6 ${isDark ? 'bg-zinc-900' : 'bg-white/70 backdrop-blur-sm'} shadow-lg`}
+                className={`rounded-xl p-6 ${isDark ? 'bg-zinc-900/90 border border-blue-500/20' : 'bg-white/70 backdrop-blur-sm border border-[#3B82F6]/20'} shadow-lg`}
               >
                 <div
-                  className={`w-12 h-12 rounded-full mb-4 flex items-center justify-center ${isDark ? 'bg-teal-900' : 'bg-teal-100'}`}
+                  className={`w-12 h-12 rounded-full mb-4 flex items-center justify-center ${isDark ? 'bg-blue-500/20' : 'bg-[#3B82F6]/20'}`}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className={`h-6 w-6 ${isDark ? 'text-teal-200' : 'text-teal-600'}`}
+                    className={`h-6 w-6 ${isDark ? 'text-blue-400' : 'text-[#3B82F6]'}`}
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -419,12 +378,10 @@ function LandingContent() {
                     />
                   </svg>
                 </div>
-                <h3
-                  className={`text-xl font-semibold mb-2 ${isDark ? 'text-white' : 'text-gray-800'}`}
-                >
+                <h3 className="text-xl font-semibold mb-2 text-theme-gradient-accent">
                   Team Management
                 </h3>
-                <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                <p className="text-theme-secondary">
                   Join teams, manage your participation, and customize tags for
                   each hackathon you participate in.
                 </p>
@@ -437,31 +394,17 @@ function LandingContent() {
       {/* Footer */}
       <div className="relative z-10 w-full mt-16 md:mt-24">
         <div
-          className={`w-full ${isDark ? 'bg-zinc-900' : 'bg-[#696969]'} py-6 md:py-8`}
+          className={`w-full ${isDark ? 'bg-zinc-900/80 border-t border-purple-500/20' : 'bg-[#696969]'} py-6 md:py-8`}
         >
           <div className="text-center">
-            <p className="text-white text-lg md:text-xl font-medium">
+            <p
+              className={`${isDark ? 'text-theme-gradient-primary' : 'text-theme-inverse'} text-lg md:text-xl font-medium`}
+            >
               Built for hackers with 🤍
             </p>
           </div>
         </div>
       </div>
-
-      {/* Theme toggle button */}
-      <ThemeToggle />
     </div>
-  );
-}
-
-// Wrap the landing page with the theme provider
-export default function LandingPage({
-  defaultTheme = 'light', // Default theme can be set by the page that imports this component
-}: {
-  defaultTheme?: 'light' | 'dark';
-}) {
-  return (
-    <ThemeProvider defaultTheme={defaultTheme}>
-      <LandingContent />
-    </ThemeProvider>
   );
 }
