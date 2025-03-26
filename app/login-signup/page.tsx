@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import LoginPage from './Login_SignupPage';
+import LoginPage from './LoginSignupPage';
 
 export const metadata: Metadata = {
   title: 'HackTBD - Find Your Perfect Hackathon Team',

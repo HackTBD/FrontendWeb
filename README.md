@@ -25,16 +25,8 @@ Architecture Design follow by: [Next.js Clean Architecture] (https://github.com/
 • public/                   # Static assets like images, icons, and fonts
   • images/                 # Images files
 • app/                      # Frameworks & Drivers Layer - basically everything Next.js (pages, server actions, components, styles etc...) or whatever "consumes" the app's logic
-  • landing/
-     • themes/              # Theme context and toggle components
-        • ThemeProvider.tsx # Context for managing theme state
-        • ThemeToggle.tsx   # Toggle button component
-  • components              # Shared UI components
+  • _components/            # Shared components directory
     • ui/                   # UI primitives and elements
-      • aurora_background.tsx
-      • button.tsx
-    • utils.ts              # Utility functions for UI components
-  • login/
   • page.tsx                # Website's root for navigation
   • global.css              # Global styles
 • src/                      # The "root" of the system that store applications, entities, infrastructure and interface-adapters
@@ -53,36 +45,6 @@ Architecture Design follow by: [Next.js Clean Architecture] (https://github.com/
 ```
 
 Project structure strategy: stores all application code in shared folders in the root of the app directory.
-
----
-
-## 🎨 Landing Pages
-
-HackTBD offers two landing page designs to accommodate different user preferences:
-
-### Light Theme (Default)
-
-- **Path**: `/`
-- **Component**: `app/light_landing/LandingPage.tsx`
-- **Features**:
-  - Colorful gradient background image
-  - Clean, modern light interface
-  - Vibrant image gallery with geometric shapes
-  - Responsive design that works on all devices
-  - Easy navigation to the dark theme version
-
-### Dark Theme
-
-- **Path**: `/dark`
-- **Component**: `app/dark/LandingPage.tsx`
-- **Features**:
-  - Dark background with elegant gradients
-  - High contrast text for better readability
-  - Same content structure as the light theme
-  - Modern UI with attention-grabbing text effects
-  - Easy navigation back to the light theme version
-
-Both landing pages share the same core functionality and content, offering users the flexibility to choose their preferred visual style. The UI components are built to ensure a consistent experience across both themes.
 
 ---
 
@@ -161,8 +123,6 @@ This will install all necessary **node_modules** for the project.
 - **ESLint** is used for code consistency and best practices. Run `pnpm lint` before committing changes.
 - **Prettier** is used for code formatting. Refer to the [Prettier Guide](Documentation/Developer%20Guide/prettier.md) for setup instructions.
 
----
-
 ## Next.js Default README
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
@@ -221,3 +181,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 - **Screaming Snake Case**
   - Hard-coded Constant
   - Enum value
+
+## Extra Tools/ Resources
+
+1. (Svg Path Editor)[https://yqnn.github.io/svg-path-editor/]: use to visualize svg files
