@@ -64,10 +64,10 @@ export const Header: React.FC<HeaderProps> = ({ className }) => {
   }, [pathname]);
 
   // Define navigation links using MAIN_NAV_ITEMS but map it to match NavLink interface
-  const navLinks: NavLink[] = MAIN_NAV_ITEMS.map(item => ({
+  const navLinks: NavLink[] = MAIN_NAV_ITEMS.map((item) => ({
     label: item.label,
     href: item.path,
-    authRequired: false
+    authRequired: false,
   }));
 
   // Define authentication links
