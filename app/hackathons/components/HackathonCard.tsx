@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { Button } from '../../_components/ui/Button';
+import { ROUTES } from '../../_lib/routes';
 
 /**
  * Props for the HackathonCard component
@@ -241,7 +242,7 @@ export default function HackathonCard({
         >
           Teams: {hackathon.teamSize}
         </div>
-        <Link href={`/hackathons/${hackathon.id}`}>
+        <Link href={ROUTES.HACKATHON_DETAILS(hackathon.id)}>
           <Button
             variant={isDark ? 'outline' : 'primary'}
             className={`py-1.5 px-3 text-sm rounded-lg ${

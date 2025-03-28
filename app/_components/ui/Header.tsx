@@ -7,6 +7,7 @@ import { cn } from '../utils';
 import { Logo } from './Logo';
 import { ThemeToggle } from './ThemeToggle';
 import { useTheme } from './ThemeProvider';
+import { ROUTES, MAIN_NAV_ITEMS, USER_NAV_ITEMS } from '../../_lib/routes';
 
 /**
  * Props for the Header component
@@ -62,19 +63,17 @@ export const Header: React.FC<HeaderProps> = ({ className }) => {
     setIsMobileMenuOpen(false);
   }, [pathname]);
 
-  // Define navigation links
-  const navLinks: NavLink[] = [
-    { label: 'Home', href: '/' },
-    { label: 'Search', href: '/search' },
-    { label: 'Projects', href: '/projects' },
-    { label: 'Challenges', href: '/challenges' },
-    { label: 'Teams', href: '/teams' },
-  ];
+  // Define navigation links using MAIN_NAV_ITEMS but map it to match NavLink interface
+  const navLinks: NavLink[] = MAIN_NAV_ITEMS.map(item => ({
+    label: item.label,
+    href: item.path,
+    authRequired: false
+  }));
 
   // Define authentication links
   const authLinks: NavLink[] = [
-    { label: 'Profile', href: '/profile', authRequired: true },
-    { label: 'Login / Sign Up', href: '/login-signup', authRequired: false },
+    { label: 'Profile', href: ROUTES.USER_PROFILE, authRequired: true },
+    { label: 'Login / Sign Up', href: ROUTES.LOGIN, authRequired: false },
   ];
 
   // Calculate header background styles based on scroll state and theme
