@@ -14,7 +14,6 @@ export default function UserProfilePage() {
   const [userData, setUserData] = useState({
     firstName: 'Alexa',
     lastName: 'Rawles',
-    pronouns: 'she/her',
     email: 'alexa.rawles@example.com',
     phone: '+1 (555) 123-4567',
     password: '',
@@ -70,7 +69,6 @@ export default function UserProfilePage() {
                     >
                       {userData.firstName} {userData.lastName}
                     </h2>
-                    <p className="text-theme-secondary">{userData.pronouns}</p>
                   </div>
                 </div>
                 <div className="mb-6">
@@ -95,7 +93,6 @@ export default function UserProfilePage() {
                 {[
                   { label: 'First Name', field: 'firstName', type: 'text' },
                   { label: 'Last Name', field: 'lastName', type: 'text' },
-                  { label: 'Pronouns', field: 'pronouns', type: 'text' },
                   { label: 'Email', field: 'email', type: 'email' },
                   { label: 'Phone number', field: 'phone', type: 'tel' },
                   { label: 'Password', field: 'password', type: 'password' },
