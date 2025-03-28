@@ -27,24 +27,31 @@ interface HackathonDetailHeaderProps {
 
 /**
  * HackathonDetailHeader component
- * 
+ *
  * Displays the header section of a hackathon detail page, including:
  * - Cover image with overlay gradient
  * - Logo
  * - Title and organizer
  * - Key metadata (dates, location, status)
  * - Action buttons (Apply, Share, Save)
- * 
+ *
  * @param {HackathonDetailHeaderProps} props - Component props
  * @returns {JSX.Element} Rendered component
  */
-export default function HackathonDetailHeader({ hackathon, isDark }: HackathonDetailHeaderProps) {
+export default function HackathonDetailHeader({
+  hackathon,
+  isDark,
+}: HackathonDetailHeaderProps) {
   const [coverImageFailed, setCoverImageFailed] = useState(false);
   const [logoImageFailed, setLogoImageFailed] = useState(false);
-  
+
   // Format date to readable format
   const formatDate = (dateString: string) => {
-    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    };
     return new Date(dateString).toLocaleDateString('en-US', options);
   };
 
@@ -54,11 +61,11 @@ export default function HackathonDetailHeader({ hackathon, isDark }: HackathonDe
     const deadline = new Date(hackathon.registrationDeadline);
     const diffTime = Math.abs(deadline.getTime() - today.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    
+
     if (deadline < today) {
       return 'Registration closed';
     }
-    
+
     return `${diffDays} days remaining`;
   };
 
@@ -69,31 +76,31 @@ export default function HackathonDetailHeader({ hackathon, isDark }: HackathonDe
         return {
           bgColor: isDark ? 'bg-green-500/20' : 'bg-green-100',
           textColor: isDark ? 'text-green-400' : 'text-green-700',
-          label: 'Registration Open'
+          label: 'Registration Open',
         };
       case 'happening':
         return {
           bgColor: isDark ? 'bg-purple-500/20' : 'bg-[#036CA0]/20',
           textColor: isDark ? 'text-purple-400' : 'text-[#036CA0]',
-          label: 'Happening Now'
+          label: 'Happening Now',
         };
       case 'coming-soon':
         return {
           bgColor: isDark ? 'bg-blue-500/20' : 'bg-blue-100',
           textColor: isDark ? 'text-blue-400' : 'text-blue-700',
-          label: 'Coming Soon'
+          label: 'Coming Soon',
         };
       case 'ended':
         return {
           bgColor: isDark ? 'bg-gray-500/20' : 'bg-gray-100',
           textColor: isDark ? 'text-gray-400' : 'text-gray-600',
-          label: 'Ended'
+          label: 'Ended',
         };
       default:
         return {
           bgColor: isDark ? 'bg-gray-500/20' : 'bg-gray-100',
           textColor: isDark ? 'text-gray-400' : 'text-gray-600',
-          label: 'Unknown Status'
+          label: 'Unknown Status',
         };
     }
   };
@@ -101,14 +108,16 @@ export default function HackathonDetailHeader({ hackathon, isDark }: HackathonDe
   const statusStyles = getStatusStyles(hackathon.status);
 
   return (
-    <div className={`rounded-xl overflow-hidden shadow-md ${isDark ? 'bg-zinc-800' : 'bg-white'}`}>
+    <div
+      className={`rounded-xl overflow-hidden shadow-md ${isDark ? 'bg-zinc-800' : 'bg-white'}`}
+    >
       {/* Cover image section with overlay */}
       <div className="relative h-64 md:h-80">
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/10 z-10" />
-        
+
         {/* Fallback color if image fails */}
-        <div 
+        <div
           className={`absolute inset-0 ${isDark ? 'bg-zinc-700' : 'bg-gray-200'} ${!coverImageFailed && hackathon.coverImage ? 'hidden' : ''}`}
         >
           <div className="h-full w-full flex items-center justify-center">
@@ -117,7 +126,7 @@ export default function HackathonDetailHeader({ hackathon, isDark }: HackathonDe
             </span>
           </div>
         </div>
-        
+
         {/* Cover image */}
         {hackathon.coverImage && (
           <Image
@@ -129,12 +138,14 @@ export default function HackathonDetailHeader({ hackathon, isDark }: HackathonDe
             priority
           />
         )}
-        
+
         {/* Content overlay */}
         <div className="absolute inset-0 flex flex-col justify-end p-6 z-20">
           <div className="flex items-end gap-4">
             {/* Logo */}
-            <div className={`w-20 h-20 rounded-xl flex items-center justify-center shadow-md overflow-hidden ${isDark ? 'bg-zinc-900' : 'bg-white'}`}>
+            <div
+              className={`w-20 h-20 rounded-xl flex items-center justify-center shadow-md overflow-hidden ${isDark ? 'bg-zinc-900' : 'bg-white'}`}
+            >
               {hackathon.logo && !logoImageFailed ? (
                 <Image
                   src={hackathon.logo}
@@ -146,18 +157,24 @@ export default function HackathonDetailHeader({ hackathon, isDark }: HackathonDe
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
-                  <span className={`text-2xl font-bold ${isDark ? 'text-pink-400' : 'text-[#036CA0]'}`}>
+                  <span
+                    className={`text-2xl font-bold ${isDark ? 'text-pink-400' : 'text-[#036CA0]'}`}
+                  >
                     {hackathon.title.substring(0, 2)}
                   </span>
                 </div>
               )}
             </div>
-            
+
             {/* Title and organizer */}
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-1">
-                <h1 className="text-3xl font-bold text-white line-clamp-1">{hackathon.title}</h1>
-                <span className={`px-3 py-1 rounded-full text-sm font-medium ${statusStyles.bgColor} ${statusStyles.textColor}`}>
+                <h1 className="text-3xl font-bold text-white line-clamp-1">
+                  {hackathon.title}
+                </h1>
+                <span
+                  className={`px-3 py-1 rounded-full text-sm font-medium ${statusStyles.bgColor} ${statusStyles.textColor}`}
+                >
                   {statusStyles.label}
                 </span>
               </div>
@@ -166,47 +183,72 @@ export default function HackathonDetailHeader({ hackathon, isDark }: HackathonDe
           </div>
         </div>
       </div>
-      
+
       {/* Details and action buttons */}
-      <div className={`p-6 border-t ${isDark ? 'border-zinc-700' : 'border-gray-100'}`}>
+      <div
+        className={`p-6 border-t ${isDark ? 'border-zinc-700' : 'border-gray-100'}`}
+      >
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           {/* Key details */}
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             <div>
-              <p className={`text-xs uppercase ${isDark ? 'text-zinc-400' : 'text-gray-500'}`}>Dates</p>
-              <p className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                {formatDate(hackathon.startDate)} - {formatDate(hackathon.endDate)}
+              <p
+                className={`text-xs uppercase ${isDark ? 'text-zinc-400' : 'text-gray-500'}`}
+              >
+                Dates
+              </p>
+              <p
+                className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}
+              >
+                {formatDate(hackathon.startDate)} -{' '}
+                {formatDate(hackathon.endDate)}
               </p>
             </div>
             <div>
-              <p className={`text-xs uppercase ${isDark ? 'text-zinc-400' : 'text-gray-500'}`}>Location</p>
-              <p className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>{hackathon.location}</p>
+              <p
+                className={`text-xs uppercase ${isDark ? 'text-zinc-400' : 'text-gray-500'}`}
+              >
+                Location
+              </p>
+              <p
+                className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}
+              >
+                {hackathon.location}
+              </p>
             </div>
             <div>
-              <p className={`text-xs uppercase ${isDark ? 'text-zinc-400' : 'text-gray-500'}`}>Registration</p>
-              <p className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>{calculateDaysRemaining()}</p>
+              <p
+                className={`text-xs uppercase ${isDark ? 'text-zinc-400' : 'text-gray-500'}`}
+              >
+                Registration
+              </p>
+              <p
+                className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}
+              >
+                {calculateDaysRemaining()}
+              </p>
             </div>
           </div>
-          
+
           {/* Action buttons */}
           <div className="flex space-x-3">
-            <Button 
-              variant="primary" 
+            <Button
+              variant="primary"
               className={`px-6 py-2 ${!isDark && 'bg-[#036CA0] hover:bg-[#036CA0]/90'}`}
             >
               Apply Now
             </Button>
             <Button
-              variant={isDark ? "outline" : "secondary"}
+              variant={isDark ? 'outline' : 'secondary'}
               className={`${isDark ? 'border-zinc-700 hover:border-zinc-600' : 'border-gray-200 hover:bg-gray-50'}`}
             >
-            <div className="flex items-center">
-              <ShareIcon className="w-5 h-5 mr-2" />
-              Share
-            </div>
+              <div className="flex items-center">
+                <ShareIcon className="w-5 h-5 mr-2" />
+                Share
+              </div>
             </Button>
             <Button
-              variant={isDark ? "outline" : "secondary"}
+              variant={isDark ? 'outline' : 'secondary'}
               className={`px-3 ${isDark ? 'border-zinc-700 hover:border-zinc-600' : 'border-gray-200 hover:bg-gray-50'}`}
             >
               <BookmarkIcon className="w-5 h-5" />
@@ -220,14 +262,14 @@ export default function HackathonDetailHeader({ hackathon, isDark }: HackathonDe
 
 // Icon components
 const ShareIcon = ({ className = '' }) => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
     className={className}
   >
     <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
@@ -237,16 +279,16 @@ const ShareIcon = ({ className = '' }) => (
 );
 
 const BookmarkIcon = ({ className = '' }) => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
     className={className}
   >
     <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
   </svg>
-); 
+);

@@ -52,7 +52,9 @@ export default function LandingPage() {
                 className={`p-2 rounded-full ${isDark ? 'border-zinc-700 hover:border-zinc-600' : 'border-gray-200 hover:bg-gray-50'}`}
                 aria-label="Profile"
               >
-                <UserIcon className={`h-5 w-5 ${isDark ? 'text-zinc-400' : 'text-gray-600'}`} />
+                <UserIcon
+                  className={`h-5 w-5 ${isDark ? 'text-zinc-400' : 'text-gray-600'}`}
+                />
               </Button>
             </Link>
             <Link href={ROUTES.LOGIN}>

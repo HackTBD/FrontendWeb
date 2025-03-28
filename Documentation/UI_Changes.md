@@ -3,7 +3,8 @@
 ## Landing Page Changes
 
 #### Top Navigation Bar Simplification
-- **Date**: 
+
+- **Date**:
 - **Files Modified**: `FrontendWeb/app/landing/LandingPage.tsx`
 - **Description**: Removed all navigation links from the top bar to create a cleaner, more focused user interface.
 - **Details**:
@@ -13,7 +14,8 @@
   - The navigation is now handled through other entry points rather than the top navigation bar
 
 #### Hero Section Button Optimization
-- **Date**: 
+
+- **Date**:
 - **Files Modified**: `FrontendWeb/app/landing/LandingPage.tsx`
 - **Description**: Simplified the call-to-action area by removing the "Get Started" button.
 - **Details**:
@@ -23,7 +25,8 @@
   - Reduces visual clutter and focuses user attention on discovering events
 
 #### Button Alignment Update
-- **Date**: 
+
+- **Date**:
 - **Files Modified**: `FrontendWeb/app/landing/LandingPage.tsx`
 - **Description**: Centered the "Hackathon Events" button for better visual balance.
 - **Details**:
@@ -36,7 +39,8 @@
 ## Routing System Implementation
 
 #### Centralized Routing Configuration
-- **Date**: 
+
+- **Date**:
 - **Files Modified**: `FrontendWeb/app/_lib/routes.ts`
 - **Description**: Created a centralized routing system to ensure consistent navigation throughout the application.
 - **Details**:
@@ -55,7 +59,8 @@
   - Added type safety with TypeScript interfaces for route objects
 
 #### Navigation Component Updates
-- **Date**: 
+
+- **Date**:
 - **Files Modified**:
   - `FrontendWeb/app/landing/LandingPage.tsx`
   - `FrontendWeb/app/_components/ui/Sidebar.tsx`
@@ -73,6 +78,7 @@
 ## Hackathon Details Page Implementation
 
 #### Hackathon Detail Page Creation
+
 - **Date**:
 - **Files Modified**:
   - `FrontendWeb/app/hackathons/[id]/page.tsx`
@@ -102,8 +108,9 @@
   - Added proper dark/light theme support with conditional styling for all components
 
 #### Detail Page Navigation Enhancements
+
 - **Date**:
-- **Files Modified**: 
+- **Files Modified**:
   - `FrontendWeb/app/hackathons/[id]/page.tsx`
   - `FrontendWeb/app/_components/ui/Breadcrumbs.tsx`
 - **Description**: Added "Back to All Hackathons" button and breadcrumb navigation.
@@ -119,6 +126,7 @@
 ## Hackathons Listing Page Improvements
 
 #### Filter Panel Refinement
+
 - **Date**:
 - **Files Modified**:
   - `FrontendWeb/app/hackathons/components/FilterPanel.tsx`
@@ -139,8 +147,9 @@
   - Improved mobile responsiveness with collapsible sections
 
 #### Filter Panel UI and UX Improvements
+
 - **Date**:
-- **Files Modified**: 
+- **Files Modified**:
   - `FrontendWeb/app/hackathons/components/FilterPanel.tsx`
   - `FrontendWeb/app/hackathons/HackathonsPage.tsx`
 - **Description**: Enhanced the usability and visual design of the filter system.
@@ -155,6 +164,7 @@
   - Added filter tags display to show currently active filters
 
 #### Hackathon Card Enhancement
+
 - **Date**:
 - **Files Modified**: `FrontendWeb/app/hackathons/components/HackathonCard.tsx`
 - **Description**: Improved the hackathon card to provide more relevant information at a glance.
@@ -169,6 +179,7 @@
   - Improved responsive behavior on different screen sizes
 
 #### Search and Sorting Enhancements
+
 - **Date**:
 - **Files Modified**: `FrontendWeb/app/hackathons/HackathonsPage.tsx`
 - **Description**: Added robust search and sorting capabilities.
@@ -187,7 +198,8 @@
 ## Recent Mobile Responsiveness Improvements
 
 #### Cross-Component Mobile Enhancements
-- **Date**: 
+
+- **Date**:
 - **Files Modified**:
   - Multiple component files across the application
 - **Description**: Implemented comprehensive mobile responsiveness improvements throughout the app.
@@ -200,7 +212,8 @@
   - Fixed overflow issues in various containers
 
 #### Performance Optimizations
-- **Date**: 
+
+- **Date**:
 - **Files Modified**:
   - Image components and data-heavy pages
 - **Description**: Improved application performance, especially on mobile devices.
@@ -229,6 +242,7 @@ These UI changes collectively accomplish several key goals:
 ## Navigation System
 
 The application's primary navigation now relies on:
+
 - The "Hackathon Events" button for direct access to hackathon listings
 - The sidebar for authenticated users to navigate between sections
 - Breadcrumbs for sub-navigation within hackathon details
