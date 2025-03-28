@@ -1,10 +1,12 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { Button } from '../_components/ui/Button';
 import { useTheme } from '../_components/ui/ThemeProvider';
 import { ThemeToggle } from '../_components/ui/ThemeToggle';
 import { Logo } from '../_components/ui/Logo';
+import { ROUTES, MAIN_NAV_ITEMS } from '../_lib/routes';
 
 // The main content component that changes based on theme
 export default function LandingPage() {
@@ -44,18 +46,31 @@ export default function LandingPage() {
           {/* Sign Up/Sign In buttons */}
           <div className="flex items-center space-x-3">
             <ThemeToggle className="mr-3" />
-            <Button
-              variant="secondary"
-              className={`px-4 py-2 text-sm rounded-lg ${isDark ? 'border-purple-500/30 hover:border-purple-500/50' : ''}`}
-            >
-              Sign in
-            </Button>
-            <Button
-              variant="primary"
-              className={`px-4 py-2 text-sm rounded-lg ${isDark ? 'bg-pink-600/80 hover:bg-pink-600' : ''}`}
-            >
-              Sign up
-            </Button>
+            <Link href={ROUTES.USER_PROFILE}>
+              <Button
+                variant="outline"
+                className={`p-2 rounded-full ${isDark ? 'border-zinc-700 hover:border-zinc-600' : 'border-gray-200 hover:bg-gray-50'}`}
+                aria-label="Profile"
+              >
+                <UserIcon className={`h-5 w-5 ${isDark ? 'text-zinc-400' : 'text-gray-600'}`} />
+              </Button>
+            </Link>
+            <Link href={ROUTES.LOGIN}>
+              <Button
+                variant="secondary"
+                className={`px-4 py-2 text-sm rounded-lg ${isDark ? 'border-purple-500/30 hover:border-purple-500/50' : ''}`}
+              >
+                Sign in
+              </Button>
+            </Link>
+            <Link href={ROUTES.LOGIN}>
+              <Button
+                variant="primary"
+                className={`px-4 py-2 text-sm rounded-lg ${isDark ? 'bg-pink-600/80 hover:bg-pink-600' : ''}`}
+              >
+                Sign up
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
@@ -66,7 +81,7 @@ export default function LandingPage() {
           // Dark theme layout - similar to light but with dark colors
           <div className="relative z-10 mt-8 md:mt-16 px-4 md:px-8 lg:px-28 flex flex-col md:flex-row justify-between items-center">
             {/* Left content - Text and CTA */}
-            <div className="max-w-lg mb-10 md:mb-0 text-center md:text-left">
+            <div className="w-full md:max-w-lg mb-10 md:mb-0 text-center">
               <div className="space-y-6">
                 <p
                   className={`py-1 px-3 ${isDark ? 'bg-zinc-900/60' : 'bg-white/40'} backdrop-blur-sm font-light rounded-full text-theme-primary inline-block`}
@@ -84,27 +99,19 @@ export default function LandingPage() {
                   HackTBD matches you with teammates that complement your skills
                   and goals. Collaborate to build winning projects.
                 </p>
-                <div className="flex justify-center md:justify-start space-x-4">
-                  <Button
-                    variant="primary"
-                    className={`px-8 py-3 rounded-lg ${
-                      isDark
-                        ? 'bg-purple-600/80 hover:bg-purple-600 text-white'
-                        : 'bg-[#036CA0] hover:bg-[#036CA0]/90 text-white'
-                    }`}
-                  >
-                    Get Started
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className={`px-8 py-3 rounded-lg text-theme-primary bg-transparent ${
-                      isDark
-                        ? 'border-pink-500/30 hover:border-pink-500/50 hover:bg-zinc-800'
-                        : 'border-[#036CA0]/30 hover:border-[#036CA0]/50 hover:bg-gray-50'
-                    }`}
-                  >
-                    Learn More
-                  </Button>
+                <div className="flex justify-center space-x-4">
+                  <Link href={ROUTES.HACKATHONS}>
+                    <Button
+                      variant="outline"
+                      className={`px-8 py-3 rounded-lg text-theme-primary bg-transparent ${
+                        isDark
+                          ? 'border-pink-500/30 hover:border-pink-500/50 hover:bg-zinc-800'
+                          : 'border-[#036CA0]/30 hover:border-[#036CA0]/50 hover:bg-gray-50'
+                      }`}
+                    >
+                      Hackathon Events
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -177,7 +184,7 @@ export default function LandingPage() {
           // Light theme layout - side by side
           <div className="relative z-10 mt-8 md:mt-16 px-4 md:px-8 lg:px-28 flex flex-col md:flex-row justify-between items-center">
             {/* Left content - Text and CTA */}
-            <div className="max-w-lg mb-10 md:mb-0 text-center md:text-left">
+            <div className="w-full md:max-w-lg mb-10 md:mb-0 text-center">
               <div className="space-y-6">
                 <p
                   className={`py-1 px-3 ${isDark ? 'bg-zinc-900/60' : 'bg-white/40'} backdrop-blur-sm font-light rounded-full text-theme-primary inline-block`}
@@ -195,27 +202,19 @@ export default function LandingPage() {
                   HackTBD matches you with teammates that complement your skills
                   and goals. Collaborate to build winning projects.
                 </p>
-                <div className="flex justify-center md:justify-start space-x-4">
-                  <Button
-                    variant="primary"
-                    className={`px-8 py-3 rounded-lg ${
-                      isDark
-                        ? 'bg-purple-600/80 hover:bg-purple-600 text-white'
-                        : 'bg-[#036CA0] hover:bg-[#036CA0]/90 text-white'
-                    }`}
-                  >
-                    Get Started
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className={`px-8 py-3 rounded-lg text-theme-primary bg-transparent ${
-                      isDark
-                        ? 'border-pink-500/30 hover:border-pink-500/50 hover:bg-zinc-800'
-                        : 'border-[#036CA0]/30 hover:border-[#036CA0]/50 hover:bg-gray-50'
-                    }`}
-                  >
-                    Learn More
-                  </Button>
+                <div className="flex justify-center space-x-4">
+                  <Link href={ROUTES.HACKATHONS}>
+                    <Button
+                      variant="outline"
+                      className={`px-8 py-3 rounded-lg text-theme-primary bg-transparent ${
+                        isDark
+                          ? 'border-pink-500/30 hover:border-pink-500/50 hover:bg-zinc-800'
+                          : 'border-[#036CA0]/30 hover:border-[#036CA0]/50 hover:bg-gray-50'
+                      }`}
+                    >
+                      Hackathon Events
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -408,3 +407,20 @@ export default function LandingPage() {
     </div>
   );
 }
+
+// Add user icon component at the end of the file
+const UserIcon = ({ className = '' }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+    <circle cx="12" cy="7" r="4" />
+  </svg>
+);

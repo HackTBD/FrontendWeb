@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Logo } from './Logo';
 import { useTheme } from './ThemeProvider';
+import { ROUTES, isActivePath } from '../../_lib/routes';
 
 interface SidebarItemProps {
   icon: ReactNode;
@@ -382,15 +383,15 @@ export default function Sidebar({
           <SidebarItem
             icon={<GridIcon />}
             label="All Hackathons"
-            isActive={activePath === '/hackathons'}
-            href="/hackathons"
+            isActive={activePath === ROUTES.HACKATHONS}
+            href={ROUTES.HACKATHONS}
             isCollapsed={isCollapsed}
           />
           <SidebarItem
             icon={<BoxIcon />}
             label="My Hackathon"
-            isActive={activePath === '/my-hackathon'}
-            href="/my-hackathon"
+            isActive={activePath === ROUTES.MY_HACKATHONS}
+            href={ROUTES.MY_HACKATHONS}
             isCollapsed={isCollapsed}
           />
         </SidebarSection>
@@ -399,15 +400,15 @@ export default function Sidebar({
           <SidebarItem
             icon={<MessageIcon />}
             label="My Match"
-            isActive={activePath === '/my-match'}
-            href="/my-match"
+            isActive={activePath === ROUTES.MY_MATCH}
+            href={ROUTES.MY_MATCH}
             isCollapsed={isCollapsed}
           />
           <SidebarItem
             icon={<UsersIcon />}
             label="My Team"
-            isActive={activePath === '/my-team'}
-            href="/my-team"
+            isActive={activePath === ROUTES.MY_TEAM}
+            href={ROUTES.MY_TEAM}
             isCollapsed={isCollapsed}
           />
         </SidebarSection>
@@ -419,15 +420,15 @@ export default function Sidebar({
         <SidebarItem
           icon={<HelpIcon />}
           label="Help"
-          isActive={activePath === '/help'}
-          href="/help"
+          isActive={activePath === ROUTES.HELP}
+          href={ROUTES.HELP}
           isCollapsed={isCollapsed}
         />
         <SidebarItem
           icon={<LogoutIcon />}
           label="Log out"
           isActive={false}
-          href="/logout"
+          href={ROUTES.LOGOUT}
           isCollapsed={isCollapsed}
         />
       </div>

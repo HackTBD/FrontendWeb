@@ -11,6 +11,7 @@ import { Button } from '../../_components/ui/Button';
 import HackathonDetailHeader from '../components/HackathonDetailHeader';
 import HackathonDetailInfo from '../components/HackathonDetailInfo';
 import HackathonDetailTeam from '../components/HackathonDetailTeam';
+import { ROUTES } from '../../_lib/routes';
 
 /**
  * HackathonDetailsPage component
@@ -60,7 +61,7 @@ export default function HackathonDetailsPage() {
           <p className={`mb-4 ${isDark ? 'text-zinc-400' : 'text-gray-600'}`}>
             The hackathon you&apos;re looking for doesn&apos;t exist or has been removed.
           </p>
-          <Link href="/hackathons">
+          <Link href={ROUTES.HACKATHONS}>
             <Button 
               variant={isDark ? "outline" : "primary"}
               className={`mt-4 ${isDark ? 'border-pink-500/30 hover:border-pink-500/50' : ''}`}
@@ -88,7 +89,7 @@ export default function HackathonDetailsPage() {
             <nav className="flex" aria-label="Breadcrumb">
               <ol className="flex items-center space-x-2">
                 <li>
-                  <Link href="/hackathons" className={`text-sm ${isDark ? 'text-zinc-400 hover:text-white' : 'text-gray-500 hover:text-gray-700'}`}>
+                  <Link href={ROUTES.HACKATHONS} className={`text-sm ${isDark ? 'text-zinc-400 hover:text-white' : 'text-gray-500 hover:text-gray-700'}`}>
                     All Hackathons
                   </Link>
                 </li>
@@ -106,7 +107,7 @@ export default function HackathonDetailsPage() {
             </nav>
             
             {/* Back button */}
-            <Link href="/hackathons" className="mt-3 sm:mt-0">
+            <Link href={ROUTES.HACKATHONS} className="mt-3 sm:mt-0">
               <Button 
                 variant={isDark ? "outline" : "secondary"}
                 className={`px-4 py-2 ${isDark ? 'border-zinc-700 hover:border-zinc-600' : 'border-gray-200 hover:bg-gray-50'}`}
