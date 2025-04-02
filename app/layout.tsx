@@ -4,6 +4,7 @@ import './globals.css';
 import { AuroraBackground } from './_components/ui/AuroraBackground';
 import { ThemeProvider } from './_components/ui/ThemeProvider';
 import React from 'react';
+import { ClerkProvider } from '@clerk/nextjs';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -26,16 +27,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-full h-full overflow-y-auto`}
-      >
-        <ThemeProvider defaultTheme="system">
-          <main className="relative h-full w-full overflow-auto">
-            <AuroraBackground>{children}</AuroraBackground>
-          </main>
-        </ThemeProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" className="h-full">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-full h-full overflow-y-auto`}
+        >
+          <ThemeProvider defaultTheme="system">
+            <main className="relative h-full w-full overflow-auto">
+              <AuroraBackground>{children}</AuroraBackground>
+            </main>
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
