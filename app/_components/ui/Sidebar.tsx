@@ -1,11 +1,10 @@
 'use client';
 
 import { useState, useCallback, useEffect, ReactNode } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { Logo } from './Logo';
 import { useTheme } from './ThemeProvider';
-import { ROUTES, isActivePath } from '../../_lib/routes';
+import { ROUTES } from '../../_lib/routes';
 
 interface SidebarItemProps {
   icon: ReactNode;
