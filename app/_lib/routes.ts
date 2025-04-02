@@ -22,6 +22,8 @@ export const ROUTES = {
 
   HELP: '/help',
   LOGOUT: '/logout',
+
+  NOT_FOUND: '/not-found',
 };
 
 // Navigation menu items for main navbar
