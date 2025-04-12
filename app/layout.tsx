@@ -4,6 +4,7 @@ import './globals.css';
 import { AuroraBackground } from './_components/ui/AuroraBackground';
 import { ThemeProvider } from './_components/ui/ThemeProvider';
 import React from 'react';
+import { ApolloWrapper } from './_components/provider/ApolloProvider';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -30,11 +31,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-full h-full overflow-y-auto`}
       >
+        <ApolloWrapper>
         <ThemeProvider defaultTheme="system">
           <main className="relative h-full w-full overflow-auto">
             <AuroraBackground>{children}</AuroraBackground>
           </main>
-        </ThemeProvider>
+          </ThemeProvider>
+          </ApolloWrapper>
       </body>
     </html>
   );
