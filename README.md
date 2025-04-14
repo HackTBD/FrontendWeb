@@ -122,6 +122,7 @@ This will install all necessary **node_modules** for the project.
 - Tailwind CSS is used for styling—refer to `postcss.config.mjs` for customization.
 - **ESLint** is used for code consistency and best practices. Run `pnpm lint` before committing changes.
 - **Prettier** is used for code formatting. Refer to the [Prettier Guide](Documentation/Developer%20Guide/prettier.md) for setup instructions.
+- **Codegen** is used for generating GraphQL types. Refer to the [Codegen Guide](Documentation/Developer%20Guide/codegen.md) for setup instructions.
 
 ## Next.js Default README
 

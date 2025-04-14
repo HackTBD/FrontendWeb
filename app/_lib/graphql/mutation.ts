@@ -3,7 +3,7 @@ import { gql } from '@apollo/client';
 
 // Approved Emails Mutations
 export const CREATE_APPROVED_EMAIL = gql`
-  mutation CreateApprovedEmail($input: CreateApprovedEmailsInput!) {
+  mutation CreateApprovedEmail($input: ApprovedEmailsInput!) {
     createApprovedEmails(input: $input) {
       approvedEmail {
         id
@@ -11,7 +11,7 @@ export const CREATE_APPROVED_EMAIL = gql`
         email
         eventId
         addedAt
-        hackathonEvent {
+        hackathonEvents {
           id
           name
         }
@@ -29,7 +29,7 @@ export const UPDATE_APPROVED_EMAIL = gql`
         email
         eventId
         addedAt
-        hackathonEvent {
+        hackathonEvents {
           id
           name
         }
@@ -39,8 +39,8 @@ export const UPDATE_APPROVED_EMAIL = gql`
 `;
 
 export const DELETE_APPROVED_EMAIL = gql`
-  mutation DeleteApprovedEmail($input: DeleteApprovedEmailsInput!) {
-    deleteApprovedEmails(input: $input) {
+  mutation DeleteApprovedEmail($keyEmailEventId: UUID!) {
+    deleteApprovedEmails(keyEmailEventId: $keyEmailEventId) {
       success
     }
   }
@@ -48,7 +48,7 @@ export const DELETE_APPROVED_EMAIL = gql`
 
 // Hackathon Events Mutations
 export const CREATE_HACKATHON_EVENT = gql`
-  mutation CreateHackathonEvent($input: CreateHackathonEventsInput!) {
+  mutation CreateHackathonEvent($input: HackathonEventsInput!) {
     createHackathonEvents(input: $input) {
       hackathonEvent {
         id
@@ -65,7 +65,7 @@ export const CREATE_HACKATHON_EVENT = gql`
         level
         status
         createdAt
-        hackathonOrganization {
+        hackathonOrganizations {
           id
           name
         }
@@ -75,8 +75,8 @@ export const CREATE_HACKATHON_EVENT = gql`
 `;
 
 export const UPDATE_HACKATHON_EVENT = gql`
-  mutation UpdateHackathonEvent($input: UpdateHackathonEventsInput!) {
-    updateHackathonEvents(input: $input) {
+  mutation UpdateHackathonEvent($id: ID!, $input: HackathonEventsInput!) {
+    updateHackathonEvents(id: $id, input: $input) {
       hackathonEvent {
         id
         eventId
@@ -92,7 +92,7 @@ export const UPDATE_HACKATHON_EVENT = gql`
         level
         status
         createdAt
-        hackathonOrganization {
+        hackathonOrganizations {
           id
           name
         }
@@ -102,8 +102,8 @@ export const UPDATE_HACKATHON_EVENT = gql`
 `;
 
 export const DELETE_HACKATHON_EVENT = gql`
-  mutation DeleteHackathonEvent($input: DeleteHackathonEventsInput!) {
-    deleteHackathonEvents(input: $input) {
+  mutation DeleteHackathonEvent($id: ID!) {
+    deleteHackathonEvents(id: $id) {
       success
     }
   }
@@ -112,7 +112,7 @@ export const DELETE_HACKATHON_EVENT = gql`
 // Hackathon Organizations Mutations
 export const CREATE_HACKATHON_ORGANIZATION = gql`
   mutation CreateHackathonOrganization(
-    $input: CreateHackathonOrganizationsInput!
+    $input: HackathonOrganizationsInput!
   ) {
     createHackathonOrganizations(input: $input) {
       hackathonOrganization {
@@ -131,9 +131,10 @@ export const CREATE_HACKATHON_ORGANIZATION = gql`
 
 export const UPDATE_HACKATHON_ORGANIZATION = gql`
   mutation UpdateHackathonOrganization(
-    $input: UpdateHackathonOrganizationsInput!
+    $id: ID!,
+    $input: HackathonOrganizationsInput!
   ) {
-    updateHackathonOrganizations(input: $input) {
+    updateHackathonOrganizations(id: $id, input: $input) {
       hackathonOrganization {
         id
         orgId
@@ -150,9 +151,10 @@ export const UPDATE_HACKATHON_ORGANIZATION = gql`
 
 export const DELETE_HACKATHON_ORGANIZATION = gql`
   mutation DeleteHackathonOrganization(
-    $input: DeleteHackathonOrganizationsInput!
+    $id: ID!
   ) {
-    deleteHackathonOrganizations(input: $input) {
+    deleteHackathonOrganizations(id: $id) {
+      message
       success
     }
   }
@@ -161,7 +163,7 @@ export const DELETE_HACKATHON_ORGANIZATION = gql`
 // Hackathon User Profiles Mutations
 export const CREATE_HACKATHON_USER_PROFILE = gql`
   mutation CreateHackathonUserProfile(
-    $input: CreateHackathonUserProfilesInput!
+    $input: HackathonUserProfilesInput!
   ) {
     createHackathonUserProfiles(input: $input) {
       hackathonUserProfile {
@@ -175,11 +177,11 @@ export const CREATE_HACKATHON_USER_PROFILE = gql`
         teamId
         createdAt
         updatedAt
-        hackathonEvent {
+        hackathonEvents {
           id
           name
         }
-        user {
+        users {
           id
           email
           firstName
@@ -192,9 +194,9 @@ export const CREATE_HACKATHON_USER_PROFILE = gql`
 
 export const UPDATE_HACKATHON_USER_PROFILE = gql`
   mutation UpdateHackathonUserProfile(
-    $input: UpdateHackathonUserProfilesInput!
+    $id: ID!, $input: HackathonUserProfilesInput!
   ) {
-    updateHackathonUserProfiles(input: $input) {
+    updateHackathonUserProfiles(id: $id, input: $input) {
       hackathonUserProfile {
         id
         profileId
@@ -206,11 +208,11 @@ export const UPDATE_HACKATHON_USER_PROFILE = gql`
         teamId
         createdAt
         updatedAt
-        hackathonEvent {
+        hackathonEvents {
           id
           name
         }
-        user {
+        users {
           id
           email
           firstName
@@ -223,9 +225,9 @@ export const UPDATE_HACKATHON_USER_PROFILE = gql`
 
 export const DELETE_HACKATHON_USER_PROFILE = gql`
   mutation DeleteHackathonUserProfile(
-    $input: DeleteHackathonUserProfilesInput!
+    $id: ID!
   ) {
-    deleteHackathonUserProfiles(input: $input) {
+    deleteHackathonUserProfiles(id: $id) {
       success
     }
   }
@@ -295,9 +297,10 @@ export const UPDATE_TEAM_MEMBER = gql`
 `;
 
 export const DELETE_TEAM_MEMBER = gql`
-  mutation DeleteTeamMember($input: DeleteTeamMembersInput!) {
-    deleteTeamMembers(input: $input) {
-      success
+  mutation DeleteTeamMember($teamIdUserId: UUID!) {
+    deleteTeamMembers(teamIdUserId: $teamIdUserId) {
+        success
+        message
     }
   }
 `;
@@ -313,11 +316,11 @@ export const CREATE_TEAM = gql`
         teamName
         status
         createdAt
-        hackathonEvent {
+        hackathonEvents {
           id
           name
         }
-        teamMembers {
+        teamMemberss {
           edges {
             node {
               id
@@ -331,7 +334,7 @@ export const CREATE_TEAM = gql`
 `;
 
 export const UPDATE_TEAM = gql`
-  mutation UpdateTeam($input: UpdateTeamsInput!) {
+  mutation UpdateTeam($input: UpdateTeamInput!) {
     updateTeams(input: $input) {
       team {
         id
@@ -340,11 +343,11 @@ export const UPDATE_TEAM = gql`
         teamName
         status
         createdAt
-        hackathonEvent {
+        hackathonEvents {
           id
           name
         }
-        teamMembers {
+        teamMemberss {
           edges {
             node {
               id
@@ -358,9 +361,10 @@ export const UPDATE_TEAM = gql`
 `;
 
 export const DELETE_TEAM = gql`
-  mutation DeleteTeam($input: DeleteTeamsInput!) {
-    deleteTeams(input: $input) {
-      success
+  mutation DeleteTeam($teamId: UUID!) {
+    deleteTeams(teamId: $teamId) {
+        message
+        success
     }
   }
 `;
