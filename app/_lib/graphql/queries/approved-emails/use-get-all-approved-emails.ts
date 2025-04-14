@@ -4,6 +4,7 @@ import { ApprovedEmailsNodeEdge } from '../../__generated__/graphql';
 export const GET_ALL_APPROVED_EMAILS = gql`
   query GetAllApprovedEmails {
     allApprovedEmails {
+      __typename
       edges {
         cursor
         node {

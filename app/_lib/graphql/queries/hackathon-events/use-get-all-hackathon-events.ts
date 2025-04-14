@@ -6,6 +6,7 @@ import { HackathonEventsNode } from '../../__generated__/graphql';
 export const GET_ALL_HACKATHON_EVENTS = gql`
   query GetAllHackathonEvents {
     allHackathonEvents {
+      __typename
       edges {
         cursor
         node {
