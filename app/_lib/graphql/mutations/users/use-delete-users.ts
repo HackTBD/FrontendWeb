@@ -10,5 +10,5 @@ export const DELETE_USER = gql`
 
 // TODO: Not fully implemented
 export function useDeleteUser() {
-  useMutation(DELETE_USER, {});
+  return useMutation(DELETE_USER, {});
 }

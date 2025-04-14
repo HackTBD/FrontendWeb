@@ -11,5 +11,5 @@ export const DELETE_TEAM_MEMBER = gql`
 
 // TODO: Not fully implemented
 export function useDeleteTeamMembers() {
-  useMutation(DELETE_TEAM_MEMBER, {});
+  return useMutation(DELETE_TEAM_MEMBER, {});
 }

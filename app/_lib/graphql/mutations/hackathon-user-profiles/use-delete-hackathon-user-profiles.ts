@@ -10,5 +10,5 @@ export const DELETE_HACKATHON_USER_PROFILE = gql`
 
 // TODO: Not fully implemented
 export function useDeleteHackathonUserProfile() {
-  useMutation(DELETE_HACKATHON_USER_PROFILE, {});
+  return useMutation(DELETE_HACKATHON_USER_PROFILE, {});
 }

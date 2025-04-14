@@ -15,5 +15,5 @@ export const CREATE_USER = gql`
 
 // TODO: Not fully implemented
 export function useCreateUser() {
-  useMutation(CREATE_USER, {});
+  return useMutation(CREATE_USER, {});
 }

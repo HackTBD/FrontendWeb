@@ -13,5 +13,5 @@ export const CREATE_HACKATHON_ORGANIZATION = gql`
 
 // TODO: Not fully implemented
 export function useCreateHackathonOrganization() {
-  useMutation(CREATE_HACKATHON_ORGANIZATION, {});
+  return useMutation(CREATE_HACKATHON_ORGANIZATION, {});
 }

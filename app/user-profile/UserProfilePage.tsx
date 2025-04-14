@@ -7,8 +7,7 @@ import { Button } from '../_components/ui/Button';
 import { useTheme } from '../_components/ui/ThemeProvider';
 import Sidebar from '../_components/ui/Sidebar';
 import { Header } from '../_components/ui/Header';
-import { useMutation } from '@apollo/client';
-import { UPDATE_USER } from '../_lib/graphql/mutation';
+import { useUpdateUser } from '../_lib/graphql/mutations/users/use-update-users';
 
 interface UserData {
   user_id: string;
@@ -43,7 +42,7 @@ export default function UserProfilePage() {
     authProviderId: 'google-oauth2|123456789012345678901',
   });
 
-  const [updateUser, { loading }] = useMutation(UPDATE_USER);
+  const [updateUser, { loading }] = useUpdateUser();
 
   const handleInputChange = (
     field: keyof UserData,

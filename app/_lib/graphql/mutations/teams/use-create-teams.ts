@@ -16,5 +16,5 @@ export const CREATE_TEAM = gql`
 
 // TODO: Not fully implemented
 export function useCreateTeam() {
-  useMutation(CREATE_TEAM, {});
+  return useMutation(CREATE_TEAM, {});
 }

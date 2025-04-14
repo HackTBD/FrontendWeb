@@ -15,5 +15,5 @@ export const UPDATE_HACKATHON_EVENT = gql`
 
 // TODO: Not fully implemented
 export function useUpdateHackathonEvent() {
-  useMutation(UPDATE_HACKATHON_EVENT, {});
+  return useMutation(UPDATE_HACKATHON_EVENT, {});
 }

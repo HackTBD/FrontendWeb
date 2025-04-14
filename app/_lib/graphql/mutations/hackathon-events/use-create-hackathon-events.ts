@@ -14,5 +14,5 @@ export const CREATE_HACKATHON_EVENT = gql`
 `;
 
 export function useCreateHackathonEvent() {
-  useMutation(CREATE_HACKATHON_EVENT, {});
+  return useMutation(CREATE_HACKATHON_EVENT, {});
 }

@@ -15,5 +15,5 @@ export const UPDATE_USER = gql`
 
 // TODO: Not fully implemented
 export function useUpdateUser() {
-  useMutation(UPDATE_USER, {});
+  return useMutation(UPDATE_USER, {});
 }

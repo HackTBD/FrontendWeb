@@ -15,5 +15,5 @@ export const UPDATE_APPROVED_EMAIL = gql`
 
 // TODO: not fully implemented
 export function useUpdateApprovedEmail() {
-  useMutation(UPDATE_APPROVED_EMAIL, {});
+  return useMutation(UPDATE_APPROVED_EMAIL, {});
 }

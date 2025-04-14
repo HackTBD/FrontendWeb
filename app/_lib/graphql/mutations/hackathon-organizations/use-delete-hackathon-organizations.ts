@@ -11,5 +11,5 @@ export const DELETE_HACKATHON_ORGANIZATION = gql`
 
 // TODO: not fully implemented
 export function useDeleteHackathonOrganizations() {
-  useMutation(DELETE_HACKATHON_ORGANIZATION, {});
+  return useMutation(DELETE_HACKATHON_ORGANIZATION, {});
 }

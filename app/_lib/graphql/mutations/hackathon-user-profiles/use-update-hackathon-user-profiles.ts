@@ -18,5 +18,5 @@ export const UPDATE_HACKATHON_USER_PROFILE = gql`
 
 // TODO: Not fully implemented
 export function useUpdateHackathonUserProfiles() {
-  useMutation(UPDATE_HACKATHON_USER_PROFILE, {});
+  return useMutation(UPDATE_HACKATHON_USER_PROFILE, {});
 }

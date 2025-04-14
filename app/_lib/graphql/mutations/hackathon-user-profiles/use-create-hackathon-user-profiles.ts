@@ -15,5 +15,5 @@ export const CREATE_HACKATHON_USER_PROFILE = gql`
 
 // TODO: Not fully implemented
 export function useCreateHackathonUserProfile() {
-  useMutation(CREATE_HACKATHON_USER_PROFILE, {});
+  return useMutation(CREATE_HACKATHON_USER_PROFILE, {});
 }
