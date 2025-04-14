@@ -4,22 +4,22 @@ import { PAGE_INFO_MODEL_FRAGMENT } from '../../fragments/page-info-fields';
 import { HackathonEventsNode } from '../../__generated__/graphql';
 
 export const GET_ALL_HACKATHON_EVENTS = gql`
-    query GetAllHackathonEvents {
-        allHackathonEvents {
-            edges {
-                cursor
-                node {
-                    ...hackathonEventsFields
-                }
-            }
-            pageInfo {
-                ...pageInfoFields
-            }
+  query GetAllHackathonEvents {
+    allHackathonEvents {
+      edges {
+        cursor
+        node {
+          ...hackathonEventsFields
         }
+      }
+      pageInfo {
+        ...pageInfoFields
+      }
     }
-    
-    ${HACKATHON_EVENT_MODEL_FRAGMENT}
-    ${PAGE_INFO_MODEL_FRAGMENT}
+  }
+
+  ${HACKATHON_EVENT_MODEL_FRAGMENT}
+  ${PAGE_INFO_MODEL_FRAGMENT}
 `;
 
 // TODO: Might not what you want
