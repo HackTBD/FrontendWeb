@@ -1,29 +1,42 @@
 /* eslint-disable */
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
+export type MakeEmpty<
+  T extends { [key: string]: unknown },
+  K extends keyof T,
+> = { [_ in K]?: never };
+export type Incremental<T> =
+  | T
+  | {
+      [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never;
+    };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string; }
-  String: { input: string; output: string; }
-  Boolean: { input: boolean; output: boolean; }
-  Int: { input: number; output: number; }
-  Float: { input: number; output: number; }
+  ID: { input: string; output: string };
+  String: { input: string; output: string };
+  Boolean: { input: boolean; output: boolean };
+  Int: { input: number; output: number };
+  Float: { input: number; output: number };
   /**
    * The `DateTime` scalar type represents a DateTime
    * value as specified by
    * [iso8601](https://en.wikipedia.org/wiki/ISO_8601).
    */
-  DateTime: { input: any; output: any; }
+  DateTime: { input: any; output: any };
   /**
    * Leverages the internal Python implementation of UUID (uuid.UUID) to provide native UUID objects
    * in fields, resolvers and input.
    */
-  UUID: { input: any; output: any; }
+  UUID: { input: any; output: any };
 };
 
 export type ApprovedEmailsInput = {
@@ -178,7 +191,7 @@ export enum HackTbdHackathonEventsLevelChoices {
   /** BEGINNER */
   Beginner = 'BEGINNER',
   /** INTERMEDIATE */
-  Intermediate = 'INTERMEDIATE'
+  Intermediate = 'INTERMEDIATE',
 }
 
 /** An enumeration. */
@@ -186,7 +199,7 @@ export enum HackTbdHackathonEventsStatusChoices {
   /** COMPLETED */
   Completed = 'COMPLETED',
   /** UPCOMING */
-  Upcoming = 'UPCOMING'
+  Upcoming = 'UPCOMING',
 }
 
 /** An enumeration. */
@@ -194,7 +207,7 @@ export enum HackTbdTeamsStatusChoices {
   /** COMPLETE */
   Complete = 'COMPLETE',
   /** FORMING */
-  Forming = 'FORMING'
+  Forming = 'FORMING',
 }
 
 export type HackathonEventsInput = {
@@ -237,7 +250,6 @@ export type HackathonEventsNode = Node & {
   teamss: TeamsNodeConnection;
 };
 
-
 export type HackathonEventsNodeApprovedEmailssArgs = {
   addedAt?: InputMaybe<Scalars['DateTime']['input']>;
   after?: InputMaybe<Scalars['String']['input']>;
@@ -250,7 +262,6 @@ export type HackathonEventsNodeApprovedEmailssArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
 };
-
 
 export type HackathonEventsNodeHackathonUserProfilessArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -270,7 +281,6 @@ export type HackathonEventsNodeHackathonUserProfilessArgs = {
   userId?: InputMaybe<Scalars['UUID']['input']>;
   users?: InputMaybe<Scalars['ID']['input']>;
 };
-
 
 export type HackathonEventsNodeTeamssArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -325,7 +335,6 @@ export type HackathonOrganizationsNode = Node & {
   orgId: Scalars['UUID']['output'];
   website?: Maybe<Scalars['String']['output']>;
 };
-
 
 export type HackathonOrganizationsNodeHackathonEventssArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -440,109 +449,88 @@ export type Mutation = {
   updateUsers?: Maybe<UpdateUsersPayload>;
 };
 
-
 export type MutationCreateApprovedEmailsArgs = {
   input: ApprovedEmailsInput;
 };
-
 
 export type MutationCreateHackathonEventsArgs = {
   input: HackathonEventsInput;
 };
 
-
 export type MutationCreateHackathonOrganizationsArgs = {
   input: HackathonOrganizationsInput;
 };
-
 
 export type MutationCreateHackathonUserProfilesArgs = {
   input: HackathonUserProfilesInput;
 };
 
-
 export type MutationCreateTeamMembersArgs = {
   input: CreateTeamMembersInput;
 };
-
 
 export type MutationCreateTeamsArgs = {
   input: CreateTeamsInput;
 };
 
-
 export type MutationCreateUsersArgs = {
   input: CreateUsersInput;
 };
-
 
 export type MutationDeleteApprovedEmailsArgs = {
   keyEmailEventId: Scalars['UUID']['input'];
 };
 
-
 export type MutationDeleteHackathonEventsArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 export type MutationDeleteHackathonOrganizationsArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
-
 export type MutationDeleteHackathonUserProfilesArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 export type MutationDeleteTeamMembersArgs = {
   teamIdUserId: Scalars['UUID']['input'];
 };
 
-
 export type MutationDeleteTeamsArgs = {
   teamId: Scalars['UUID']['input'];
 };
-
 
 export type MutationDeleteUsersArgs = {
   input: DeleteUsersInput;
 };
 
-
 export type MutationUpdateApprovedEmailsArgs = {
   input: UpdateApprovedEmailsInput;
 };
-
 
 export type MutationUpdateHackathonEventsArgs = {
   id: Scalars['ID']['input'];
   input: HackathonEventsInput;
 };
 
-
 export type MutationUpdateHackathonOrganizationsArgs = {
   id: Scalars['ID']['input'];
   input: HackathonOrganizationsInput;
 };
-
 
 export type MutationUpdateHackathonUserProfilesArgs = {
   id: Scalars['ID']['input'];
   input: HackathonUserProfilesInput;
 };
 
-
 export type MutationUpdateTeamMembersArgs = {
   input: UpdateTeamMembersInput;
 };
 
-
 export type MutationUpdateTeamsArgs = {
   input: UpdateTeamInput;
 };
-
 
 export type MutationUpdateUsersArgs = {
   input: UpdateUsersInput;
@@ -592,7 +580,6 @@ export type Query = {
   userByUuid?: Maybe<UsersNode>;
 };
 
-
 export type QueryAllApprovedEmailsArgs = {
   addedAt?: InputMaybe<Scalars['DateTime']['input']>;
   after?: InputMaybe<Scalars['String']['input']>;
@@ -605,7 +592,6 @@ export type QueryAllApprovedEmailsArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
 };
-
 
 export type QueryAllHackathonEventsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -633,7 +619,6 @@ export type QueryAllHackathonEventsArgs = {
   teamss?: InputMaybe<Scalars['ID']['input']>;
 };
 
-
 export type QueryAllHackathonOrganizationsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -649,7 +634,6 @@ export type QueryAllHackathonOrganizationsArgs = {
   orgId?: InputMaybe<Scalars['UUID']['input']>;
   website?: InputMaybe<Scalars['String']['input']>;
 };
-
 
 export type QueryAllHackathonUserProfilesArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -670,7 +654,6 @@ export type QueryAllHackathonUserProfilesArgs = {
   users?: InputMaybe<Scalars['ID']['input']>;
 };
 
-
 export type QueryAllTeamMembersArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -683,7 +666,6 @@ export type QueryAllTeamMembersArgs = {
   userId?: InputMaybe<Scalars['UUID']['input']>;
   userss?: InputMaybe<Scalars['ID']['input']>;
 };
-
 
 export type QueryAllTeamsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -699,7 +681,6 @@ export type QueryAllTeamsArgs = {
   teamMemberss?: InputMaybe<Scalars['ID']['input']>;
   teamName?: InputMaybe<Scalars['String']['input']>;
 };
-
 
 export type QueryAllUsersArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -724,71 +705,57 @@ export type QueryAllUsersArgs = {
   userId?: InputMaybe<Scalars['UUID']['input']>;
 };
 
-
 export type QueryApprovedEmailArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 export type QueryApprovedEmailByEmailArgs = {
   email: Scalars['String']['input'];
 };
 
-
 export type QueryHackathonEventArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 export type QueryHackathonEventByEventIdArgs = {
   eventId: Scalars['UUID']['input'];
 };
 
-
 export type QueryHackathonOrganizationArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 export type QueryHackathonOrganizationByOrgIdArgs = {
   orgId: Scalars['UUID']['input'];
 };
 
-
 export type QueryHackathonUserProfileArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 export type QueryHackathonUserProfileByProfileIdArgs = {
   profileId: Scalars['UUID']['input'];
 };
 
-
 export type QueryTeamArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 export type QueryTeamByTeamIdArgs = {
   teamId: Scalars['UUID']['input'];
 };
 
-
 export type QueryTeamMemberArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 export type QueryTeamMemberByMemberIdArgs = {
   teamIdUserId: Scalars['UUID']['input'];
 };
 
-
 export type QueryUserArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 export type QueryUserByUuidArgs = {
   userId: Scalars['UUID']['input'];
@@ -805,7 +772,6 @@ export type TeamMembersNode = Node & {
   userss: UsersNodeConnection;
 };
 
-
 export type TeamMembersNodeTeamssArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -820,7 +786,6 @@ export type TeamMembersNodeTeamssArgs = {
   teamMemberss?: InputMaybe<Scalars['ID']['input']>;
   teamName?: InputMaybe<Scalars['String']['input']>;
 };
-
 
 export type TeamMembersNodeUserssArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -874,7 +839,6 @@ export type TeamsNode = Node & {
   teamMemberss: TeamMembersNodeConnection;
   teamName: Scalars['String']['output'];
 };
-
 
 export type TeamsNodeTeamMemberssArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -1001,7 +965,6 @@ export type UsersNode = Node & {
   userId: Scalars['UUID']['output'];
 };
 
-
 export type UsersNodeHackathonUserProfilessArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -1020,7 +983,6 @@ export type UsersNodeHackathonUserProfilessArgs = {
   userId?: InputMaybe<Scalars['UUID']['input']>;
   users?: InputMaybe<Scalars['ID']['input']>;
 };
-
 
 export type UsersNodeTeamMemberssArgs = {
   after?: InputMaybe<Scalars['String']['input']>;

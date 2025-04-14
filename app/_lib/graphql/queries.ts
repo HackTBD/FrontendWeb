@@ -12,7 +12,7 @@ export const GET_ALL_APPROVED_EMAILS = gql`
           email
           eventId
           addedAt
-          hackathonEvent {
+          hackathonEvents {
             id
             name
           }
@@ -30,7 +30,7 @@ export const GET_APPROVED_EMAIL_BY_ID = gql`
       email
       eventId
       addedAt
-      hackathonEvent {
+      hackathonEvents {
         id
         name
       }
@@ -59,7 +59,7 @@ export const GET_ALL_HACKATHON_EVENTS = gql`
           level
           status
           createdAt
-          hackathonOrganization {
+          hackathonOrganizations {
             id
             name
           }
@@ -87,7 +87,7 @@ export const GET_HACKATHON_EVENT_BY_ID = gql`
       level
       status
       createdAt
-      hackathonOrganization {
+      hackathonOrganizations {
         id
         name
       }
@@ -146,11 +146,11 @@ export const GET_ALL_HACKATHON_USER_PROFILES = gql`
           teamId
           createdAt
           updatedAt
-          hackathonEvent {
+          hackathonEvents {
             id
             name
           }
-          user {
+          users {
             id
             email
             firstName
@@ -175,11 +175,11 @@ export const GET_HACKATHON_USER_PROFILE_BY_ID = gql`
       teamId
       createdAt
       updatedAt
-      hackathonEvent {
+      hackathonEvents {
         id
         name
       }
-      user {
+      users {
         id
         email
         firstName
@@ -264,11 +264,11 @@ export const GET_ALL_TEAMS = gql`
           teamName
           status
           createdAt
-          hackathonEvent {
+          hackathonEvents {
             id
             name
           }
-          teamMembers {
+          teamMemberss {
             edges {
               node {
                 id
@@ -291,11 +291,11 @@ export const GET_TEAM_BY_ID = gql`
       teamName
       status
       createdAt
-      hackathonEvent {
+      hackathonEvents {
         id
         name
       }
-      teamMembers {
+      teamMemberss {
         edges {
           node {
             id
@@ -353,63 +353,63 @@ export const GET_USER_BY_ID = gql`
     }
   }
 `;
-
-// Custom Queries
-export const GET_USERS_BY_EVENT = gql`
-  query GetUsersByEvent($eventId: UUID!) {
-    usersByEvent(eventId: $eventId) {
-      edges {
-        node {
-          id
-          userId
-          email
-          firstName
-          lastName
-          hackathonUserProfiless {
-            edges {
-              node {
-                profileId
-                skills
-                bio
-                teamId
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
-export const GET_TEAMS_BY_EVENT = gql`
-  query GetTeamsByEvent($eventId: UUID!) {
-    teamsByEvent(eventId: $eventId) {
-      edges {
-        node {
-          id
-          teamId
-          teamName
-          status
-          teamMembers {
-            edges {
-              node {
-                id
-                userId
-                userss {
-                  edges {
-                    node {
-                      id
-                      firstName
-                      lastName
-                      email
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+//
+// // Custom Queries
+// export const GET_USERS_BY_EVENT = gql`
+//   query GetUsersByEvent($eventId: UUID!) {
+//     usersByEvent(eventId: $eventId) {
+//       edges {
+//         node {
+//           id
+//           userId
+//           email
+//           firstName
+//           lastName
+//           hackathonUserProfiless {
+//             edges {
+//               node {
+//                 profileId
+//                 skills
+//                 bio
+//                 teamId
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// `;
+//
+// export const GET_TEAMS_BY_EVENT = gql`
+//   query GetTeamsByEvent($eventId: UUID!) {
+//     teamsByEvent(eventId: $eventId) {
+//       edges {
+//         node {
+//           id
+//           teamId
+//           teamName
+//           status
+//           teamMembers {
+//             edges {
+//               node {
+//                 id
+//                 userId
+//                 userss {
+//                   edges {
+//                     node {
+//                       id
+//                       firstName
+//                       lastName
+//                       email
+//                     }
+//                   }
+//                 }
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// `;

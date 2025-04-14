@@ -45,8 +45,11 @@ export default function UserProfilePage() {
 
   const [updateUser, { loading }] = useMutation(UPDATE_USER);
 
-  const handleInputChange = (field: keyof UserData, value: string | boolean) => {
-    setUserData(prev => ({ ...prev, [field]: value }));
+  const handleInputChange = (
+    field: keyof UserData,
+    value: string | boolean
+  ) => {
+    setUserData((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleSave = async () => {
@@ -83,7 +86,9 @@ export default function UserProfilePage() {
   };
 
   return (
-    <div className={`flex h-screen ${isDark ? 'bg-zinc-900/40' : 'bg-gray-50/40'}`}>
+    <div
+      className={`flex h-screen ${isDark ? 'bg-zinc-900/40' : 'bg-gray-50/40'}`}
+    >
       <Sidebar activePath="/profile" hideLogo={true} />
 
       <div className="flex-1 overflow-auto">
@@ -121,7 +126,9 @@ export default function UserProfilePage() {
                   <div className="ml-6 mb-4">
                     <h2
                       className={`text-2xl font-bold ${
-                        isDark ? 'text-theme-gradient-primary' : 'text-theme-primary'
+                        isDark
+                          ? 'text-theme-gradient-primary'
+                          : 'text-theme-primary'
                       }`}
                     >
                       {userData.firstName} {userData.lastName}
@@ -139,7 +146,11 @@ export default function UserProfilePage() {
                     onClick={isEditing ? handleSave : () => setIsEditing(true)}
                     disabled={loading}
                   >
-                    {loading ? 'Saving...' : isEditing ? 'Save Changes' : 'Edit Profile'}
+                    {loading
+                      ? 'Saving...'
+                      : isEditing
+                        ? 'Save Changes'
+                        : 'Edit Profile'}
                   </Button>
                 </div>
               </div>
@@ -156,12 +167,16 @@ export default function UserProfilePage() {
                   <input
                     type="text"
                     value={userData.firstName}
-                    onChange={(e) => handleInputChange('firstName', e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange('firstName', e.target.value)
+                    }
                     disabled={!isEditing}
                     className={`w-full p-3 rounded-lg border transition-colors ${
                       isDark
                         ? `bg-zinc-800 border-pink-500/30 text-theme-primary placeholder:text-pink-300/40 ${
-                            isEditing ? 'hover:bg-zinc-700 focus:bg-zinc-700 focus:border-pink-500/50' : ''
+                            isEditing
+                              ? 'hover:bg-zinc-700 focus:bg-zinc-700 focus:border-pink-500/50'
+                              : ''
                           }`
                         : `bg-white border-gray-300 text-theme-primary ${
                             isEditing ? 'hover:bg-gray-50 focus:bg-gray-50' : ''
@@ -177,12 +192,16 @@ export default function UserProfilePage() {
                   <input
                     type="text"
                     value={userData.lastName}
-                    onChange={(e) => handleInputChange('lastName', e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange('lastName', e.target.value)
+                    }
                     disabled={!isEditing}
                     className={`w-full p-3 rounded-lg border transition-colors ${
                       isDark
                         ? `bg-zinc-800 border-pink-500/30 text-theme-primary placeholder:text-pink-300/40 ${
-                            isEditing ? 'hover:bg-zinc-700 focus:bg-zinc-700 focus:border-pink-500/50' : ''
+                            isEditing
+                              ? 'hover:bg-zinc-700 focus:bg-zinc-700 focus:border-pink-500/50'
+                              : ''
                           }`
                         : `bg-white border-gray-300 text-theme-primary ${
                             isEditing ? 'hover:bg-gray-50 focus:bg-gray-50' : ''
@@ -204,7 +223,9 @@ export default function UserProfilePage() {
                     className={`w-full p-3 rounded-lg border transition-colors ${
                       isDark
                         ? `bg-zinc-800 border-pink-500/30 text-theme-primary placeholder:text-pink-300/40 ${
-                            isEditing ? 'hover:bg-zinc-700 focus:bg-zinc-700 focus:border-pink-500/50' : ''
+                            isEditing
+                              ? 'hover:bg-zinc-700 focus:bg-zinc-700 focus:border-pink-500/50'
+                              : ''
                           }`
                         : `bg-white border-gray-300 text-theme-primary ${
                             isEditing ? 'hover:bg-gray-50 focus:bg-gray-50' : ''
@@ -225,7 +246,9 @@ export default function UserProfilePage() {
                     className={`w-full p-3 rounded-lg border transition-colors ${
                       isDark
                         ? `bg-zinc-800 border-pink-500/30 text-theme-primary placeholder:text-pink-300/40 ${
-                            isEditing ? 'hover:bg-zinc-700 focus:bg-zinc-700 focus:border-pink-500/50' : ''
+                            isEditing
+                              ? 'hover:bg-zinc-700 focus:bg-zinc-700 focus:border-pink-500/50'
+                              : ''
                           }`
                         : `bg-white border-gray-300 text-theme-primary ${
                             isEditing ? 'hover:bg-gray-50 focus:bg-gray-50' : ''
@@ -243,7 +266,9 @@ export default function UserProfilePage() {
                     className={`w-full p-3 rounded-lg border flex items-center transition-colors ${
                       isDark
                         ? `bg-zinc-800 border-purple-500/30 ${
-                            isEditing ? 'hover:bg-zinc-700 focus-within:border-purple-500/50' : ''
+                            isEditing
+                              ? 'hover:bg-zinc-700 focus-within:border-purple-500/50'
+                              : ''
                           }`
                         : `bg-white border-gray-300 ${isEditing ? 'hover:bg-gray-50' : ''}`
                     }`}
@@ -254,7 +279,9 @@ export default function UserProfilePage() {
                     <input
                       type="text"
                       value={userData.devpost}
-                      onChange={(e) => handleInputChange('devpost', e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange('devpost', e.target.value)
+                      }
                       disabled={!isEditing}
                       className={`flex-1 bg-transparent focus:outline-none ml-2 text-theme-primary ${
                         !isEditing ? 'cursor-not-allowed opacity-80' : ''
@@ -272,7 +299,9 @@ export default function UserProfilePage() {
                     className={`w-full p-3 rounded-lg border flex items-center transition-colors ${
                       isDark
                         ? `bg-zinc-800 border-purple-500/30 ${
-                            isEditing ? 'hover:bg-zinc-700 focus-within:border-purple-500/50' : ''
+                            isEditing
+                              ? 'hover:bg-zinc-700 focus-within:border-purple-500/50'
+                              : ''
                           }`
                         : `bg-white border-gray-300 ${isEditing ? 'hover:bg-gray-50' : ''}`
                     }`}
@@ -283,7 +312,9 @@ export default function UserProfilePage() {
                     <input
                       type="text"
                       value={userData.github}
-                      onChange={(e) => handleInputChange('github', e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange('github', e.target.value)
+                      }
                       disabled={!isEditing}
                       className={`flex-1 bg-transparent focus:outline-none ml-2 text-theme-primary ${
                         !isEditing ? 'cursor-not-allowed opacity-80' : ''
@@ -300,7 +331,9 @@ export default function UserProfilePage() {
                     className={`w-full p-3 rounded-lg border flex items-center transition-colors ${
                       isDark
                         ? `bg-zinc-800 border-purple-500/30 ${
-                            isEditing ? 'hover:bg-zinc-700 focus-within:border-purple-500/50' : ''
+                            isEditing
+                              ? 'hover:bg-zinc-700 focus-within:border-purple-500/50'
+                              : ''
                           }`
                         : `bg-white border-gray-300 ${isEditing ? 'hover:bg-gray-50' : ''}`
                     }`}
@@ -311,7 +344,9 @@ export default function UserProfilePage() {
                     <input
                       type="text"
                       value={userData.linkedin}
-                      onChange={(e) => handleInputChange('linkedin', e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange('linkedin', e.target.value)
+                      }
                       disabled={!isEditing}
                       className={`flex-1 bg-transparent focus:outline-none ml-2 text-theme-primary ${
                         !isEditing ? 'cursor-not-allowed opacity-80' : ''

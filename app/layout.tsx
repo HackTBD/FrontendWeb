@@ -32,12 +32,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-full h-full overflow-y-auto`}
       >
         <ApolloWrapper>
-        <ThemeProvider defaultTheme="system">
-          <main className="relative h-full w-full overflow-auto">
-            <AuroraBackground>{children}</AuroraBackground>
-          </main>
+          <ThemeProvider defaultTheme="system">
+            <main className="relative h-full w-full overflow-auto">
+              <AuroraBackground>{children}</AuroraBackground>
+            </main>
           </ThemeProvider>
-          </ApolloWrapper>
+        </ApolloWrapper>
       </body>
     </html>
   );

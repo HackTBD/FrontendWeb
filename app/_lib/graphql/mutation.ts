@@ -111,9 +111,7 @@ export const DELETE_HACKATHON_EVENT = gql`
 
 // Hackathon Organizations Mutations
 export const CREATE_HACKATHON_ORGANIZATION = gql`
-  mutation CreateHackathonOrganization(
-    $input: HackathonOrganizationsInput!
-  ) {
+  mutation CreateHackathonOrganization($input: HackathonOrganizationsInput!) {
     createHackathonOrganizations(input: $input) {
       hackathonOrganization {
         id
@@ -131,7 +129,7 @@ export const CREATE_HACKATHON_ORGANIZATION = gql`
 
 export const UPDATE_HACKATHON_ORGANIZATION = gql`
   mutation UpdateHackathonOrganization(
-    $id: ID!,
+    $id: ID!
     $input: HackathonOrganizationsInput!
   ) {
     updateHackathonOrganizations(id: $id, input: $input) {
@@ -150,9 +148,7 @@ export const UPDATE_HACKATHON_ORGANIZATION = gql`
 `;
 
 export const DELETE_HACKATHON_ORGANIZATION = gql`
-  mutation DeleteHackathonOrganization(
-    $id: ID!
-  ) {
+  mutation DeleteHackathonOrganization($id: ID!) {
     deleteHackathonOrganizations(id: $id) {
       message
       success
@@ -162,9 +158,7 @@ export const DELETE_HACKATHON_ORGANIZATION = gql`
 
 // Hackathon User Profiles Mutations
 export const CREATE_HACKATHON_USER_PROFILE = gql`
-  mutation CreateHackathonUserProfile(
-    $input: HackathonUserProfilesInput!
-  ) {
+  mutation CreateHackathonUserProfile($input: HackathonUserProfilesInput!) {
     createHackathonUserProfiles(input: $input) {
       hackathonUserProfile {
         id
@@ -194,7 +188,8 @@ export const CREATE_HACKATHON_USER_PROFILE = gql`
 
 export const UPDATE_HACKATHON_USER_PROFILE = gql`
   mutation UpdateHackathonUserProfile(
-    $id: ID!, $input: HackathonUserProfilesInput!
+    $id: ID!
+    $input: HackathonUserProfilesInput!
   ) {
     updateHackathonUserProfiles(id: $id, input: $input) {
       hackathonUserProfile {
@@ -224,9 +219,7 @@ export const UPDATE_HACKATHON_USER_PROFILE = gql`
 `;
 
 export const DELETE_HACKATHON_USER_PROFILE = gql`
-  mutation DeleteHackathonUserProfile(
-    $id: ID!
-  ) {
+  mutation DeleteHackathonUserProfile($id: ID!) {
     deleteHackathonUserProfiles(id: $id) {
       success
     }
@@ -299,8 +292,8 @@ export const UPDATE_TEAM_MEMBER = gql`
 export const DELETE_TEAM_MEMBER = gql`
   mutation DeleteTeamMember($teamIdUserId: UUID!) {
     deleteTeamMembers(teamIdUserId: $teamIdUserId) {
-        success
-        message
+      success
+      message
     }
   }
 `;
@@ -363,8 +356,8 @@ export const UPDATE_TEAM = gql`
 export const DELETE_TEAM = gql`
   mutation DeleteTeam($teamId: UUID!) {
     deleteTeams(teamId: $teamId) {
-        message
-        success
+      message
+      success
     }
   }
 `;
