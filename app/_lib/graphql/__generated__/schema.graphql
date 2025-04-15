@@ -1,0 +1,960 @@
+input ApprovedEmailsInput {
+  email: String!
+  eventId: UUID!
+}
+
+type ApprovedEmailsNode implements Node {
+  addedAt: DateTime
+  email: String!
+  eventId: UUID
+  hackathonEvents: HackathonEventsNode!
+
+  """
+  The ID of the object
+  """
+  id: ID!
+  keyEmailEventId: UUID!
+}
+
+type ApprovedEmailsNodeConnection {
+  """
+  Contains the nodes in this connection.
+  """
+  edges: [ApprovedEmailsNodeEdge]!
+
+  """
+  Pagination data for this connection.
+  """
+  pageInfo: PageInfo!
+}
+
+"""
+A Relay edge containing a `ApprovedEmailsNode` and its cursor.
+"""
+type ApprovedEmailsNodeEdge {
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge
+  """
+  node: ApprovedEmailsNode
+}
+
+type CreateApprovedEmails {
+  approvedEmail: ApprovedEmailsNode
+  message: String
+  success: Boolean
+}
+
+type CreateHackathonEvents {
+  hackathonEvent: HackathonEventsNode
+}
+
+type CreateHackathonOrganizations {
+  hackathonOrganization: HackathonOrganizationsNode
+}
+
+type CreateHackathonUserProfiles {
+  hackathonUserProfile: HackathonUserProfilesNode
+}
+
+type CreateTeamMembers {
+  message: String
+  success: Boolean
+  teamMember: TeamMembersNode
+}
+
+input CreateTeamMembersInput {
+  teamId: UUID!
+  userId: UUID!
+}
+
+type CreateTeams {
+  message: String
+  success: Boolean
+  team: TeamsNode
+}
+
+input CreateTeamsInput {
+  eventId: UUID!
+  status: String
+  teamName: String!
+}
+
+input CreateUsersInput {
+  authProvider: String!
+  authProviderId: String!
+  clientMutationId: String
+  devpost: String
+  email: String!
+  firstName: String
+  github: String
+  isAdmin: Boolean
+  lastName: String
+  linkedin: String
+  phoneNumber: String
+}
+
+type CreateUsersPayload {
+  clientMutationId: String
+  user: UsersNode
+}
+
+"""
+The `DateTime` scalar type represents a DateTime
+value as specified by
+[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+"""
+scalar DateTime
+
+type DeleteApprovedEmails {
+  message: String
+  success: Boolean
+}
+
+type DeleteHackathonEvents {
+  success: Boolean
+}
+
+type DeleteHackathonOrganizations {
+  message: String
+  success: Boolean
+}
+
+type DeleteHackathonUserProfiles {
+  success: Boolean
+}
+
+type DeleteTeamMembers {
+  message: String
+  success: Boolean
+}
+
+type DeleteTeams {
+  message: String
+  success: Boolean
+}
+
+input DeleteUsersInput {
+  clientMutationId: String
+  userId: UUID!
+}
+
+type DeleteUsersPayload {
+  clientMutationId: String
+  success: Boolean
+}
+
+"""
+An enumeration.
+"""
+enum HackTbdHackathonEventsLevelChoices {
+  """
+  ADVANCED
+  """
+  ADVANCED
+
+  """
+  BEGINNER
+  """
+  BEGINNER
+
+  """
+  INTERMEDIATE
+  """
+  INTERMEDIATE
+}
+
+"""
+An enumeration.
+"""
+enum HackTbdHackathonEventsStatusChoices {
+  """
+  COMPLETED
+  """
+  COMPLETED
+
+  """
+  UPCOMING
+  """
+  UPCOMING
+}
+
+"""
+An enumeration.
+"""
+enum HackTbdTeamsStatusChoices {
+  """
+  COMPLETE
+  """
+  COMPLETE
+
+  """
+  FORMING
+  """
+  FORMING
+}
+
+input HackathonEventsInput {
+  description: String
+  endDate: DateTime!
+  hackathonOrganizationsId: UUID!
+  isVirtual: Boolean
+  level: String
+  location: String
+  maxTeamSize: Int!
+  minTeamSize: Int!
+  name: String!
+  orgId: UUID
+  startDate: DateTime!
+  status: String
+  teamSize: Int!
+}
+
+type HackathonEventsNode implements Node {
+  approvedEmailss(
+    addedAt: DateTime
+    after: String
+    before: String
+    email: String
+    eventId: UUID
+    first: Int
+    hackathonEvents: ID
+    keyEmailEventId: UUID
+    last: Int
+    offset: Int
+  ): ApprovedEmailsNodeConnection!
+  createdAt: DateTime
+  description: String
+  endDate: DateTime!
+  eventId: UUID!
+  hackathonOrganizations: HackathonOrganizationsNode!
+  hackathonUserProfiless(
+    after: String
+    before: String
+    bio: String
+    createdAt: DateTime
+    eventId: UUID
+    first: Int
+    hackathonEvents: ID
+    last: Int
+    offset: Int
+    preferences: String
+    profileId: UUID
+    skills: String
+    teamId: UUID
+    updatedAt: DateTime
+    userId: UUID
+    users: ID
+  ): HackathonUserProfilesNodeConnection!
+
+  """
+  The ID of the object
+  """
+  id: ID!
+  isVirtual: Boolean
+  level: HackTbdHackathonEventsLevelChoices
+  location: String
+  maxTeamSize: Int!
+  minTeamSize: Int!
+  name: String!
+  orgId: UUID
+  startDate: DateTime!
+  status: HackTbdHackathonEventsStatusChoices
+  teamSize: Int!
+  teamss(
+    after: String
+    before: String
+    createdAt: DateTime
+    eventId: UUID
+    first: Int
+    hackathonEvents: ID
+    last: Int
+    offset: Int
+    status: HackTbdTeamsStatusChoices
+    teamId: UUID
+    teamMemberss: ID
+    teamName: String
+  ): TeamsNodeConnection!
+}
+
+type HackathonEventsNodeConnection {
+  """
+  Contains the nodes in this connection.
+  """
+  edges: [HackathonEventsNodeEdge]!
+
+  """
+  Pagination data for this connection.
+  """
+  pageInfo: PageInfo!
+}
+
+"""
+A Relay edge containing a `HackathonEventsNode` and its cursor.
+"""
+type HackathonEventsNodeEdge {
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge
+  """
+  node: HackathonEventsNode
+}
+
+input HackathonOrganizationsInput {
+  contactEmail: String
+  description: String
+  linkedin: String
+  name: String!
+  website: String
+}
+
+type HackathonOrganizationsNode implements Node {
+  contactEmail: String
+  createdAt: DateTime
+  description: String
+  hackathonEventss(
+    after: String
+    approvedEmailss: ID
+    before: String
+    createdAt: DateTime
+    description: String
+    endDate: DateTime
+    eventId: UUID
+    first: Int
+    hackathonOrganizations: ID
+    hackathonUserProfiless: ID
+    isVirtual: Boolean
+    last: Int
+    level: HackTbdHackathonEventsLevelChoices
+    location: String
+    maxTeamSize: Int
+    minTeamSize: Int
+    name: String
+    offset: Int
+    orgId: UUID
+    startDate: DateTime
+    status: HackTbdHackathonEventsStatusChoices
+    teamSize: Int
+    teamss: ID
+  ): HackathonEventsNodeConnection!
+
+  """
+  The ID of the object
+  """
+  id: ID!
+  linkedin: String
+  name: String!
+  orgId: UUID!
+  website: String
+}
+
+type HackathonOrganizationsNodeConnection {
+  """
+  Contains the nodes in this connection.
+  """
+  edges: [HackathonOrganizationsNodeEdge]!
+
+  """
+  Pagination data for this connection.
+  """
+  pageInfo: PageInfo!
+}
+
+"""
+A Relay edge containing a `HackathonOrganizationsNode` and its cursor.
+"""
+type HackathonOrganizationsNodeEdge {
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge
+  """
+  node: HackathonOrganizationsNode
+}
+
+input HackathonUserProfilesInput {
+  bio: String
+  eventId: UUID
+  hackathonEventsId: UUID!
+  preferences: String
+  skills: String!
+  teamId: UUID
+  userId: UUID
+  usersId: UUID!
+}
+
+type HackathonUserProfilesNode implements Node {
+  bio: String
+  createdAt: DateTime
+  eventId: UUID
+  hackathonEvents: HackathonEventsNode!
+
+  """
+  The ID of the object
+  """
+  id: ID!
+  preferences: String
+  profileId: UUID!
+  skills: String!
+  teamId: UUID
+  updatedAt: DateTime
+  userId: UUID
+  users: UsersNode!
+}
+
+type HackathonUserProfilesNodeConnection {
+  """
+  Contains the nodes in this connection.
+  """
+  edges: [HackathonUserProfilesNodeEdge]!
+
+  """
+  Pagination data for this connection.
+  """
+  pageInfo: PageInfo!
+}
+
+"""
+A Relay edge containing a `HackathonUserProfilesNode` and its cursor.
+"""
+type HackathonUserProfilesNodeEdge {
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge
+  """
+  node: HackathonUserProfilesNode
+}
+
+type Mutation {
+  createApprovedEmails(input: ApprovedEmailsInput!): CreateApprovedEmails
+  createHackathonEvents(input: HackathonEventsInput!): CreateHackathonEvents
+  createHackathonOrganizations(
+    input: HackathonOrganizationsInput!
+  ): CreateHackathonOrganizations
+  createHackathonUserProfiles(
+    input: HackathonUserProfilesInput!
+  ): CreateHackathonUserProfiles
+  createTeamMembers(input: CreateTeamMembersInput!): CreateTeamMembers
+  createTeams(input: CreateTeamsInput!): CreateTeams
+  createUsers(input: CreateUsersInput!): CreateUsersPayload
+  deleteApprovedEmails(keyEmailEventId: UUID!): DeleteApprovedEmails
+  deleteHackathonEvents(id: ID!): DeleteHackathonEvents
+  deleteHackathonOrganizations(id: ID): DeleteHackathonOrganizations
+  deleteHackathonUserProfiles(id: ID!): DeleteHackathonUserProfiles
+  deleteTeamMembers(teamIdUserId: UUID!): DeleteTeamMembers
+  deleteTeams(teamId: UUID!): DeleteTeams
+  deleteUsers(input: DeleteUsersInput!): DeleteUsersPayload
+  updateApprovedEmails(input: UpdateApprovedEmailsInput!): UpdateApprovedEmails
+  updateHackathonEvents(
+    id: ID!
+    input: HackathonEventsInput!
+  ): UpdateHackathonEvents
+  updateHackathonOrganizations(
+    id: ID!
+    input: HackathonOrganizationsInput!
+  ): UpdateHackathonOrganizations
+  updateHackathonUserProfiles(
+    id: ID!
+    input: HackathonUserProfilesInput!
+  ): UpdateHackathonUserProfiles
+  updateTeamMembers(input: UpdateTeamMembersInput!): UpdateTeamMembers
+  updateTeams(input: UpdateTeamInput!): UpdateTeams
+  updateUsers(input: UpdateUsersInput!): UpdateUsersPayload
+}
+
+"""
+An object with an ID
+"""
+interface Node {
+  """
+  The ID of the object
+  """
+  id: ID!
+}
+
+"""
+The Relay compliant `PageInfo` type, containing data necessary to paginate this connection.
+"""
+type PageInfo {
+  """
+  When paginating forwards, the cursor to continue.
+  """
+  endCursor: String
+
+  """
+  When paginating forwards, are there more items?
+  """
+  hasNextPage: Boolean!
+
+  """
+  When paginating backwards, are there more items?
+  """
+  hasPreviousPage: Boolean!
+
+  """
+  When paginating backwards, the cursor to continue.
+  """
+  startCursor: String
+}
+
+type Query {
+  allApprovedEmails(
+    addedAt: DateTime
+    after: String
+    before: String
+    email: String
+    eventId: UUID
+    first: Int
+    hackathonEvents: ID
+    keyEmailEventId: UUID
+    last: Int
+    offset: Int
+  ): ApprovedEmailsNodeConnection
+  allHackathonEvents(
+    after: String
+    approvedEmailss: ID
+    before: String
+    createdAt: DateTime
+    description: String
+    endDate: DateTime
+    eventId: UUID
+    first: Int
+    hackathonOrganizations: ID
+    hackathonUserProfiless: ID
+    isVirtual: Boolean
+    last: Int
+    level: HackTbdHackathonEventsLevelChoices
+    location: String
+    maxTeamSize: Int
+    minTeamSize: Int
+    name: String
+    offset: Int
+    orgId: UUID
+    startDate: DateTime
+    status: HackTbdHackathonEventsStatusChoices
+    teamSize: Int
+    teamss: ID
+  ): HackathonEventsNodeConnection
+  allHackathonOrganizations(
+    after: String
+    before: String
+    contactEmail: String
+    createdAt: DateTime
+    description: String
+    first: Int
+    hackathonEventss: ID
+    last: Int
+    linkedin: String
+    name: String
+    offset: Int
+    orgId: UUID
+    website: String
+  ): HackathonOrganizationsNodeConnection
+  allHackathonUserProfiles(
+    after: String
+    before: String
+    bio: String
+    createdAt: DateTime
+    eventId: UUID
+    first: Int
+    hackathonEvents: ID
+    last: Int
+    offset: Int
+    preferences: String
+    profileId: UUID
+    skills: String
+    teamId: UUID
+    updatedAt: DateTime
+    userId: UUID
+    users: ID
+  ): HackathonUserProfilesNodeConnection
+  allTeamMembers(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    offset: Int
+    teamId: UUID
+    teamIdUserId: UUID
+    teamss: ID
+    userId: UUID
+    userss: ID
+  ): TeamMembersNodeConnection
+  allTeams(
+    after: String
+    before: String
+    createdAt: DateTime
+    eventId: UUID
+    first: Int
+    hackathonEvents: ID
+    last: Int
+    offset: Int
+    status: HackTbdTeamsStatusChoices
+    teamId: UUID
+    teamMemberss: ID
+    teamName: String
+  ): TeamsNodeConnection
+  allUsers(
+    after: String
+    authProvider: String
+    authProviderId: String
+    before: String
+    createdAt: DateTime
+    devpost: String
+    email: String
+    first: Int
+    firstName: String
+    github: String
+    hackathonUserProfiless: ID
+    isAdmin: Boolean
+    last: Int
+    lastName: String
+    linkedin: String
+    offset: Int
+    phoneNumber: String
+    teamMemberss: ID
+    updatedAt: DateTime
+    userId: UUID
+  ): UsersNodeConnection
+  approvedEmail(
+    """
+    The ID of the object
+    """
+    id: ID!
+  ): ApprovedEmailsNode
+  approvedEmailByEmail(email: String!): ApprovedEmailsNode
+  hackathonEvent(
+    """
+    The ID of the object
+    """
+    id: ID!
+  ): HackathonEventsNode
+  hackathonEventByEventId(eventId: UUID!): HackathonEventsNode
+  hackathonOrganization(
+    """
+    The ID of the object
+    """
+    id: ID!
+  ): HackathonOrganizationsNode
+  hackathonOrganizationByOrgId(orgId: UUID!): HackathonOrganizationsNode
+  hackathonUserProfile(
+    """
+    The ID of the object
+    """
+    id: ID!
+  ): HackathonUserProfilesNode
+  hackathonUserProfileByProfileId(profileId: UUID!): HackathonUserProfilesNode
+  team(
+    """
+    The ID of the object
+    """
+    id: ID!
+  ): TeamsNode
+  teamByTeamId(teamId: UUID!): TeamsNode
+  teamMember(
+    """
+    The ID of the object
+    """
+    id: ID!
+  ): TeamMembersNode
+  teamMemberByMemberId(teamIdUserId: UUID!): TeamMembersNode
+  user(
+    """
+    The ID of the object
+    """
+    id: ID!
+  ): UsersNode
+  userByUuid(userId: UUID!): UsersNode
+}
+
+type TeamMembersNode implements Node {
+  """
+  The ID of the object
+  """
+  id: ID!
+  teamId: UUID
+  teamIdUserId: UUID!
+  teamss(
+    after: String
+    before: String
+    createdAt: DateTime
+    eventId: UUID
+    first: Int
+    hackathonEvents: ID
+    last: Int
+    offset: Int
+    status: HackTbdTeamsStatusChoices
+    teamId: UUID
+    teamMemberss: ID
+    teamName: String
+  ): TeamsNodeConnection!
+  userId: UUID
+  userss(
+    after: String
+    authProvider: String
+    authProviderId: String
+    before: String
+    createdAt: DateTime
+    devpost: String
+    email: String
+    first: Int
+    firstName: String
+    github: String
+    hackathonUserProfiless: ID
+    isAdmin: Boolean
+    last: Int
+    lastName: String
+    linkedin: String
+    offset: Int
+    phoneNumber: String
+    teamMemberss: ID
+    updatedAt: DateTime
+    userId: UUID
+  ): UsersNodeConnection!
+}
+
+type TeamMembersNodeConnection {
+  """
+  Contains the nodes in this connection.
+  """
+  edges: [TeamMembersNodeEdge]!
+
+  """
+  Pagination data for this connection.
+  """
+  pageInfo: PageInfo!
+}
+
+"""
+A Relay edge containing a `TeamMembersNode` and its cursor.
+"""
+type TeamMembersNodeEdge {
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge
+  """
+  node: TeamMembersNode
+}
+
+type TeamsNode implements Node {
+  createdAt: DateTime
+  eventId: UUID
+  hackathonEvents: HackathonEventsNode!
+
+  """
+  The ID of the object
+  """
+  id: ID!
+  status: HackTbdTeamsStatusChoices
+  teamId: UUID!
+  teamMemberss(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    offset: Int
+    teamId: UUID
+    teamIdUserId: UUID
+    teamss: ID
+    userId: UUID
+    userss: ID
+  ): TeamMembersNodeConnection!
+  teamName: String!
+}
+
+type TeamsNodeConnection {
+  """
+  Contains the nodes in this connection.
+  """
+  edges: [TeamsNodeEdge]!
+
+  """
+  Pagination data for this connection.
+  """
+  pageInfo: PageInfo!
+}
+
+"""
+A Relay edge containing a `TeamsNode` and its cursor.
+"""
+type TeamsNodeEdge {
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge
+  """
+  node: TeamsNode
+}
+
+"""
+Leverages the internal Python implementation of UUID (uuid.UUID) to provide native UUID objects
+in fields, resolvers and input.
+"""
+scalar UUID
+
+type UpdateApprovedEmails {
+  approvedEmail: ApprovedEmailsNode
+  message: String
+  success: Boolean
+}
+
+input UpdateApprovedEmailsInput {
+  email: String!
+  keyEmailEventId: UUID!
+}
+
+type UpdateHackathonEvents {
+  hackathonEvent: HackathonEventsNode
+}
+
+type UpdateHackathonOrganizations {
+  hackathonOrganization: HackathonOrganizationsNode
+}
+
+type UpdateHackathonUserProfiles {
+  hackathonUserProfile: HackathonUserProfilesNode
+}
+
+input UpdateTeamInput {
+  status: String
+  teamId: UUID!
+  teamName: String
+}
+
+type UpdateTeamMembers {
+  message: String
+  success: Boolean
+  teamMember: TeamMembersNode
+}
+
+input UpdateTeamMembersInput {
+  teamId: UUID
+  teamIdUserId: UUID!
+  userId: UUID
+}
+
+type UpdateTeams {
+  message: String
+  success: Boolean
+  team: TeamsNode
+}
+
+input UpdateUsersInput {
+  authProvider: String
+  authProviderId: String
+  clientMutationId: String
+  devpost: String
+  email: String
+  firstName: String
+  github: String
+  isAdmin: Boolean
+  lastName: String
+  linkedin: String
+  phoneNumber: String
+  userId: UUID!
+}
+
+type UpdateUsersPayload {
+  clientMutationId: String
+  user: UsersNode
+}
+
+type UsersNode implements Node {
+  authProvider: String
+  authProviderId: String
+  createdAt: DateTime
+  devpost: String
+  email: String!
+  firstName: String
+  github: String
+  hackathonUserProfiless(
+    after: String
+    before: String
+    bio: String
+    createdAt: DateTime
+    eventId: UUID
+    first: Int
+    hackathonEvents: ID
+    last: Int
+    offset: Int
+    preferences: String
+    profileId: UUID
+    skills: String
+    teamId: UUID
+    updatedAt: DateTime
+    userId: UUID
+    users: ID
+  ): HackathonUserProfilesNodeConnection!
+
+  """
+  The ID of the object
+  """
+  id: ID!
+  isAdmin: Boolean
+  lastName: String
+  linkedin: String
+  phoneNumber: String
+  teamMemberss(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    offset: Int
+    teamId: UUID
+    teamIdUserId: UUID
+    teamss: ID
+    userId: UUID
+    userss: ID
+  ): TeamMembersNodeConnection!
+  updatedAt: DateTime
+  userId: UUID!
+}
+
+type UsersNodeConnection {
+  """
+  Contains the nodes in this connection.
+  """
+  edges: [UsersNodeEdge]!
+
+  """
+  Pagination data for this connection.
+  """
+  pageInfo: PageInfo!
+}
+
+"""
+A Relay edge containing a `UsersNode` and its cursor.
+"""
+type UsersNodeEdge {
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge
+  """
+  node: UsersNode
+}
