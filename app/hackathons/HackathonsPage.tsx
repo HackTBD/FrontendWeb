@@ -25,7 +25,7 @@ const mockHackathons = [
     teamSize: '1-4',
     prizes: '$10,000 in prizes',
     tags: ['beginner-friendly', 'in-person', 'hardware'],
-    status: 'open', // open, closed, happening, ended
+    status: 'open',
   },
   {
     id: '2',
@@ -127,7 +127,7 @@ export default function HackathonsPage() {
       window.matchMedia('(prefers-color-scheme: dark)').matches);
 
   const [hackathons, setHackathons] = useState(mockHackathons);
-  const [activeFilter, setActiveFilter] = useState('all'); // all, open, closed, happening, etc.
+  const [activeFilter, setActiveFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [isFiltersVisible, setIsFiltersVisible] = useState(false);
   const [advancedFilters, setAdvancedFilters] = useState({
@@ -231,6 +231,11 @@ export default function HackathonsPage() {
     setAdvancedFilters(filters);
   };
 
+  // Handler for Create Hackathon button
+  const handleCreateHackathon = () => {
+    window.location.href = '/hackathons/create';
+  };
+
   return (
     <div className={`flex h-screen ${isDark ? 'bg-zinc-900/40' : 'bg-white'}`}>
       <Sidebar activePath="/hackathons" hideLogo={true} />
@@ -266,6 +271,7 @@ export default function HackathonsPage() {
               <Button
                 variant="primary"
                 className={`rounded-lg ${!isDark && 'bg-[#036CA0] hover:bg-[#036CA0]/90'}`}
+                onClick={handleCreateHackathon}
               >
                 + Create Hackathon
               </Button>
