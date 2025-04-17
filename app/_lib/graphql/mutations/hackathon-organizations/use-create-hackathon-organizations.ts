@@ -4,14 +4,15 @@ import { HACKATHON_ORGANIZATION_MODEL_FRAGMENT } from '../../fragments/hackthon-
 export const CREATE_HACKATHON_ORGANIZATION = gql`
   mutation CreateHackathonOrganization($input: HackathonOrganizationsInput!) {
     createHackathonOrganizations(input: $input) {
-      ...hackathonOrganizationsFields
+      hackathonOrganization {
+        ...hackathonOrganizationsFields
+      }
     }
   }
 
   ${HACKATHON_ORGANIZATION_MODEL_FRAGMENT}
 `;
 
-// TODO: Not fully implemented
 export function useCreateHackathonOrganization() {
   return useMutation(CREATE_HACKATHON_ORGANIZATION, {});
 }

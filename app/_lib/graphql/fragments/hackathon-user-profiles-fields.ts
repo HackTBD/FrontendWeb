@@ -1,6 +1,6 @@
 import { DocumentNode, gql } from '@apollo/client';
-import { USER_MODEL_FRAGMENT } from './users-fields';
-import { HACKATHON_EVENT_MODEL_FRAGMENT } from './hackathon-events-fields';
+import { USERS_CORE_FIELDS } from './users-core-fields'; 
+import { HACKATHON_EVENTS_CORE_FIELDS } from './hackathon-events-core-fields'; 
 
 export const HACKATHON_USER_PROFILE_MODEL_FRAGMENT: DocumentNode = gql`
   fragment hackathonUserProfilesFields on HackathonUserProfilesNode {
@@ -9,7 +9,7 @@ export const HACKATHON_USER_PROFILE_MODEL_FRAGMENT: DocumentNode = gql`
     createdAt
     eventId
     hackathonEvents {
-      ...hackathonEventsFields
+      ...hackathonEventsCoreFields
     }
     id
     preferences
@@ -19,10 +19,10 @@ export const HACKATHON_USER_PROFILE_MODEL_FRAGMENT: DocumentNode = gql`
     updatedAt
     userId
     users {
-      ...usersFields
+      ...usersCoreFields
     }
   }
 
-  ${USER_MODEL_FRAGMENT}
-  ${HACKATHON_EVENT_MODEL_FRAGMENT}
+  ${USERS_CORE_FIELDS}
+  ${HACKATHON_EVENTS_CORE_FIELDS}
 `;
