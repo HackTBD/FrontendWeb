@@ -198,7 +198,8 @@ export default function HackathonFormDetails({
             </option>
             {experienceLevels.map((level) => (
               <option key={level} value={level}>
-                {level.charAt(0).toUpperCase() + level.slice(1).replace('level', 'Level')}
+                {level.charAt(0).toUpperCase() +
+                  level.slice(1).replace('level', 'Level')}
               </option>
             ))}
           </select>

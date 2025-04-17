@@ -120,7 +120,7 @@ export default function HackathonFormSubmit({
                     {formatDate(formState.end_date)}
                   </span>
                 </div>
-                
+
                 <div className="flex justify-between">
                   <span>Time Zone:</span>
                   <span className="font-medium">
@@ -151,8 +151,6 @@ export default function HackathonFormSubmit({
                   <span>Experience Level:</span>
                   <span className="font-medium">{formState.level}</span>
                 </div>
-
-               
               </div>
             </div>
 

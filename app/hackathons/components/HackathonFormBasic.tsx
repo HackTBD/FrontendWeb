@@ -182,8 +182,6 @@ export default function HackathonFormBasic({
             />
           </div>
 
-          
-
           {/* Timezone */}
           <div>
             <label

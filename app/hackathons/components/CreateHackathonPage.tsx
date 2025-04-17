@@ -22,7 +22,7 @@ type HackathonFormState = {
   level: string;
   start_date: string;
   end_date: string;
-  status:  'open' | 'happening' | 'closed' | 'completed';
+  status: 'open' | 'happening' | 'closed' | 'completed';
   // Additional fields for the form
   org_id: string;
   hackathon_organizations_id: string;
@@ -48,10 +48,15 @@ const initialFormState: HackathonFormState = {
 
 export default function CreateHackathonPage() {
   const { theme } = useTheme();
-  const isDark = theme === 'dark' || (theme === 'system' && typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  const isDark =
+    theme === 'dark' ||
+    (theme === 'system' &&
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches);
 
   const [currentStep, setCurrentStep] = useState(1);
-  const [formState, setFormState] = useState<HackathonFormState>(initialFormState);
+  const [formState, setFormState] =
+    useState<HackathonFormState>(initialFormState);
 
   // Simulate fetching org_id from user context
   useState(() => {
@@ -94,10 +99,20 @@ export default function CreateHackathonPage() {
   };
 
   const handleSubmit = async () => {
-    console.log('handleSubmit triggered, currentStep:', currentStep, 'formState:', formState);
+    console.log(
+      'handleSubmit triggered, currentStep:',
+      currentStep,
+      'formState:',
+      formState
+    );
 
     // Validate required fields
-    if (!formState.name || !formState.start_date || !formState.end_date || !formState.location) {
+    if (
+      !formState.name ||
+      !formState.start_date ||
+      !formState.end_date ||
+      !formState.location
+    ) {
       Swal.fire({
         icon: 'error',
         title: 'Validation Error',
@@ -150,9 +165,21 @@ export default function CreateHackathonPage() {
     console.log('Rendering step:', currentStep);
     switch (currentStep) {
       case 1:
-        return <HackathonFormBasic formState={formState} updateFormState={updateFormState} isDark={isDark} />;
+        return (
+          <HackathonFormBasic
+            formState={formState}
+            updateFormState={updateFormState}
+            isDark={isDark}
+          />
+        );
       case 2:
-        return <HackathonFormDetails formState={formState} updateFormState={updateFormState} isDark={isDark} />;
+        return (
+          <HackathonFormDetails
+            formState={formState}
+            updateFormState={updateFormState}
+            isDark={isDark}
+          />
+        );
       case 3:
         return <HackathonFormSubmit formState={formState} isDark={isDark} />;
       default:
@@ -172,10 +199,14 @@ export default function CreateHackathonPage() {
         <div className="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
           {/* Page title */}
           <div className="mb-8">
-            <h1 className={`text-3xl font-bold ${isDark ? 'text-theme-gradient-primary' : 'text-theme-gradient-primary'}`}>
+            <h1
+              className={`text-3xl font-bold ${isDark ? 'text-theme-gradient-primary' : 'text-theme-gradient-primary'}`}
+            >
               Create New Hackathon
             </h1>
-            <p className={`mt-2 ${isDark ? 'text-zinc-400' : 'text-theme-secondary'}`}>
+            <p
+              className={`mt-2 ${isDark ? 'text-zinc-400' : 'text-theme-secondary'}`}
+            >
               Fill in the details to create and publish your hackathon event
             </p>
           </div>
@@ -204,7 +235,9 @@ export default function CreateHackathonPage() {
                 </span>
               ))}
             </div>
-            <div className={`w-full h-2 rounded-full ${isDark ? 'bg-zinc-800' : 'bg-gray-100'}`}>
+            <div
+              className={`w-full h-2 rounded-full ${isDark ? 'bg-zinc-800' : 'bg-gray-100'}`}
+            >
               <div
                 className={`h-full rounded-full ${isDark ? 'bg-pink-500' : 'bg-[#036CA0]'}`}
                 style={{ width: `${(currentStep / 4) * 100}%` }}
@@ -213,7 +246,9 @@ export default function CreateHackathonPage() {
           </div>
 
           {/* Form container */}
-          <div className={`rounded-lg p-6 mb-8 ${isDark ? 'bg-zinc-800/50' : 'bg-white border border-gray-200'}`}>
+          <div
+            className={`rounded-lg p-6 mb-8 ${isDark ? 'bg-zinc-800/50' : 'bg-white border border-gray-200'}`}
+          >
             {renderStep()}
           </div>
 
