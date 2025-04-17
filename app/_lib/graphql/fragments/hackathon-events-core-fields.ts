@@ -13,6 +13,5 @@ export const HACKATHON_EVENTS_CORE_FIELDS = gql`
     endDate
     status
     description
-
   }
 `;
