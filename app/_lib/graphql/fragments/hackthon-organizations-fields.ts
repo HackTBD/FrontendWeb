@@ -1,5 +1,6 @@
+// hackathon-organizations-fields.ts
 import { DocumentNode, gql } from '@apollo/client';
-import { HACKATHON_EVENT_MODEL_FRAGMENT } from './hackathon-events-fields';
+import { HACKATHON_EVENTS_CORE_FIELDS } from './hackathon-events-core-fields';
 import { PAGE_INFO_MODEL_FRAGMENT } from './page-info-fields';
 
 export const HACKATHON_ORGANIZATION_MODEL_FRAGMENT: DocumentNode = gql`
@@ -13,7 +14,7 @@ export const HACKATHON_ORGANIZATION_MODEL_FRAGMENT: DocumentNode = gql`
       edges {
         cursor
         node {
-          ...hackathonEventsFields
+          ...hackathonEventsCoreFields
         }
       }
       pageInfo {
@@ -27,6 +28,6 @@ export const HACKATHON_ORGANIZATION_MODEL_FRAGMENT: DocumentNode = gql`
     website
   }
 
-  ${HACKATHON_EVENT_MODEL_FRAGMENT}
+  ${HACKATHON_EVENTS_CORE_FIELDS}
   ${PAGE_INFO_MODEL_FRAGMENT}
 `;

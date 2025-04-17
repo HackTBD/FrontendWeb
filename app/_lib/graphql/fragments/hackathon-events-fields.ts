@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 import { PAGE_INFO_MODEL_FRAGMENT } from './page-info-fields';
 import { HACKATHON_USER_PROFILE_MODEL_FRAGMENT } from './hackathon-user-profiles-fields';
-import { TEAM_MODEL_FRAGMENT } from './teams-fields';
+import { TEAMS_CORE_FIELDS } from './teams-core-fields';
 import { HACKATHON_ORGANIZATION_MODEL_FRAGMENT } from './hackthon-organizations-fields';
 
 export const HACKATHON_EVENT_MODEL_FRAGMENT = gql`
@@ -42,16 +42,14 @@ export const HACKATHON_EVENT_MODEL_FRAGMENT = gql`
     maxTeamSize
     minTeamSize
     name
-    orgId
     startDate
     status
-    teamSize
     teamss {
       __typename
       edges {
         cursor
         node {
-          ...teamsFields
+          ...teamsCoreFields
         }
       }
       pageInfo {
@@ -62,6 +60,6 @@ export const HACKATHON_EVENT_MODEL_FRAGMENT = gql`
 
   ${PAGE_INFO_MODEL_FRAGMENT}
   ${HACKATHON_USER_PROFILE_MODEL_FRAGMENT}
-  ${TEAM_MODEL_FRAGMENT}
+  ${TEAMS_CORE_FIELDS}
   ${HACKATHON_ORGANIZATION_MODEL_FRAGMENT}
 `;
