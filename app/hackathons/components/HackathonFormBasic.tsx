@@ -1,3 +1,5 @@
+'use client';
+
 import { FormEvent } from 'react';
 
 type HackathonFormBasicProps = {
@@ -127,10 +129,10 @@ export default function HackathonFormBasic({
                 : 'bg-white border-gray-200 focus:border-[#036CA0]/30 focus:ring-[#036CA0]/20'
             }`}
           >
-            <option value="open">Open for Registration</option>
-            <option value="closed">Registration Closed</option>
-            <option value="happening">Currently Happening</option>
-            <option value="completed">Completed</option>
+            <option value="Open">Open for Registration</option>
+            <option value="Closed">Registration Closed</option>
+            <option value="Happening">Currently Happening</option>
+            <option value="Ended">Completed</option>
           </select>
         </div>
 
@@ -180,34 +182,6 @@ export default function HackathonFormBasic({
                   : 'bg-white border-gray-200 focus:border-[#036CA0]/30 focus:ring-[#036CA0]/20'
               }`}
             />
-          </div>
-
-          {/* Timezone */}
-          <div>
-            <label
-              htmlFor="timezone"
-              className={`block text-sm font-medium mb-1 ${isDark ? 'text-zinc-300' : 'text-gray-700'}`}
-            >
-              Timezone *
-            </label>
-            <select
-              id="timezone"
-              name="timezone"
-              value={formState.timezone}
-              onChange={handleChange}
-              required
-              className={`w-full px-4 py-2.5 rounded-lg text-sm border focus:ring-2 focus:outline-none transition-colors ${
-                isDark
-                  ? 'bg-zinc-800/60 text-white border-zinc-700/50 focus:border-pink-500/30 focus:ring-pink-500/20'
-                  : 'bg-white border-gray-200 focus:border-[#036CA0]/30 focus:ring-[#036CA0]/20'
-              }`}
-            >
-              <option value="EST">Eastern Time (EST)</option>
-              <option value="CST">Central Time (CST)</option>
-              <option value="MST">Mountain Time (MST)</option>
-              <option value="PST">Pacific Time (PST)</option>
-              <option value="UTC">Coordinated Universal Time (UTC)</option>
-            </select>
           </div>
         </div>
       </div>

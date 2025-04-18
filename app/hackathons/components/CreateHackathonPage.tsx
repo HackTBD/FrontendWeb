@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import { useTheme } from '../../_components/ui/ThemeProvider';
 import Sidebar from '../../_components/ui/Sidebar';
@@ -9,9 +9,9 @@ import { Button } from '../../_components/ui/Button';
 import HackathonFormBasic from '../components/HackathonFormBasic';
 import HackathonFormDetails from '../components/HackathonFormDetails';
 import HackathonFormSubmit from '../components/HackathonFormSubmit';
+import { useCreateHackathonEvent } from '../../_lib/graphql/mutations/hackathon-events/use-create-hackathon-events';
 
 type HackathonFormState = {
-  // Required database fields
   name: string;
   description: string;
   team_size: string;
@@ -19,14 +19,14 @@ type HackathonFormState = {
   max_team_size: number;
   location: string;
   is_virtual: boolean;
-  level: string;
+  level: 'beginner' | 'intermediate' | 'advanced' | 'all level';
   start_date: string;
   end_date: string;
-  status: 'open' | 'happening' | 'closed' | 'completed';
-  // Additional fields for the form
+  status: 'open' | 'closed' | 'happening' | 'completed';
   org_id: string;
   hackathon_organizations_id: string;
-  timezone: string;
+  logo?: File | null;
+  coverImage?: File | null;
 };
 
 const initialFormState: HackathonFormState = {
@@ -39,11 +39,12 @@ const initialFormState: HackathonFormState = {
   max_team_size: 4,
   location: '',
   is_virtual: false,
-  level: 'all-levels',
+  level: 'beginner',
   start_date: '',
   end_date: '',
   status: 'open',
-  timezone: 'EST',
+  logo: null,
+  coverImage: null,
 };
 
 export default function CreateHackathonPage() {
@@ -57,16 +58,21 @@ export default function CreateHackathonPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [formState, setFormState] =
     useState<HackathonFormState>(initialFormState);
+  const [createHackathonEvent, { loading, error }] = useCreateHackathonEvent();
 
-  // Simulate fetching org_id from user context
-  useState(() => {
-    const mockOrgId = '2d7a8f62-bf79-4d49-a4f4-0f7b2d83c90e';
-    setFormState((prev) => ({
-      ...prev,
-      org_id: mockOrgId,
-      hackathon_organizations_id: mockOrgId,
-    }));
-  });
+  // Fetch or set org_id dynamically
+  useEffect(() => {
+    const fetchOrgId = async () => {
+      // TODO: Replace with actual logic to fetch org_id from auth context
+      const mockOrgId = '2d7a8f62-bf79-4d49-a4f4-0f7b2d83c90e'; // Verify this ID exists in the backend
+      setFormState((prev) => ({
+        ...prev,
+        org_id: mockOrgId,
+        hackathon_organizations_id: mockOrgId,
+      }));
+    };
+    fetchOrgId();
+  }, []);
 
   const updateFormState = (updates: Partial<HackathonFormState>) => {
     setFormState((prev) => {
@@ -111,52 +117,72 @@ export default function CreateHackathonPage() {
       !formState.name ||
       !formState.start_date ||
       !formState.end_date ||
-      !formState.location
+      !formState.location ||
+      !formState.hackathon_organizations_id
     ) {
       Swal.fire({
         icon: 'error',
         title: 'Validation Error',
-        text: 'Please fill in all required fields (Name, Location, Start Date, End Date).',
+        text: 'Please fill in all required fields (Name, Location, Start Date, End Date, Organization).',
       });
       return;
     }
 
-    // Prepare data for database
-    const hackathonData = {
-      event_id: null,
-      org_id: formState.org_id,
+    // Validate date format
+    if (
+      isNaN(new Date(formState.start_date).getTime()) ||
+      isNaN(new Date(formState.end_date).getTime())
+    ) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid Date',
+        text: 'Please provide valid start and end dates.',
+      });
+      return;
+    }
+
+    // Prepare data for GraphQL mutation
+    const input = {
       name: formState.name,
       description: formState.description,
-      team_size: formState.team_size,
       location: formState.location,
-      is_virtual: formState.is_virtual,
+      isVirtual: formState.is_virtual,
       level: formState.level,
-      start_date: formState.start_date,
-      end_date: formState.end_date,
-      created_at: new Date().toISOString(),
-      hackathon_organizations_id: formState.hackathon_organizations_id,
-      max_team_size: formState.max_team_size,
-      min_team_size: formState.min_team_size,
+      minTeamSize: formState.min_team_size,
+      maxTeamSize: formState.max_team_size,
+      startDate: new Date(formState.start_date).toISOString(),
+      endDate: new Date(formState.end_date).toISOString(),
       status: formState.status,
+      hackathonOrganizationsId: formState.hackathon_organizations_id,
     };
 
-    console.log('Form data for database insertion:', hackathonData);
-
     try {
-      // Simulate API call (uncomment when backend is ready)
-      // await createHackathon(hackathonData);
-      Swal.fire({
-        icon: 'success',
-        title: 'Success',
-        text: 'Hackathon created successfully!',
+      const { data } = await createHackathonEvent({
+        variables: { input },
       });
-      window.location.href = '/hackathons';
-    } catch (error) {
-      console.error('Error creating hackathon:', error);
+
+      if (data?.createHackathonEvents?.hackathonEvent) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Hackathon created successfully!',
+        });
+        window.location.href = '/hackathons';
+      } else {
+        throw new Error('No hackathon event returned');
+      }
+    } catch (err: any) {
+      console.error('Error creating hackathon:', err);
+      let errorMessage = 'Failed to create hackathon. Please try again.';
+      if (err.graphQLErrors && err.graphQLErrors.length > 0) {
+        errorMessage = err.graphQLErrors[0].message;
+      } else if (err.networkError) {
+        errorMessage = 'Network error. Please check your connection.';
+      }
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'Failed to create hackathon. Please try again.',
+        text: errorMessage,
       });
     }
   };
@@ -190,14 +216,9 @@ export default function CreateHackathonPage() {
   return (
     <div className={`flex h-screen ${isDark ? 'bg-zinc-900/40' : 'bg-white'}`}>
       <Sidebar activePath="/hackathons" hideLogo={true} />
-
       <div className="flex-1 overflow-auto">
-        {/* Header */}
         <Header />
-
-        {/* Main content */}
         <div className="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-          {/* Page title */}
           <div className="mb-8">
             <h1
               className={`text-3xl font-bold ${isDark ? 'text-theme-gradient-primary' : 'text-theme-gradient-primary'}`}
@@ -210,8 +231,6 @@ export default function CreateHackathonPage() {
               Fill in the details to create and publish your hackathon event
             </p>
           </div>
-
-          {/* Progress bar */}
           <div className="mb-8">
             <div className="flex justify-between mb-2">
               {['Basic Info', 'Details', 'Review'].map((step, index) => (
@@ -244,15 +263,11 @@ export default function CreateHackathonPage() {
               />
             </div>
           </div>
-
-          {/* Form container */}
           <div
             className={`rounded-lg p-6 mb-8 ${isDark ? 'bg-zinc-800/50' : 'bg-white border border-gray-200'}`}
           >
             {renderStep()}
           </div>
-
-          {/* Navigation buttons */}
           <div className="flex justify-between">
             <Button
               variant="outline"
@@ -262,7 +277,6 @@ export default function CreateHackathonPage() {
             >
               Back
             </Button>
-
             <div className="flex space-x-3">
               <Button
                 variant="outline"
@@ -271,7 +285,6 @@ export default function CreateHackathonPage() {
               >
                 Cancel
               </Button>
-
               {currentStep < 4 ? (
                 <Button
                   variant="primary"
@@ -284,12 +297,10 @@ export default function CreateHackathonPage() {
                 <Button
                   variant="primary"
                   className={`rounded-lg ${!isDark && 'bg-[#036CA0] hover:bg-[#036CA0]/90'}`}
-                  onClick={() => {
-                    console.log('Create Hackathon button clicked');
-                    handleSubmit();
-                  }}
+                  onClick={handleSubmit}
+                  disabled={loading}
                 >
-                  Create Hackathon
+                  {loading ? 'Creating...' : 'Create Hackathon'}
                 </Button>
               )}
             </div>

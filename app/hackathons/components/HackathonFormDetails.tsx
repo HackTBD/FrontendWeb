@@ -1,5 +1,3 @@
-'use client';
-
 import { FormEvent, useState } from 'react';
 
 type HackathonFormDetailsProps = {
@@ -8,7 +6,6 @@ type HackathonFormDetailsProps = {
   isDark: boolean;
 };
 
-// Available tags for hackathons
 const availableTags = [
   'ai-ml',
   'web3',
@@ -29,8 +26,13 @@ const availableTags = [
   'international',
 ];
 
-// ENUM values for experience level
-const experienceLevels = ['beginner', 'intermediate', 'advanced', 'all level'];
+// Use lowercase enum values to match the schema
+const experienceLevels: { value: string; label: string }[] = [
+  { value: 'beginner', label: 'Beginner' },
+  { value: 'intermediate', label: 'Intermediate' },
+  { value: 'advanced', label: 'Advanced' },
+  { value: 'all level', label: 'All Level' },
+];
 
 export default function HackathonFormDetails({
   formState,
@@ -48,12 +50,10 @@ export default function HackathonFormDetails({
 
   const handleNumericChange = (e: FormEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget;
-    // Convert to integer and ensure it's a valid positive number
     const numValue = parseInt(value, 10);
     if (!isNaN(numValue) && numValue >= 1) {
       updateFormState({ [name]: numValue });
     } else if (value === '') {
-      // Allow empty field for user input
       updateFormState({ [name]: '' });
     }
   };
@@ -196,10 +196,9 @@ export default function HackathonFormDetails({
             <option value="" disabled>
               Select experience level
             </option>
-            {experienceLevels.map((level) => (
-              <option key={level} value={level}>
-                {level.charAt(0).toUpperCase() +
-                  level.slice(1).replace('level', 'Level')}
+            {experienceLevels.map(({ value, label }) => (
+              <option key={value} value={value}>
+                {label}
               </option>
             ))}
           </select>

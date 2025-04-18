@@ -1,3 +1,5 @@
+'use client';
+
 import { format } from 'date-fns';
 
 type HackathonFormSubmitProps = {
@@ -120,13 +122,6 @@ export default function HackathonFormSubmit({
                     {formatDate(formState.end_date)}
                   </span>
                 </div>
-
-                <div className="flex justify-between">
-                  <span>Time Zone:</span>
-                  <span className="font-medium">
-                    {formState.timezone || 'Not set'}
-                  </span>
-                </div>
               </div>
             </div>
 
@@ -167,38 +162,6 @@ export default function HackathonFormSubmit({
                 {formState.description || 'No description provided'}
               </div>
             </div>
-
-            {/* Requirements if provided */}
-            {formState.requirements && (
-              <div>
-                <h4
-                  className={`text-sm font-medium mb-2 ${isDark ? 'text-zinc-300' : 'text-gray-700'}`}
-                >
-                  Special Requirements
-                </h4>
-                <div
-                  className={`text-sm whitespace-pre-wrap ${isDark ? 'text-zinc-400' : 'text-gray-600'}`}
-                >
-                  {formState.requirements}
-                </div>
-              </div>
-            )}
-
-            {/* Rules if provided */}
-            {formState.rules && (
-              <div>
-                <h4
-                  className={`text-sm font-medium mb-2 ${isDark ? 'text-zinc-300' : 'text-gray-700'}`}
-                >
-                  Rules & Guidelines
-                </h4>
-                <div
-                  className={`text-sm whitespace-pre-wrap ${isDark ? 'text-zinc-400' : 'text-gray-600'}`}
-                >
-                  {formState.rules}
-                </div>
-              </div>
-            )}
           </div>
 
           {/* Footer with status */}
@@ -213,7 +176,7 @@ export default function HackathonFormSubmit({
               </span>
               <span
                 className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                  formState.status === 'draft'
+                  formState.status === 'Draft'
                     ? isDark
                       ? 'bg-yellow-400/10 text-yellow-300'
                       : 'bg-yellow-100 text-yellow-800'
@@ -222,9 +185,7 @@ export default function HackathonFormSubmit({
                       : 'bg-green-100 text-green-800'
                 }`}
               >
-                {formState.status === 'draft'
-                  ? 'Draft'
-                  : 'Open for Registration'}
+                {formState.status}
               </span>
             </div>
             <p
