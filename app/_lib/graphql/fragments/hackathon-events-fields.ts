@@ -7,15 +7,6 @@ import { HACKATHON_ORGANIZATION_MODEL_FRAGMENT } from './hackthon-organizations-
 export const HACKATHON_EVENT_MODEL_FRAGMENT = gql`
   fragment hackathonEventsFields on HackathonEventsNode {
     __typename
-    approvedEmailss {
-      __typename
-      edges {
-        cursor
-        node {
-          ...approvedEmailsFields
-        }
-      }
-    }
     createdAt
     description
     endDate
@@ -57,7 +48,6 @@ export const HACKATHON_EVENT_MODEL_FRAGMENT = gql`
       }
     }
   }
-
   ${PAGE_INFO_MODEL_FRAGMENT}
   ${HACKATHON_USER_PROFILE_MODEL_FRAGMENT}
   ${TEAMS_CORE_FIELDS}

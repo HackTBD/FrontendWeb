@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { Button } from '../../_components/ui/Button';
@@ -19,13 +18,6 @@ interface HackathonCardProps {
     startDate: string;
     /** End date in ISO format (YYYY-MM-DD) */
     endDate: string;
-    timezone: string;
-    logo: string;
-    coverImage: string;
-    registrationDeadline: string;
-    teamSize: string;
-    prizes: string;
-    tags: string[];
     status: string;
   };
   isDark: boolean;
@@ -38,11 +30,9 @@ interface HackathonCardProps {
  * - Title, organizer, and location
  * - Dates and status
  * - Visual indicators for status (open, happening, etc.)
- * - Tags relevant to the hackathon
- * - Team size information
  * - Link to view details
  *
- * The component handles image fallbacks gracefully and adjusts styling based on theme.
+ * The component adjusts styling based on theme.
  *
  * @param {HackathonCardProps} props - The component props
  * @returns {JSX.Element} Rendered HackathonCard component
@@ -51,10 +41,6 @@ export default function HackathonCard({
   hackathon,
   isDark,
 }: HackathonCardProps) {
-  // State to track if images have loaded
-  const [coverImageFailed, setCoverImageFailed] = useState(false);
-  const [logoImageFailed, setLogoImageFailed] = useState(false);
-
   // Format date to readable format
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = {
@@ -79,17 +65,17 @@ export default function HackathonCard({
           textColor: isDark ? 'text-purple-400' : 'text-purple-800',
           label: 'Happening Now',
         };
-      case 'coming-soon':
+      case 'closed':
         return {
           bgColor: isDark ? 'bg-blue-500/20' : 'bg-blue-100',
           textColor: isDark ? 'text-blue-400' : 'text-blue-800',
-          label: 'Coming Soon',
+          label: 'Closed',
         };
-      case 'ended':
+      case 'completed':
         return {
           bgColor: isDark ? 'bg-gray-500/20' : 'bg-gray-100',
           textColor: isDark ? 'text-gray-400' : 'text-gray-800',
-          label: 'Ended',
+          label: 'Completed',
         };
       default:
         return {
@@ -110,57 +96,19 @@ export default function HackathonCard({
           : 'bg-white border border-gray-200 hover:border-[#036CA0]/20'
       }`}
     >
-      {/* Card header with cover image */}
+      {/* Card header */}
       <div className="relative h-40">
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/10 z-10" />
 
         {/* Default fallback image handling */}
         <div
-          className={`absolute inset-0 flex items-center justify-center ${isDark ? 'bg-zinc-700' : 'bg-gray-100'} ${!coverImageFailed && hackathon.coverImage ? 'hidden' : ''}`}
+          className={`absolute inset-0 flex items-center justify-center ${isDark ? 'bg-zinc-700' : 'bg-gray-100'}`}
         >
           <span
             className={`text-4xl font-bold ${isDark ? 'text-zinc-600' : 'text-gray-300'}`}
           >
             {hackathon.title.substring(0, 2)}
           </span>
-        </div>
-
-        {/* Cover image (if available) */}
-        {hackathon.coverImage && (
-          <Image
-            src={hackathon.coverImage}
-            alt={hackathon.title}
-            width={400}
-            height={200}
-            className="object-cover w-full h-full"
-            onError={() => setCoverImageFailed(true)}
-          />
-        )}
-
-        {/* Logo */}
-        <div className="absolute left-4 bottom-0 transform translate-y-1/2 z-20">
-          <div
-            className={`flex items-center justify-center w-16 h-16 rounded-xl shadow-md ${isDark ? 'bg-zinc-900' : 'bg-white'}`}
-          >
-            {hackathon.logo && !logoImageFailed ? (
-              <Image
-                src={hackathon.logo}
-                alt={`${hackathon.title} logo`}
-                width={48}
-                height={48}
-                className="object-contain"
-                onError={() => setLogoImageFailed(true)}
-              />
-            ) : (
-              <div className="flex items-center justify-center w-full h-full">
-                <span
-                  className={`text-lg font-bold ${isDark ? 'text-pink-400' : 'text-[#036CA0]'}`}
-                >
-                  {hackathon.title.substring(0, 2)}
-                </span>
-              </div>
-            )}
-          </div>
         </div>
 
         {/* Status badge */}
@@ -202,46 +150,14 @@ export default function HackathonCard({
           <LocationIcon className="mr-2 w-4 h-4 opacity-70" />
           <span>{hackathon.location}</span>
         </div>
-
-        {/* Tags */}
-        <div className="mt-4 mb-5 flex flex-wrap gap-2">
-          {hackathon.tags.slice(0, 3).map((tag, index) => (
-            <span
-              key={index}
-              className={`px-2 py-1 rounded-md text-xs ${
-                isDark
-                  ? 'bg-zinc-700/80 text-zinc-300'
-                  : 'bg-gray-100 text-gray-700'
-              }`}
-            >
-              {tag}
-            </span>
-          ))}
-          {hackathon.tags.length > 3 && (
-            <span
-              className={`px-2 py-1 rounded-md text-xs ${
-                isDark
-                  ? 'bg-zinc-700/80 text-zinc-300'
-                  : 'bg-gray-100 text-gray-700'
-              }`}
-            >
-              +{hackathon.tags.length - 3} more
-            </span>
-          )}
-        </div>
       </div>
 
       {/* Card footer */}
       <div
-        className={`px-4 py-4 flex items-center justify-between border-t ${
+        className={`px-4 py-4 flex justify-end border-t ${
           isDark ? 'border-zinc-700/80' : 'border-gray-100'
         }`}
       >
-        <div
-          className={`text-sm ${isDark ? 'text-zinc-400' : 'text-gray-500'}`}
-        >
-          Teams: {hackathon.teamSize}
-        </div>
         <Link href={ROUTES.HACKATHON_DETAILS(hackathon.id)}>
           <Button
             variant={isDark ? 'outline' : 'primary'}

@@ -1,9 +1,8 @@
-'use client';
-
-import Image from 'next/image';
-import Link from 'next/link';
-import { useState, useEffect } from 'react';
 import { Button } from '../../_components/ui/Button';
+
+// Define ENUM types for TypeScript
+type EventStatus = 'open' | 'happening' | 'closed' | 'completed';
+type EventLevel = 'beginner' | 'intermediate' | 'advanced' | 'all level';
 
 /**
  * Props for the AllHackathonCard component
@@ -14,21 +13,13 @@ interface AllHackathonCardProps {
     title: string;
     organizer: string;
     location: string;
-    /** Start and end date in ISO format (YYYY-MM-DD) */
+    /** Start date in ISO format (YYYY-MM-DD) */
     startDate: string;
     /** End date in ISO format (YYYY-MM-DD) */
     endDate: string;
-    /** Timezone of the event (e.g., 'PST', 'EST') */
-    timezone: string;
-    logo: string;
-    coverImage: string;
-    registrationDeadline: string;
-    teamSize: string;
-    prizes: string;
-    tags: string[];
-    status: string;
+    status: EventStatus;
     description?: string;
-    level?: string;
+    level?: EventLevel;
   };
   /** Whether the current theme is dark mode */
   isDark: boolean;
@@ -47,10 +38,6 @@ export default function AllHackathonCard({
   hackathon,
   isDark,
 }: AllHackathonCardProps) {
-  // State to track if images have loaded
-  const [coverImageFailed, setCoverImageFailed] = useState(false);
-  const [logoImageFailed, setLogoImageFailed] = useState(false);
-
   // Format date to readable format
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = {
@@ -63,6 +50,13 @@ export default function AllHackathonCard({
 
   const formattedDateRange = `${formatDate(hackathon.startDate)} - ${formatDate(hackathon.endDate)}`;
 
+  // Capitalize status and level for display
+  const formatTag = (value: string) =>
+    value
+      .split(' ')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+
   return (
     <div
       className={`rounded-xl overflow-hidden shadow-md transition-all hover:shadow-lg ${
@@ -71,40 +65,36 @@ export default function AllHackathonCard({
           : 'bg-white border border-gray-200'
       }`}
     >
-      {/* Card header with cover image */}
-      <div className="relative h-40 bg-gray-200">
-        {/* Default fallback image handling - Always render this, control visibility with CSS */}
+      {/* Card header */}
+      <div className="relative h-40">
+        {/* Fallback background */}
         <div
-          className={`absolute inset-0 flex items-center justify-center ${isDark ? 'bg-zinc-700' : 'bg-gray-100'} ${coverImageFailed ? 'block' : 'hidden'}`}
+          className={`absolute inset-0 flex items-center justify-center ${
+            isDark ? 'bg-zinc-700' : 'bg-gray-100'
+          }`}
         >
           <span
-            className={`text-4xl font-bold ${isDark ? 'text-zinc-600' : 'text-gray-300'}`}
+            className={`text-4xl font-bold ${
+              isDark ? 'text-zinc-600' : 'text-gray-300'
+            }`}
           >
             {hackathon.title.substring(0, 2)}
           </span>
         </div>
-
-        {/* Cover image */}
-        <Image
-          src={hackathon.coverImage || '/images/hackathon-placeholder.jpg'}
-          alt={hackathon.title}
-          width={400}
-          height={200}
-          className={`object-cover w-full h-full ${coverImageFailed ? 'hidden' : 'block'}`}
-          onError={() => setCoverImageFailed(true)}
-        />
       </div>
 
       {/* Card content */}
       <div className="p-6 flex flex-col gap-4">
         {/* Hackathon title */}
         <h3
-          className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-theme-primary'}`}
+          className={`text-2xl font-bold ${
+            isDark ? 'text-white' : 'text-theme-primary'
+          }`}
         >
           {hackathon.title}
         </h3>
 
-        {/* Tags and metadata */}
+        {/* Metadata */}
         <div className="flex flex-wrap gap-2">
           {/* Location tag */}
           <div
@@ -126,15 +116,29 @@ export default function AllHackathonCard({
             <span>{formattedDateRange}</span>
           </div>
 
-          {/* Experience level tag */}
+          {/* Status tag */}
           <div
             className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs ${
               isDark ? 'bg-zinc-700 text-zinc-300' : 'bg-gray-100 text-gray-700'
             }`}
           >
-            <DiamondIcon className="w-3 h-3" />
-            <span>{hackathon.level || 'Beginner'}</span>
+            <StatusIcon className="w-3 h-3" />
+            <span>{formatTag(hackathon.status)}</span>
           </div>
+
+          {/* Level tag (if available) */}
+          {hackathon.level && (
+            <div
+              className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs ${
+                isDark
+                  ? 'bg-zinc-700 text-zinc-300'
+                  : 'bg-gray-100 text-gray-700'
+              }`}
+            >
+              <LevelIcon className="w-3 h-3" />
+              <span>{formatTag(hackathon.level)}</span>
+            </div>
+          )}
         </div>
 
         {/* Description */}
@@ -209,7 +213,7 @@ const CalendarIcon = ({ className = '' }) => (
   </svg>
 );
 
-const DiamondIcon = ({ className = '' }) => (
+const StatusIcon = ({ className = '' }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className={className}
@@ -221,7 +225,24 @@ const DiamondIcon = ({ className = '' }) => (
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}
-      d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"
+      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+    />
+  </svg>
+);
+
+const LevelIcon = ({ className = '' }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M13 10V3L4 14h7v7l9-11h-7z"
     />
   </svg>
 );
