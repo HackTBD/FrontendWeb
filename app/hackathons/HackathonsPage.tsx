@@ -11,6 +11,7 @@ import FilterPanel from './components/FilterPanel';
 import type { FilterSettings } from './components/FilterPanel';
 import { useGetAllHackathonEvents } from '../_lib/graphql/queries/hackathon-events/use-get-all-hackathon-events';
 import type { HackathonEventsNode } from '../_lib/graphql/__generated__/graphql';
+
 /**
  * Main Hackathons Page component
  * Displays a list of hackathon events with filtering options
@@ -38,13 +39,27 @@ export default function HackathonsPage() {
   const { hackathonEvents, loading, error, refetch } =
     useGetAllHackathonEvents();
 
+  // Deduplicate hackathonEvents by id
+  const uniqueHackathonEvents = Array.from(
+    new Map(hackathonEvents.map((event) => [event.id, event])).values()
+  );
+
+  // Log for debugging
+  useEffect(() => {
+    console.log('Raw hackathonEvents:', hackathonEvents);
+    console.log('Unique hackathonEvents:', uniqueHackathonEvents);
+    if (hackathonEvents.length !== uniqueHackathonEvents.length) {
+      console.warn('Duplicates detected:', hackathonEvents);
+    }
+  }, [hackathonEvents]);
+
   // Handler for Create Hackathon button
   const handleCreateHackathon = () => {
     window.location.href = '/hackathons/create';
   };
 
   // Filter hackathon events based on activeFilter, searchQuery, and advancedFilters
-  const filteredHackathons = hackathonEvents.filter(
+  const filteredHackathons = uniqueHackathonEvents.filter(
     (event: HackathonEventsNode) => {
       const now = new Date();
       const startDate = new Date(event.startDate);
@@ -72,12 +87,12 @@ export default function HackathonsPage() {
         advancedFilters.organizations.length === 0 ||
         (Array.isArray(event.hackathonOrganizations) &&
           event.hackathonOrganizations.some((org) =>
-            advancedFilters.organizations.includes(org.name)
+            advancedFilters.organizations.includes(org?.name || '')
           ));
 
       const expMatch =
         advancedFilters.experience.length === 0 ||
-        advancedFilters.experience.includes(event.level);
+        advancedFilters.experience.includes(event.level || '');
 
       const locationMatch =
         advancedFilters.location === 'any' ||
@@ -93,8 +108,9 @@ export default function HackathonsPage() {
 
       const teamSizeMatch =
         advancedFilters.teamSize === 'any' ||
-        (advancedFilters.teamSize === 'small' && event.maxTeamSize <= 4) ||
-        (advancedFilters.teamSize === 'large' && event.maxTeamSize > 4);
+        (advancedFilters.teamSize === 'small' &&
+          (event.maxTeamSize || 0) <= 4) ||
+        (advancedFilters.teamSize === 'large' && (event.maxTeamSize || 0) > 4);
 
       return (
         statusMatch &&
@@ -172,7 +188,7 @@ export default function HackathonsPage() {
                 </div>
               </div>
               <div className="flex flex-wrap space-x-2">
-                {['all', 'open', 'happening', 'coming-soon', 'ended'].map(
+                {['all', 'open', 'happening', 'closed', 'completed'].map(
                   (filter) => (
                     <button
                       key={filter}
@@ -226,7 +242,6 @@ export default function HackathonsPage() {
                 </p>
               </div>
             )}
-
             {!loading &&
               !error &&
               filteredHackathons.map((event: HackathonEventsNode) => (
@@ -234,7 +249,7 @@ export default function HackathonsPage() {
                   key={event.id}
                   hackathon={{
                     id: event.id,
-                    title: event.name, // Map name to title
+                    title: event.name,
                     organizer: Array.isArray(event.hackathonOrganizations)
                       ? event.hackathonOrganizations[0]?.name ||
                         'Unknown Organizer'
@@ -244,7 +259,7 @@ export default function HackathonsPage() {
                       : event.location || 'Location TBD',
                     startDate: event.startDate,
                     endDate: event.endDate,
-                    status: event.status.toLowerCase(), // Convert to lowercase to match expected values
+                    status: event.status.toLowerCase(),
                   }}
                   isDark={isDark}
                 />

@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
 import { Button } from '../../_components/ui/Button';
 import { ROUTES } from '../../_lib/routes';
 
@@ -14,9 +13,7 @@ interface HackathonCardProps {
     title: string;
     organizer: string;
     location: string;
-    /** Start date in ISO format (YYYY-MM-DD) */
     startDate: string;
-    /** End date in ISO format (YYYY-MM-DD) */
     endDate: string;
     status: string;
   };
@@ -41,6 +38,20 @@ export default function HackathonCard({
   hackathon,
   isDark,
 }: HackathonCardProps) {
+  // Validate hackathon data
+  if (
+    !hackathon ||
+    !hackathon.id ||
+    !hackathon.title ||
+    !hackathon.status ||
+    !hackathon.startDate ||
+    !hackathon.endDate ||
+    !hackathon.organizer
+  ) {
+    console.error('Invalid hackathon data:', hackathon);
+    return null;
+  }
+
   // Format date to readable format
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = {
@@ -52,7 +63,7 @@ export default function HackathonCard({
 
   // Get status style based on hackathon status
   const getStatusStyles = (status: string) => {
-    switch (status) {
+    switch (status.toLowerCase()) {
       case 'open':
         return {
           bgColor: isDark ? 'bg-green-500/20' : 'bg-green-100',
@@ -87,6 +98,10 @@ export default function HackathonCard({
   };
 
   const statusStyles = getStatusStyles(hackathon.status);
+
+  // Debug navigation
+  const detailsUrl = ROUTES.HACKATHON_DETAILS(hackathon.id);
+  console.log('Navigating to:', detailsUrl);
 
   return (
     <div
@@ -158,7 +173,10 @@ export default function HackathonCard({
           isDark ? 'border-zinc-700/80' : 'border-gray-100'
         }`}
       >
-        <Link href={ROUTES.HACKATHON_DETAILS(hackathon.id)}>
+        <Link
+          href={detailsUrl}
+          onClick={() => console.log('Link clicked:', detailsUrl)}
+        >
           <Button
             variant={isDark ? 'outline' : 'primary'}
             className={`py-1.5 px-3 text-sm rounded-lg ${

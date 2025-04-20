@@ -1,33 +1,27 @@
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
 import { HACKATHON_EVENT_MODEL_FRAGMENT } from '../../fragments/hackathon-events-fields';
-import { HackathonEventsNode } from '../../__generated__/graphql';
 
-export const GET_HACKATHON_EVENT_BY_ID = gql`
-  query GetHackathonEventById($id: ID!) {
-    hackathonEvent(id: $id) {
+export const GET_HACKATHON_EVENT_BY_EVENT_ID = gql`
+  query GetHackathonEventByEventId($eventId: UUID!) {
+    hackathonEventByEventId(eventId: $eventId) {
       ...hackathonEventsFields
     }
   }
-
   ${HACKATHON_EVENT_MODEL_FRAGMENT}
 `;
 
-// TODO: Recheck
-export function useGetHackathonEventById(id: string) {
+export function useGetHackathonEventById(eventId: string) {
   const { data, loading, error, refetch } = useQuery(
-    GET_HACKATHON_EVENT_BY_ID,
+    GET_HACKATHON_EVENT_BY_EVENT_ID,
     {
-      variables: { id },
-      skip: !id, // prevent query if id is falsy
-      fetchPolicy: 'cache-and-network',
+      variables: { eventId },
+      skip: !eventId,
     }
   );
 
-  const hackathonEvent: HackathonEventsNode | null =
-    data?.hackathonEvent ?? null;
-
   return {
-    hackathonEvent,
+    hackathonEvent: data?.hackathonEventByEventId,
     loading,
     error,
     refetch,
