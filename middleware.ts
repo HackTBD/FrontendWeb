@@ -1,20 +1,23 @@
 // https://clerk.com/docs/quickstarts/nextjs
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import { 
+  clerkMiddleware, createRouteMatcher
+} from '@clerk/nextjs/server';
 
 // Sets all /landing and /login-signup routes as public routes.
 const isPublicRoute = createRouteMatcher([
   '/',
   '/landing(.*)',
   '/login-signup(.*)',
-]);
-
-// Sets all /user-profile and /hackathons routes as protected routes.
-const isProtectedRoute = createRouteMatcher([
-  '/user-profile(.*)',
+  '/not-found(.*)',
   '/hackathons(.*)',
+  '/help(.*)',
 ]);
 
-export default clerkMiddleware();
+
+export default clerkMiddleware(async (auth, req) => {
+  // Automatically redirect user to sign-in page if they are not signed in
+  if (!isPublicRoute(req)) await auth.protect();
+
 // export default clerkMiddleware(async (auth, req) => {
 //   const {userId} = await auth();
 //
@@ -34,9 +37,17 @@ export default clerkMiddleware();
 //
 //   // If approved, continue as normal
 //   return;
-// })
+  },
+  { debug: true}
+)
+
 
 // Helper function to check if a user is approved for a hackathon
+/**
+ * ! Tony - I'm not sure if checkUserApproval is needed as middleware. 
+    * What about we add "hackathonStatus" to userModel. This could be a dictionary store hackathons users apply as key and val will be the status
+    * Then we can access directly to this data in the database for the status?
+ */ 
 async function checkUserApproval(userId: string): Promise<boolean> {
   try {
     // TODO: Logic to check if user is approved for a hackathon

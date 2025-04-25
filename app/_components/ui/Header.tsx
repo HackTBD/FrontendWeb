@@ -9,24 +9,17 @@ import { ThemeToggle } from './ThemeToggle';
 import { useTheme } from './ThemeProvider';
 import { ROUTES, MAIN_NAV_ITEMS, USER_NAV_ITEMS } from '../../_lib/routes';
 
-/**
- * Props for the Header component
- */
+
+
 interface HeaderProps {
-  /** Additional classes for the header */
   className?: string;
 }
 
-/**
- * Navigation link definition
- */
+/// NavLink interface defines the structure of navigation links
 interface NavLink {
-  /** Display text for the navigation link */
-  label: string;
-  /** URL path for the navigation link */
-  href: string;
-  /** Whether this link is for authenticated users only */
-  authRequired?: boolean;
+  label: string; // text for url link
+  href: string; // url path for navigation
+  authRequired?: boolean; // indicates if authentication is required
 }
 
 /**
