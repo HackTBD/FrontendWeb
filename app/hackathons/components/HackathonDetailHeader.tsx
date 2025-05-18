@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import { Button } from '../../_components/ui/Button';
 
 interface HackathonDetailHeaderProps {
@@ -9,18 +8,11 @@ interface HackathonDetailHeaderProps {
     id: string;
     title: string;
     organizer: string;
-    organizerLogo?: string;
     location: string;
     startDate: string;
     endDate: string;
-    timezone: string;
-    logo: string;
-    coverImage: string;
     registrationDeadline: string;
     status: string;
-    tags: string[];
-    level: string;
-    website?: string;
   };
   isDark: boolean;
 }
@@ -29,8 +21,6 @@ interface HackathonDetailHeaderProps {
  * HackathonDetailHeader component
  *
  * Displays the header section of a hackathon detail page, including:
- * - Cover image with overlay gradient
- * - Logo
  * - Title and organizer
  * - Key metadata (dates, location, status)
  * - Action buttons (Apply, Share, Save)
@@ -42,9 +32,6 @@ export default function HackathonDetailHeader({
   hackathon,
   isDark,
 }: HackathonDetailHeaderProps) {
-  const [coverImageFailed, setCoverImageFailed] = useState(false);
-  const [logoImageFailed, setLogoImageFailed] = useState(false);
-
   // Format date to readable format
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = {
@@ -111,14 +98,14 @@ export default function HackathonDetailHeader({
     <div
       className={`rounded-xl overflow-hidden shadow-md ${isDark ? 'bg-zinc-800' : 'bg-white'}`}
     >
-      {/* Cover image section with overlay */}
+      {/* Header section */}
       <div className="relative h-64 md:h-80">
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/10 z-10" />
 
-        {/* Fallback color if image fails */}
+        {/* Fallback background */}
         <div
-          className={`absolute inset-0 ${isDark ? 'bg-zinc-700' : 'bg-gray-200'} ${!coverImageFailed && hackathon.coverImage ? 'hidden' : ''}`}
+          className={`absolute inset-0 ${isDark ? 'bg-zinc-700' : 'bg-gray-200'}`}
         >
           <div className="h-full w-full flex items-center justify-center">
             <span className="text-5xl font-bold text-gray-400 opacity-30">
@@ -127,45 +114,9 @@ export default function HackathonDetailHeader({
           </div>
         </div>
 
-        {/* Cover image */}
-        {hackathon.coverImage && (
-          <Image
-            src={hackathon.coverImage}
-            alt={`${hackathon.title} cover`}
-            fill
-            className="object-cover"
-            onError={() => setCoverImageFailed(true)}
-            priority
-          />
-        )}
-
         {/* Content overlay */}
         <div className="absolute inset-0 flex flex-col justify-end p-6 z-20">
           <div className="flex items-end gap-4">
-            {/* Logo */}
-            <div
-              className={`w-20 h-20 rounded-xl flex items-center justify-center shadow-md overflow-hidden ${isDark ? 'bg-zinc-900' : 'bg-white'}`}
-            >
-              {hackathon.logo && !logoImageFailed ? (
-                <Image
-                  src={hackathon.logo}
-                  alt={`${hackathon.title} logo`}
-                  width={64}
-                  height={64}
-                  className="object-contain"
-                  onError={() => setLogoImageFailed(true)}
-                />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center">
-                  <span
-                    className={`text-2xl font-bold ${isDark ? 'text-pink-400' : 'text-[#036CA0]'}`}
-                  >
-                    {hackathon.title.substring(0, 2)}
-                  </span>
-                </div>
-              )}
-            </div>
-
             {/* Title and organizer */}
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-1">

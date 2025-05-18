@@ -18,12 +18,10 @@ export const GET_ALL_HACKATHON_EVENTS = gql`
       }
     }
   }
-
   ${HACKATHON_EVENT_MODEL_FRAGMENT}
   ${PAGE_INFO_MODEL_FRAGMENT}
 `;
 
-// TODO: Might not what you want
 export function useGetAllHackathonEvents() {
   const { data, loading, error, refetch } = useQuery(GET_ALL_HACKATHON_EVENTS, {
     fetchPolicy: 'cache-and-network',
