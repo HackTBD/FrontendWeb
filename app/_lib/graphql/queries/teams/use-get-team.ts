@@ -10,6 +10,8 @@ export const GET_TEAMS_BY_EVENT_ID = gql`
           teamName
           status
           createdAt
+          skillsNeeded
+          backgroundNeeded
           hackathonEvents {
             id
             name
