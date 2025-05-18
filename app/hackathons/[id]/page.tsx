@@ -247,7 +247,7 @@ export default function HackathonDetails({
                     {hackathonEvent.level || 'Not specified'}
                   </span>
                 </div>
-                <div className="mt-6 flex gap-4">
+                <div className="mt-6 flex flex-wrap gap-4">
                   <Button
                     variant="primary"
                     className={`${
@@ -259,6 +259,18 @@ export default function HackathonDetails({
                   >
                     Join Hackathon
                   </Button>
+                  <Link href={`/hackathons/${id}/teams`}>
+                    <Button
+                      variant="primary"
+                      className={`${
+                        isDark
+                          ? 'bg-purple-500 hover:bg-purple-600 text-white'
+                          : 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                      }`}
+                    >
+                      View Teams
+                    </Button>
+                  </Link>
                   <Button
                     variant="outline"
                     className={`${
