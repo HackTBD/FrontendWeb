@@ -50,13 +50,25 @@ interface HackathonFormState {
 
 interface EditHackathonFormProps {
   hackathon: HackathonEventsNode & {
-    hackathonOrganizations?: { id: string; orgId: string; name: string; website?: string; contactEmail?: string }[] | null;
+    hackathonOrganizations?:
+      | {
+          id: string;
+          orgId: string;
+          name: string;
+          website?: string;
+          contactEmail?: string;
+        }[]
+      | null;
   };
   isDark: boolean;
   onClose: () => void;
 }
 
-export default function EditHackathonForm({ hackathon, isDark, onClose }: EditHackathonFormProps) {
+export default function EditHackathonForm({
+  hackathon,
+  isDark,
+  onClose,
+}: EditHackathonFormProps) {
   console.log('Hackathon Prop:', hackathon);
 
   const [formData, setFormData] = useState<HackathonFormState>({
@@ -67,62 +79,72 @@ export default function EditHackathonForm({ hackathon, isDark, onClose }: EditHa
     maxTeamSize: hackathon.maxTeamSize || 4,
     location: hackathon.location || '',
     isVirtual: hackathon.isVirtual ?? false,
-    level: (hackathon.level?.toLowerCase() as HackathonFormState['level']) || 'beginner',
+    level:
+      (hackathon.level?.toLowerCase() as HackathonFormState['level']) ||
+      'beginner',
     startDate: hackathon.startDate ? hackathon.startDate.split('T')[0] : '',
     endDate: hackathon.endDate ? hackathon.endDate.split('T')[0] : '',
-    status: (hackathon.status?.toLowerCase() as HackathonFormState['status']) || 'open',
-    hackathonOrganizationsId: hackathon.hackathonOrganizations?.[0]?.orgId || '',
+    status:
+      (hackathon.status?.toLowerCase() as HackathonFormState['status']) ||
+      'open',
+    hackathonOrganizationsId:
+      hackathon.hackathonOrganizations?.[0]?.orgId || '',
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  const [updateHackathon, { loading, error }] = useMutation(UPDATE_HACKATHON_EVENTS, {
-    update(cache, { data }) {
-      if (data?.updateHackathonEvents?.hackathonEvent) {
-        cache.modify({
-          id: cache.identify(data.updateHackathonEvents.hackathonEvent),
-          fields: {
-            name() {
-              return data.updateHackathonEvents.hackathonEvent.name;
+  const [updateHackathon, { loading, error }] = useMutation(
+    UPDATE_HACKATHON_EVENTS,
+    {
+      update(cache, { data }) {
+        if (data?.updateHackathonEvents?.hackathonEvent) {
+          cache.modify({
+            id: cache.identify(data.updateHackathonEvents.hackathonEvent),
+            fields: {
+              name() {
+                return data.updateHackathonEvents.hackathonEvent.name;
+              },
+              description() {
+                return data.updateHackathonEvents.hackathonEvent.description;
+              },
+              startDate() {
+                return data.updateHackathonEvents.hackathonEvent.startDate;
+              },
+              endDate() {
+                return data.updateHackathonEvents.hackathonEvent.endDate;
+              },
+              location() {
+                return data.updateHackathonEvents.hackathonEvent.location;
+              },
+              isVirtual() {
+                return data.updateHackathonEvents.hackathonEvent.isVirtual;
+              },
+              level() {
+                return data.updateHackathonEvents.hackathonEvent.level;
+              },
+              maxTeamSize() {
+                return data.updateHackathonEvents.hackathonEvent.maxTeamSize;
+              },
+              minTeamSize() {
+                return data.updateHackathonEvents.hackathonEvent.minTeamSize;
+              },
+              status() {
+                return data.updateHackathonEvents.hackathonEvent.status;
+              },
             },
-            description() {
-              return data.updateHackathonEvents.hackathonEvent.description;
-            },
-            startDate() {
-              return data.updateHackathonEvents.hackathonEvent.startDate;
-            },
-            endDate() {
-              return data.updateHackathonEvents.hackathonEvent.endDate;
-            },
-            location() {
-              return data.updateHackathonEvents.hackathonEvent.location;
-            },
-            isVirtual() {
-              return data.updateHackathonEvents.hackathonEvent.isVirtual;
-            },
-            level() {
-              return data.updateHackathonEvents.hackathonEvent.level;
-            },
-            maxTeamSize() {
-              return data.updateHackathonEvents.hackathonEvent.maxTeamSize;
-            },
-            minTeamSize() {
-              return data.updateHackathonEvents.hackathonEvent.minTeamSize;
-            },
-            status() {
-              return data.updateHackathonEvents.hackathonEvent.status;
-            },
-          },
-        });
-      }
-    },
-  });
+          });
+        }
+      },
+    }
+  );
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value,
     }));
@@ -143,7 +165,8 @@ export default function EditHackathonForm({ hackathon, isDark, onClose }: EditHa
       newErrors.minTeamSize = 'Min team size must be at least 1';
     }
     if (formData.maxTeamSize < formData.minTeamSize) {
-      newErrors.maxTeamSize = 'Max team size must be greater than or equal to min team size';
+      newErrors.maxTeamSize =
+        'Max team size must be greater than or equal to min team size';
     }
     if (!formData.hackathonOrganizationsId) {
       newErrors.hackathonOrganizationsId = 'Organization ID is required';
@@ -182,7 +205,11 @@ export default function EditHackathonForm({ hackathon, isDark, onClose }: EditHa
         | 'ALL_LEVEL',
       startDate: formData.startDate ? `${formData.startDate}T00:00:00Z` : null,
       endDate: formData.endDate ? `${formData.endDate}T00:00:00Z` : null,
-      status: formData.status.toUpperCase() as 'OPEN' | 'CLOSED' | 'HAPPENING' | 'COMPLETED',
+      status: formData.status.toUpperCase() as
+        | 'OPEN'
+        | 'CLOSED'
+        | 'HAPPENING'
+        | 'COMPLETED',
       hackathonOrganizationsId: formData.hackathonOrganizationsId,
     };
 
@@ -198,9 +225,11 @@ export default function EditHackathonForm({ hackathon, isDark, onClose }: EditHa
       console.log('Mutation Response:', data);
       if (data?.updateHackathonEvents?.errors?.length) {
         const serverErrors: { [key: string]: string } = {};
-        data.updateHackathonEvents.errors.forEach((err: { field: string; message: string }) => {
-          serverErrors[err.field] = err.message;
-        });
+        data.updateHackathonEvents.errors.forEach(
+          (err: { field: string; message: string }) => {
+            serverErrors[err.field] = err.message;
+          }
+        );
         setErrors(serverErrors);
       } else {
         console.log('Mutation Success:', data);
@@ -236,7 +265,9 @@ export default function EditHackathonForm({ hackathon, isDark, onClose }: EditHa
               : 'bg-white border-gray-300 text-gray-900 focus:border-[#036CA0]'
           } shadow-sm focus:ring focus:ring-opacity-50 p-2`}
         />
-        {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
+        {errors.name && (
+          <p className="mt-1 text-sm text-red-500">{errors.name}</p>
+        )}
       </div>
 
       <div>
@@ -258,7 +289,9 @@ export default function EditHackathonForm({ hackathon, isDark, onClose }: EditHa
               : 'bg-white border-gray-300 text-gray-900 focus:border-[#036CA0]'
           } shadow-sm focus:ring focus:ring-opacity-50 p-2`}
         />
-        {errors.description && <p className="mt-1 text-sm text-red-500">{errors.description}</p>}
+        {errors.description && (
+          <p className="mt-1 text-sm text-red-500">{errors.description}</p>
+        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -333,7 +366,9 @@ export default function EditHackathonForm({ hackathon, isDark, onClose }: EditHa
           } shadow-sm focus:ring focus:ring-opacity-50 p-2`}
           placeholder="e.g., 1-4"
         />
-        {errors.team_size && <p className="mt-1 text-sm text-red-500">{errors.team_size}</p>}
+        {errors.team_size && (
+          <p className="mt-1 text-sm text-red-500">{errors.team_size}</p>
+        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -356,7 +391,9 @@ export default function EditHackathonForm({ hackathon, isDark, onClose }: EditHa
                 : 'bg-white border-gray-300 text-gray-900 focus:border-[#036CA0]'
             } shadow-sm focus:ring focus:ring-opacity-50 p-2`}
           />
-          {errors.startDate && <p className="mt-1 text-sm text-red-500">{errors.startDate}</p>}
+          {errors.startDate && (
+            <p className="mt-1 text-sm text-red-500">{errors.startDate}</p>
+          )}
         </div>
 
         <div>
@@ -378,7 +415,9 @@ export default function EditHackathonForm({ hackathon, isDark, onClose }: EditHa
                 : 'bg-white border-gray-300 text-gray-900 focus:border-[#036CA0]'
             } shadow-sm focus:ring focus:ring-opacity-50 p-2`}
           />
-          {errors.endDate && <p className="mt-1 text-sm text-red-500">{errors.endDate}</p>}
+          {errors.endDate && (
+            <p className="mt-1 text-sm text-red-500">{errors.endDate}</p>
+          )}
         </div>
       </div>
 
@@ -402,7 +441,9 @@ export default function EditHackathonForm({ hackathon, isDark, onClose }: EditHa
               : 'bg-white border-gray-300 text-gray-900 focus:border-[#036CA0]'
           } shadow-sm focus:ring focus:ring-opacity-50 p-2 ${formData.isVirtual ? 'opacity-50' : ''}`}
         />
-        {errors.location && <p className="mt-1 text-sm text-red-500">{errors.location}</p>}
+        {errors.location && (
+          <p className="mt-1 text-sm text-red-500">{errors.location}</p>
+        )}
       </div>
 
       <div>
@@ -417,7 +458,9 @@ export default function EditHackathonForm({ hackathon, isDark, onClose }: EditHa
             checked={formData.isVirtual}
             onChange={handleChange}
             className={`mr-2 rounded border ${
-              isDark ? 'border-zinc-700 text-pink-500' : 'border-gray-300 text-[#036CA0]'
+              isDark
+                ? 'border-zinc-700 text-pink-500'
+                : 'border-gray-300 text-[#036CA0]'
             } focus:ring focus:ring-opacity-50`}
           />
           Virtual Event
@@ -448,7 +491,9 @@ export default function EditHackathonForm({ hackathon, isDark, onClose }: EditHa
           <option value="advanced">Advanced</option>
           <option value="all level">All Level</option>
         </select>
-        {errors.level && <p className="mt-1 text-sm text-red-500">{errors.level}</p>}
+        {errors.level && (
+          <p className="mt-1 text-sm text-red-500">{errors.level}</p>
+        )}
       </div>
 
       <div>
@@ -475,7 +520,9 @@ export default function EditHackathonForm({ hackathon, isDark, onClose }: EditHa
           <option value="closed">Closed</option>
           <option value="completed">Completed</option>
         </select>
-        {errors.status && <p className="mt-1 text-sm text-red-500">{errors.status}</p>}
+        {errors.status && (
+          <p className="mt-1 text-sm text-red-500">{errors.status}</p>
+        )}
       </div>
 
       <div>
@@ -499,12 +546,16 @@ export default function EditHackathonForm({ hackathon, isDark, onClose }: EditHa
           placeholder="e.g., 2d7a8f62-bf79-4d49-a4f4-0f7b2d83c90e"
         />
         {errors.hackathonOrganizationsId && (
-          <p className="mt-1 text-sm text-red-500">{errors.hackathonOrganizationsId}</p>
+          <p className="mt-1 text-sm text-red-500">
+            {errors.hackathonOrganizationsId}
+          </p>
         )}
       </div>
 
       {error && (
-        <p className="text-red-500 text-sm">Error updating hackathon: {error.message}</p>
+        <p className="text-red-500 text-sm">
+          Error updating hackathon: {error.message}
+        </p>
       )}
 
       <div className="flex justify-end gap-4">

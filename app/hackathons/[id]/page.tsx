@@ -39,7 +39,11 @@ function decodeGlobalId(globalId: string): string | null {
  *
  * @param {Object} params - Route parameters (Promise)
  */
-export default function HackathonDetails({ params }: { params: Promise<{ id: string }> }) {
+export default function HackathonDetails({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { theme } = useTheme();
   const isDark =
     theme === 'dark' ||
@@ -59,13 +63,21 @@ export default function HackathonDetails({ params }: { params: Promise<{ id: str
   console.log('Extracted eventId:', eventId);
 
   // Use the UUID for the query
-  const { hackathonEvent, loading, error, refetch } = useGetHackathonEventById(eventId || '');
+  const { hackathonEvent, loading, error, refetch } = useGetHackathonEventById(
+    eventId || ''
+  );
 
   // State for modal
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   // Log fetched data for debugging
-  console.log('Hackathon event details:', { hackathonEvent, loading, error, decodedId, eventId });
+  console.log('Hackathon event details:', {
+    hackathonEvent,
+    loading,
+    error,
+    decodedId,
+    eventId,
+  });
 
   // Format date to readable format
   const formatDate = (dateString: string) => {
@@ -81,14 +93,22 @@ export default function HackathonDetails({ params }: { params: Promise<{ id: str
   const getStatusBadgeColor = (status: string) => {
     switch (status.toLowerCase()) {
       case 'open':
-        return isDark ? 'bg-green-600/20 text-green-400 border-green-600/30' : 'bg-green-100 text-green-800 border-green-200';
+        return isDark
+          ? 'bg-green-600/20 text-green-400 border-green-600/30'
+          : 'bg-green-100 text-green-800 border-green-200';
       case 'happening':
-        return isDark ? 'bg-blue-600/20 text-blue-400 border-blue-600/30' : 'bg-blue-100 text-blue-800 border-blue-200';
+        return isDark
+          ? 'bg-blue-600/20 text-blue-400 border-blue-600/30'
+          : 'bg-blue-100 text-blue-800 border-blue-200';
       case 'closed':
       case 'completed':
-        return isDark ? 'bg-red-600/20 text-red-400 border-red-600/30' : 'bg-red-100 text-red-800 border-red-200';
+        return isDark
+          ? 'bg-red-600/20 text-red-400 border-red-600/30'
+          : 'bg-red-100 text-red-800 border-red-200';
       default:
-        return isDark ? 'bg-zinc-600/20 text-zinc-400 border-zinc-600/30' : 'bg-gray-100 text-gray-800 border-gray-200';
+        return isDark
+          ? 'bg-zinc-600/20 text-zinc-400 border-zinc-600/30'
+          : 'bg-gray-100 text-gray-800 border-gray-200';
     }
   };
 
@@ -96,18 +116,28 @@ export default function HackathonDetails({ params }: { params: Promise<{ id: str
   const getLevelBadgeColor = (level: string | null | undefined) => {
     switch (level?.toLowerCase()) {
       case 'beginner':
-        return isDark ? 'bg-teal-600/20 text-teal-400 border-teal-600/30' : 'bg-teal-100 text-teal-800 border-teal-200';
+        return isDark
+          ? 'bg-teal-600/20 text-teal-400 border-teal-600/30'
+          : 'bg-teal-100 text-teal-800 border-teal-200';
       case 'intermediate':
-        return isDark ? 'bg-yellow-600/20 text-yellow-400 border-yellow-600/30' : 'bg-yellow-100 text-yellow-800 border-yellow-200';
+        return isDark
+          ? 'bg-yellow-600/20 text-yellow-400 border-yellow-600/30'
+          : 'bg-yellow-100 text-yellow-800 border-yellow-200';
       case 'advanced':
-        return isDark ? 'bg-purple-600/20 text-purple-400 border-purple-600/30' : 'bg-purple-100 text-purple-800 border-purple-200';
+        return isDark
+          ? 'bg-purple-600/20 text-purple-400 border-purple-600/30'
+          : 'bg-purple-100 text-purple-800 border-purple-200';
       default:
-        return isDark ? 'bg-zinc-600/20 text-zinc-400 border-zinc-600/30' : 'bg-gray-100 text-gray-800 border-gray-200';
+        return isDark
+          ? 'bg-zinc-600/20 text-zinc-400 border-zinc-600/30'
+          : 'bg-gray-100 text-gray-800 border-gray-200';
     }
   };
 
   return (
-    <div className={`flex min-h-screen ${isDark ? 'bg-zinc-900' : 'bg-gray-50'}`}>
+    <div
+      className={`flex min-h-screen ${isDark ? 'bg-zinc-900' : 'bg-gray-50'}`}
+    >
       <Sidebar activePath="/hackathons" hideLogo={true} />
 
       <div className="flex-1 flex flex-col">
@@ -157,7 +187,9 @@ export default function HackathonDetails({ params }: { params: Promise<{ id: str
           )}
           {!loading && !error && !hackathonEvent && (
             <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
-              <p className="text-red-600 font-medium">No hackathon found for the provided ID.</p>
+              <p className="text-red-600 font-medium">
+                No hackathon found for the provided ID.
+              </p>
               <Link href="/hackathons">
                 <Button
                   variant="outline"
@@ -194,7 +226,9 @@ export default function HackathonDetails({ params }: { params: Promise<{ id: str
                     isDark ? 'text-zinc-300' : 'text-gray-600'
                   }`}
                 >
-                  Organized by: {hackathonEvent.hackathonOrganizations?.[0]?.name || 'Unknown Organizer'}
+                  Organized by:{' '}
+                  {hackathonEvent.hackathonOrganizations?.[0]?.name ||
+                    'Unknown Organizer'}
                 </p>
                 <div className="mt-4 flex flex-wrap gap-4">
                   <span
@@ -202,7 +236,8 @@ export default function HackathonDetails({ params }: { params: Promise<{ id: str
                       hackathonEvent.status
                     )}`}
                   >
-                    {hackathonEvent.status.charAt(0).toUpperCase() + hackathonEvent.status.slice(1).toLowerCase()}
+                    {hackathonEvent.status.charAt(0).toUpperCase() +
+                      hackathonEvent.status.slice(1).toLowerCase()}
                   </span>
                   <span
                     className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getLevelBadgeColor(
@@ -254,7 +289,9 @@ export default function HackathonDetails({ params }: { params: Promise<{ id: str
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div
                   className={`rounded-lg p-6 ${
-                    isDark ? 'bg-zinc-800/50 border border-zinc-700/50' : 'bg-white border border-gray-200'
+                    isDark
+                      ? 'bg-zinc-800/50 border border-zinc-700/50'
+                      : 'bg-white border border-gray-200'
                   }`}
                 >
                   <h2
@@ -278,7 +315,8 @@ export default function HackathonDetails({ params }: { params: Promise<{ id: str
                           isDark ? 'text-zinc-200' : 'text-gray-900'
                         }`}
                       >
-                        {formatDate(hackathonEvent.startDate)} - {formatDate(hackathonEvent.endDate)}
+                        {formatDate(hackathonEvent.startDate)} -{' '}
+                        {formatDate(hackathonEvent.endDate)}
                       </dd>
                     </div>
                     <div>
@@ -294,7 +332,9 @@ export default function HackathonDetails({ params }: { params: Promise<{ id: str
                           isDark ? 'text-zinc-200' : 'text-gray-900'
                         }`}
                       >
-                        {hackathonEvent.isVirtual ? 'Virtual' : hackathonEvent.location || 'In-Person'}
+                        {hackathonEvent.isVirtual
+                          ? 'Virtual'
+                          : hackathonEvent.location || 'In-Person'}
                       </dd>
                     </div>
                     <div>
@@ -310,7 +350,8 @@ export default function HackathonDetails({ params }: { params: Promise<{ id: str
                           isDark ? 'text-zinc-200' : 'text-gray-900'
                         }`}
                       >
-                        {hackathonEvent.minTeamSize || 1} - {hackathonEvent.maxTeamSize || 'Not specified'}
+                        {hackathonEvent.minTeamSize || 1} -{' '}
+                        {hackathonEvent.maxTeamSize || 'Not specified'}
                       </dd>
                     </div>
                   </dl>
@@ -319,7 +360,9 @@ export default function HackathonDetails({ params }: { params: Promise<{ id: str
                 {/* Description Section */}
                 <div
                   className={`rounded-lg p-6 ${
-                    isDark ? 'bg-zinc-800/50 border border-zinc-700/50' : 'bg-white border border-gray-200'
+                    isDark
+                      ? 'bg-zinc-800/50 border border-zinc-700/50'
+                      : 'bg-white border border-gray-200'
                   }`}
                 >
                   <h2
@@ -331,7 +374,9 @@ export default function HackathonDetails({ params }: { params: Promise<{ id: str
                   </h2>
                   <HackathonDetailInfo
                     hackathon={{
-                      description: hackathonEvent.description || 'No description available',
+                      description:
+                        hackathonEvent.description ||
+                        'No description available',
                     }}
                     isDark={isDark}
                   />
@@ -360,7 +405,9 @@ export default function HackathonDetails({ params }: { params: Promise<{ id: str
                 onClose={() => setIsEditModalOpen(false)}
               />
             ) : (
-              <p className="text-red-500">Cannot edit: Hackathon data not available.</p>
+              <p className="text-red-500">
+                Cannot edit: Hackathon data not available.
+              </p>
             )}
           </Modal>
         </main>

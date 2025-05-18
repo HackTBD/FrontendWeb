@@ -9,7 +9,12 @@ interface ModalProps {
   isDark: boolean;
 }
 
-export default function Modal({ isOpen, onClose, children, isDark }: ModalProps) {
+export default function Modal({
+  isOpen,
+  onClose,
+  children,
+  isDark,
+}: ModalProps) {
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -36,7 +41,9 @@ export default function Modal({ isOpen, onClose, children, isDark }: ModalProps)
         <button
           onClick={onClose}
           className={`absolute top-4 right-4 text-2xl ${
-            isDark ? 'text-zinc-400 hover:text-zinc-200' : 'text-gray-500 hover:text-gray-700'
+            isDark
+              ? 'text-zinc-400 hover:text-zinc-200'
+              : 'text-gray-500 hover:text-gray-700'
           }`}
         >
           &times;
