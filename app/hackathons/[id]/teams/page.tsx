@@ -32,6 +32,73 @@ export default function HackathonTeams({
     }
   }
 
+  function startMatching(
+    teamId: string,
+    backgroundNeeded: string,
+    skillsNeeded: string
+  ) {
+    console.log(`Starting matching for team: ${teamId}`);
+    console.log(`Background needed: ${backgroundNeeded}`);
+    console.log(`Skills needed: ${skillsNeeded}`);
+
+    // Check if teamId exists
+    if (!teamId) {
+      console.error('Team ID is required for matching');
+      return;
+    }
+
+    // Format the data correctly - many APIs expect snake_case
+    const requestData = {
+      team_id: teamId,
+      background_needed: backgroundNeeded, // Changed from backgroundneeded to background_needed
+      skills_needed: skillsNeeded, // Changed from skillsneeded to skills_needed
+    };
+
+    console.log('Sending request with data:', requestData);
+
+    fetch('http://localhost:8000/api/matching_users/', {
+      // Using full URL
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestData),
+    })
+      .then(async (response) => {
+        // Get the response text for better error information
+        const responseText = await response.text();
+
+        if (!response.ok) {
+          // Log the response body for debugging
+          console.error(`API Error (${response.status}):`, responseText);
+          throw new Error(
+            `API request failed with status ${response.status}: ${responseText}`
+          );
+        }
+
+        // If response is empty or not JSON, return empty object
+        if (!responseText) return {};
+
+        // Try to parse as JSON
+        try {
+          return JSON.parse(responseText);
+        } catch (e) {
+          console.warn('Response is not valid JSON:', responseText);
+          return { message: responseText };
+        }
+      })
+      .then((data) => {
+        console.log('Matching result:', data);
+        alert('Matching request submitted successfully!');
+        // TODO: Display the matching results in the UI
+      })
+      .catch((error) => {
+        console.error('Matching error:', error);
+        alert(`Matching failed: ${error.message}`);
+        // Handle error in the UI if needed
+      });
+  }
+
   const eventId = decodeGlobalId(decodeURIComponent(id)) || '';
   const {
     teams: hackathonTeams,
