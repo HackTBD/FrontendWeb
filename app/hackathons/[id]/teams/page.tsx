@@ -60,7 +60,9 @@ export default function HackathonTeams({
     skillsNeeded: string
   ) {
     console.log('Starting matching process...');
-    console.log(`Team ID: ${teamId}, Background: ${backgroundNeeded}, Skills: ${skillsNeeded}`);
+    console.log(
+      `Team ID: ${teamId}, Background: ${backgroundNeeded}, Skills: ${skillsNeeded}`
+    );
 
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
     const requestBody = {
@@ -83,7 +85,9 @@ export default function HackathonTeams({
         console.log('API Response Status:', response.status);
         if (!response.ok) {
           if (response.status === 404) {
-            throw new Error('Matching API endpoint not found. Ensure Django server is running.');
+            throw new Error(
+              'Matching API endpoint not found. Ensure Django server is running.'
+            );
           }
           return response.text().then((text) => {
             console.error(`API error (${response.status}):`, text);
@@ -98,22 +102,26 @@ export default function HackathonTeams({
           ? data
           : data.results || data.users || [];
         if (!Array.isArray(results)) {
-          throw new Error('Unexpected API response format: results is not an array');
+          throw new Error(
+            'Unexpected API response format: results is not an array'
+          );
         }
-        const validatedResults = results.filter(
-          (item): item is MatchingResult =>
-            item &&
-            typeof item === 'object' &&
-            'user_id' in item &&
-            'score' in item
-        ).map((item) => ({
-          ...item,
-          userId: item.user_id,
-          matchScore: item.score,
-          username: item.username || `User ${item.user_id.slice(0, 8)}`,
-          skills: item.skills || [],
-          background: item.background || [],
-        }));
+        const validatedResults = results
+          .filter(
+            (item): item is MatchingResult =>
+              item &&
+              typeof item === 'object' &&
+              'user_id' in item &&
+              'score' in item
+          )
+          .map((item) => ({
+            ...item,
+            userId: item.user_id,
+            matchScore: item.score,
+            username: item.username || `User ${item.user_id.slice(0, 8)}`,
+            skills: item.skills || [],
+            background: item.background || [],
+          }));
         console.log('Validated Results:', validatedResults);
         setMatchingResults(validatedResults);
         setModalError(null);
@@ -333,7 +341,7 @@ export default function HackathonTeams({
                           {(Array.isArray(team.skillsNeeded)
                             ? team.skillsNeeded
                             : typeof team.skillsNeeded === 'string' &&
-                              team.skillsNeeded.trim()
+                                team.skillsNeeded.trim()
                               ? team.skillsNeeded.split(',')
                               : []
                           ).map((skill: string, index: number) => (
@@ -387,7 +395,7 @@ export default function HackathonTeams({
                           {(Array.isArray(team.backgroundNeeded)
                             ? team.backgroundNeeded
                             : typeof team.backgroundNeeded === 'string' &&
-                              team.backgroundNeeded.trim()
+                                team.backgroundNeeded.trim()
                               ? team.backgroundNeeded.split(',')
                               : []
                           ).map((background: string, index: number) => (
@@ -568,46 +576,45 @@ export default function HackathonTeams({
                           <p
                             className={`text-sm ${isDark ? 'text-zinc-400' : 'text-gray-600'}`}
                           >
-                            Match Score: {((result.matchScore ?? 0) * 100).toFixed(2)}%
+                            Match Score:{' '}
+                            {((result.matchScore ?? 0) * 100).toFixed(2)}%
                           </p>
                           <div className="mt-2">
-                           
                             <div className="flex flex-wrap gap-2 mt-1">
-                              {(Array.isArray(result.skills) ? result.skills : []).map(
-                                (skill: string, index: number) => (
-                                  <span
-                                    key={index}
-                                    className={`px-2 py-1 text-xs rounded ${
-                                      isDark
-                                        ? 'bg-pink-900/30 text-pink-300'
-                                        : 'bg-pink-100 text-pink-800'
-                                    }`}
-                                  >
-                                    {skill}
-                                  </span>
-                                )
-                              )}
-                             
+                              {(Array.isArray(result.skills)
+                                ? result.skills
+                                : []
+                              ).map((skill: string, index: number) => (
+                                <span
+                                  key={index}
+                                  className={`px-2 py-1 text-xs rounded ${
+                                    isDark
+                                      ? 'bg-pink-900/30 text-pink-300'
+                                      : 'bg-pink-100 text-pink-800'
+                                  }`}
+                                >
+                                  {skill}
+                                </span>
+                              ))}
                             </div>
                           </div>
                           <div className="mt-2">
-                            
                             <div className="flex flex-wrap gap-2 mt-1">
-                              {(Array.isArray(result.background) ? result.background : []).map(
-                                (bg: string, index: number) => (
-                                  <span
-                                    key={index}
-                                    className={`px-2 py-1 text-xs rounded ${
-                                      isDark
-                                        ? 'bg-blue-900/30 text-blue-300'
-                                        : 'bg-blue-100 text-blue-800'
-                                    }`}
-                                  >
-                                    {bg}
-                                  </span>
-                                )
-                              )}
-                              
+                              {(Array.isArray(result.background)
+                                ? result.background
+                                : []
+                              ).map((bg: string, index: number) => (
+                                <span
+                                  key={index}
+                                  className={`px-2 py-1 text-xs rounded ${
+                                    isDark
+                                      ? 'bg-blue-900/30 text-blue-300'
+                                      : 'bg-blue-100 text-blue-800'
+                                  }`}
+                                >
+                                  {bg}
+                                </span>
+                              ))}
                             </div>
                           </div>
                         </div>
