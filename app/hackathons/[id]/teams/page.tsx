@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { use } from 'react';
 import { useGetTeamsByEventId } from '../../../_lib/graphql/queries/teams/use-get-team';
 import { useTheme } from '../../../_components/ui/ThemeProvider';
@@ -7,12 +8,29 @@ import Sidebar from '../../../_components/ui/Sidebar';
 import { Header } from '../../../_components/ui/Header';
 import Link from 'next/link';
 
+interface MatchingResult {
+  user_id: string;
+  score: number;
+  details: {
+    skill_score_norm: number;
+    background_score: number;
+    size_score: number;
+    raw_skill_score: number;
+  };
+  username?: string;
+  skills?: string[];
+  background?: string[];
+  userId?: string; // Mapped in frontend
+  matchScore?: number; // Mapped in frontend
+  [key: string]: any; // For additional fields
+}
+
 export default function HackathonTeams({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const resolvedParams = use(params); // unwrap the promise
+  const resolvedParams = use(params);
   const { id } = resolvedParams;
 
   const { theme } = useTheme();
@@ -21,6 +39,10 @@ export default function HackathonTeams({
     (theme === 'system' &&
       typeof window !== 'undefined' &&
       window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [matchingResults, setMatchingResults] = useState<MatchingResult[]>([]);
+  const [modalError, setModalError] = useState<string | null>(null);
 
   function decodeGlobalId(globalId: string): string | null {
     try {
@@ -37,67 +59,71 @@ export default function HackathonTeams({
     backgroundNeeded: string,
     skillsNeeded: string
   ) {
-    console.log(`Starting matching for team: ${teamId}`);
-    console.log(`Background needed: ${backgroundNeeded}`);
-    console.log(`Skills needed: ${skillsNeeded}`);
+    console.log('Starting matching process...');
+    console.log(`Team ID: ${teamId}, Background: ${backgroundNeeded}, Skills: ${skillsNeeded}`);
 
-    // Define the API URL - adjust this to match your Django backend URL if needed
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-
-    // Try different formats for the request body
     const requestBody = {
       team_id: teamId,
       background_needed: backgroundNeeded,
       skills_needed: skillsNeeded,
-      // Include alternative formats as a fallback
-      teamId: teamId,
-      backgroundNeeded: backgroundNeeded,
-      skillsNeeded: skillsNeeded,
-      // Other possible variants
-      team: teamId,
-      background: backgroundNeeded,
-      skills: skillsNeeded,
     };
 
     console.log('Request body:', JSON.stringify(requestBody, null, 2));
 
-    // Make the API request to the Django backend
     fetch(`${apiUrl}/api/matching_users/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        // Add CSRF token if needed for Django
-        // 'X-CSRFToken': getCookie('csrftoken'),
       },
-      credentials: 'include', // Include cookies if using session auth
+      credentials: 'include',
       body: JSON.stringify(requestBody),
     })
       .then((response) => {
+        console.log('API Response Status:', response.status);
         if (!response.ok) {
           if (response.status === 404) {
-            throw new Error(
-              'Matching API endpoint not found. Check that your Django server is running.'
-            );
+            throw new Error('Matching API endpoint not found. Ensure Django server is running.');
           }
-          // Log the response for debugging
           return response.text().then((text) => {
             console.error(`API error (${response.status}):`, text);
-            throw new Error(
-              `API request failed with status ${response.status}: ${text}`
-            );
+            throw new Error(`API request failed: ${text}`);
           });
         }
         return response.json();
       })
       .then((data) => {
-        console.log('Matching result:', data);
-        alert('Matching process started successfully!');
-        // TODO: Display the matching results in the UI
+        console.log('Raw API Response:', JSON.stringify(data, null, 2));
+        const results = Array.isArray(data)
+          ? data
+          : data.results || data.users || [];
+        if (!Array.isArray(results)) {
+          throw new Error('Unexpected API response format: results is not an array');
+        }
+        const validatedResults = results.filter(
+          (item): item is MatchingResult =>
+            item &&
+            typeof item === 'object' &&
+            'user_id' in item &&
+            'score' in item
+        ).map((item) => ({
+          ...item,
+          userId: item.user_id,
+          matchScore: item.score,
+          username: item.username || `User ${item.user_id.slice(0, 8)}`,
+          skills: item.skills || [],
+          background: item.background || [],
+        }));
+        console.log('Validated Results:', validatedResults);
+        setMatchingResults(validatedResults);
+        setModalError(null);
+        setIsModalOpen(true);
       })
       .catch((error) => {
         console.error('Matching error:', error);
-        alert(`Error: ${error.message}`);
-        // Handle error in the UI if needed
+        setModalError(error.message || 'Failed to fetch matching results');
+        setMatchingResults([]);
+        setIsModalOpen(true);
       });
   }
 
@@ -307,7 +333,7 @@ export default function HackathonTeams({
                           {(Array.isArray(team.skillsNeeded)
                             ? team.skillsNeeded
                             : typeof team.skillsNeeded === 'string' &&
-                                team.skillsNeeded.trim()
+                              team.skillsNeeded.trim()
                               ? team.skillsNeeded.split(',')
                               : []
                           ).map((skill: string, index: number) => (
@@ -361,7 +387,7 @@ export default function HackathonTeams({
                           {(Array.isArray(team.backgroundNeeded)
                             ? team.backgroundNeeded
                             : typeof team.backgroundNeeded === 'string' &&
-                                team.backgroundNeeded.trim()
+                              team.backgroundNeeded.trim()
                               ? team.backgroundNeeded.split(',')
                               : []
                           ).map((background: string, index: number) => (
@@ -413,7 +439,6 @@ export default function HackathonTeams({
                             team.status === 'OPEN' ||
                             team.status === 'FORMING'
                           ) {
-                            // Get the background and skills needed
                             const backgroundNeeded = Array.isArray(
                               team.backgroundNeeded
                             )
@@ -430,7 +455,6 @@ export default function HackathonTeams({
                                 ? team.skillsNeeded
                                 : '';
 
-                            // Call the startMatching function with the team ID and requirements
                             startMatching(
                               team.teamId || team.id,
                               backgroundNeeded,
@@ -459,6 +483,156 @@ export default function HackathonTeams({
                   </div>
                 </div>
               ))}
+            </div>
+          )}
+
+          {/* Modal for Matching Results */}
+          {isModalOpen && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+              <div
+                className={`rounded-lg shadow-xl max-w-2xl w-full max-h-[80vh] overflow-y-auto ${
+                  isDark ? 'bg-zinc-800 text-white' : 'bg-white text-gray-900'
+                }`}
+              >
+                <div className="p-6">
+                  <div className="flex justify-between items-center mb-4">
+                    <h2 className="text-2xl font-bold">Matching Results</h2>
+                    <button
+                      onClick={() => {
+                        console.log('Closing modal');
+                        setIsModalOpen(false);
+                      }}
+                      className={`p-1 rounded-full ${
+                        isDark
+                          ? 'hover:bg-zinc-700 text-zinc-300'
+                          : 'hover:bg-gray-200 text-gray-600'
+                      }`}
+                    >
+                      <svg
+                        className="h-6 w-6"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+
+                  {modalError ? (
+                    <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-md">
+                      <div className="flex items-center">
+                        <svg
+                          className="h-5 w-5 text-red-500"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        <p className="ml-3 text-sm text-red-700">
+                          {modalError}
+                        </p>
+                      </div>
+                    </div>
+                  ) : matchingResults.length === 0 ? (
+                    <div className="text-center py-8">
+                      <p
+                        className={`text-lg ${isDark ? 'text-zinc-400' : 'text-gray-500'}`}
+                      >
+                        No matching users found.
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {matchingResults.map((result) => (
+                        <div
+                          key={result.userId}
+                          className={`p-4 rounded-md border ${
+                            isDark ? 'border-zinc-700' : 'border-gray-200'
+                          }`}
+                        >
+                          <h3 className="text-lg font-semibold">
+                            {result.username}
+                          </h3>
+                          <p
+                            className={`text-sm ${isDark ? 'text-zinc-400' : 'text-gray-600'}`}
+                          >
+                            Match Score: {((result.matchScore ?? 0) * 100).toFixed(2)}%
+                          </p>
+                          <div className="mt-2">
+                           
+                            <div className="flex flex-wrap gap-2 mt-1">
+                              {(Array.isArray(result.skills) ? result.skills : []).map(
+                                (skill: string, index: number) => (
+                                  <span
+                                    key={index}
+                                    className={`px-2 py-1 text-xs rounded ${
+                                      isDark
+                                        ? 'bg-pink-900/30 text-pink-300'
+                                        : 'bg-pink-100 text-pink-800'
+                                    }`}
+                                  >
+                                    {skill}
+                                  </span>
+                                )
+                              )}
+                             
+                            </div>
+                          </div>
+                          <div className="mt-2">
+                            
+                            <div className="flex flex-wrap gap-2 mt-1">
+                              {(Array.isArray(result.background) ? result.background : []).map(
+                                (bg: string, index: number) => (
+                                  <span
+                                    key={index}
+                                    className={`px-2 py-1 text-xs rounded ${
+                                      isDark
+                                        ? 'bg-blue-900/30 text-blue-300'
+                                        : 'bg-blue-100 text-blue-800'
+                                    }`}
+                                  >
+                                    {bg}
+                                  </span>
+                                )
+                              )}
+                              
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <div
+                  className={`p-4 border-t ${isDark ? 'border-zinc-700' : 'border-gray-200'}`}
+                >
+                  <button
+                    onClick={() => {
+                      console.log('Closing modal via button');
+                      setIsModalOpen(false);
+                    }}
+                    className={`w-full px-4 py-2 rounded-md ${
+                      isDark
+                        ? 'bg-pink-600 hover:bg-pink-700 text-white'
+                        : 'bg-[#036CA0] hover:bg-[#036CA0]/90 text-white'
+                    }`}
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
             </div>
           )}
         </main>
