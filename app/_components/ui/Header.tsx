@@ -15,7 +15,10 @@ import { ROUTES, MAIN_NAV_ITEMS, USER_NAV_ITEMS } from '../../_lib/routes';
 interface HeaderProps {
   /** Additional classes for the header */
   className?: string;
+  title?: string;
 }
+
+
 
 /**
  * Navigation link definition
@@ -35,7 +38,7 @@ interface NavLink {
  * Includes logo, navigation links, theme toggle, and authentication controls
  * Adjusts styling based on the current theme
  */
-export const Header: React.FC<HeaderProps> = ({ className }) => {
+export const Header: React.FC<HeaderProps> = ({ className, title }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
@@ -99,7 +102,11 @@ export const Header: React.FC<HeaderProps> = ({ className }) => {
   return (
     <header
       className={cn('sticky top-0 z-50 w-full', headerBgClasses, className)}
+      
     >
+      {title && (
+  <div className="text-2xl font-semibold px-4 pt-4">{title}</div>
+)}
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo section */}
         <div className="flex items-center">
