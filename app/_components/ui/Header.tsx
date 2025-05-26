@@ -18,8 +18,6 @@ interface HeaderProps {
   title?: string;
 }
 
-
-
 /**
  * Navigation link definition
  */
@@ -102,11 +100,8 @@ export const Header: React.FC<HeaderProps> = ({ className, title }) => {
   return (
     <header
       className={cn('sticky top-0 z-50 w-full', headerBgClasses, className)}
-      
     >
-      {title && (
-  <div className="text-2xl font-semibold px-4 pt-4">{title}</div>
-)}
+      {title && <div className="text-2xl font-semibold px-4 pt-4">{title}</div>}
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo section */}
         <div className="flex items-center">

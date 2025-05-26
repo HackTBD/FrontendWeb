@@ -36,7 +36,10 @@ export function useGetHackathonUserProfilesByEventId(eventId: string) {
   );
 
   return {
-    hackathonUserProfiles: data?.hackathonUserProfilesByEventId?.edges?.map((edge: any) => edge.node) || [],
+    hackathonUserProfiles:
+      data?.hackathonUserProfilesByEventId?.edges?.map(
+        (edge: any) => edge.node
+      ) || [],
     pageInfo: data?.hackathonUserProfilesByEventId?.pageInfo,
     loading,
     error,

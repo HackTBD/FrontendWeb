@@ -13,11 +13,14 @@ export const GET_HACKATHON_USER_PROFILE_BY_ID = gql`
 `;
 
 // React hook to use this Hackathon User Profile query
-export function useGetHackathonUserProfileById(eventId: string){
-  const {data, loading, error, refetch} = useQuery(GET_HACKATHON_USER_PROFILE_BY_ID, {
-    variables: { id: eventId },
-    skip: !eventId,
-  });
+export function useGetHackathonUserProfileById(eventId: string) {
+  const { data, loading, error, refetch } = useQuery(
+    GET_HACKATHON_USER_PROFILE_BY_ID,
+    {
+      variables: { id: eventId },
+      skip: !eventId,
+    }
+  );
   return {
     hackathonUserProfiles: data?.hackathonUserProfilesById,
     loading,
