@@ -1,6 +1,7 @@
 'use client';
 
 import { useGetHackathonEventById } from '../../_lib/graphql/queries/hackathon-events/use-get-hackathon-event';
+import { useGetHackathonUserProfilesByEventId } from '../../_lib/graphql/queries/hackathon-user-profiles/use-get-all-hackathon-user-profiles';
 import type { HackathonEventsNode } from '../../_lib/graphql/__generated__/graphql';
 import { useTheme } from '../../_components/ui/ThemeProvider';
 import { Header } from '../../_components/ui/Header';
@@ -66,6 +67,13 @@ export default function HackathonDetails({
   const { hackathonEvent, loading, error, refetch } = useGetHackathonEventById(
     eventId || ''
   );
+
+  const {
+    hackathonUserProfiles,
+    loading: userProfileLoading,
+    error: userProfileError,
+    refetch: userProfileRefetch,
+  } = useGetHackathonUserProfilesByEventId(eventId || '');
 
   // State for modal
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -271,6 +279,19 @@ export default function HackathonDetails({
                       View Teams
                     </Button>
                   </Link>
+                  <Link href={`${id}/profile`}>
+                    <Button
+                      variant="primary"
+                      className={`${
+                        isDark
+                          ? 'bg-purple-500 hover:bg-purple-600 text-white'
+                          : 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                      }`}
+                    >
+                      Hackathon User Profiles
+                    </Button>
+                  </Link>
+
                   <Button
                     variant="outline"
                     className={`${

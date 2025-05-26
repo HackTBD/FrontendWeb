@@ -573,6 +573,7 @@ export type Query = {
   hackathonOrganizationByOrgId?: Maybe<HackathonOrganizationsNode>;
   hackathonUserProfile?: Maybe<HackathonUserProfilesNode>;
   hackathonUserProfileByProfileId?: Maybe<HackathonUserProfilesNode>;
+  hackathonUserProfilesByEventId?: Maybe<HackathonUserProfilesNodeConnection>;
   team?: Maybe<TeamsNode>;
   teamByTeamId?: Maybe<TeamsNode>;
   teamMember?: Maybe<TeamMembersNode>;
