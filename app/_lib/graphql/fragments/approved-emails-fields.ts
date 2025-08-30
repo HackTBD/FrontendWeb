@@ -1,5 +1,4 @@
 import { gql } from '@apollo/client';
-import { HACKATHON_EVENT_MODEL_FRAGMENT } from './hackathon-events-fields';
 
 export const APPROVED_EMAIL_MODEL_FRAGMENT = gql`
   fragment approvedEmailsFields on ApprovedEmailsNode {
@@ -8,11 +7,12 @@ export const APPROVED_EMAIL_MODEL_FRAGMENT = gql`
     email
     eventId
     hackathonEvents {
-      ...hackathonEventsFields
+      __typename
+      id
+      eventId
+      name
     }
     id
     keyEmailEventId
   }
-
-  ${HACKATHON_EVENT_MODEL_FRAGMENT}
 `;

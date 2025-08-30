@@ -42,3 +42,6 @@ Thumbs.db
 # TypeScript build output
 dist/
 *.tsbuildinfo
+
+# Images for demo
+images/

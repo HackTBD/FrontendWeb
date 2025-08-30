@@ -50,12 +50,15 @@ export const Button: React.FC<ButtonProps> = ({
   children,
   ...props
 }) => {
-  const { theme } = useTheme();
+  const { theme, mounted } = useTheme();
 
   // Determine if dark mode based on theme and system preference
+  // Avoid reading window during SSR to prevent hydration mismatches.
+  // Until mounted, only respect explicit 'dark' theme; treat 'system' as light.
   const isDark =
     theme === 'dark' ||
-    (theme === 'system' &&
+    (mounted &&
+      theme === 'system' &&
       typeof window !== 'undefined' &&
       window.matchMedia('(prefers-color-scheme: dark)').matches);
 

@@ -3,6 +3,7 @@ import { PAGE_INFO_MODEL_FRAGMENT } from './page-info-fields';
 import { HACKATHON_USER_PROFILE_MODEL_FRAGMENT } from './hackathon-user-profiles-fields';
 import { TEAM_MODEL_FRAGMENT } from './teams-fields';
 import { HACKATHON_ORGANIZATION_MODEL_FRAGMENT } from './hackthon-organizations-fields';
+import { APPROVED_EMAIL_MODEL_FRAGMENT } from './approved-emails-fields';
 
 export const HACKATHON_EVENT_MODEL_FRAGMENT = gql`
   fragment hackathonEventsFields on HackathonEventsNode {
@@ -64,4 +65,5 @@ export const HACKATHON_EVENT_MODEL_FRAGMENT = gql`
   ${HACKATHON_USER_PROFILE_MODEL_FRAGMENT}
   ${TEAM_MODEL_FRAGMENT}
   ${HACKATHON_ORGANIZATION_MODEL_FRAGMENT}
+  ${APPROVED_EMAIL_MODEL_FRAGMENT}
 `;

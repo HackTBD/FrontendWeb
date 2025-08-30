@@ -2,53 +2,31 @@
 
 This repository contains the frontend codebase for **HackTBD**, built using **Next.js** with **TypeScript**. The goal is to provide a fast, efficient, and user-friendly experience for hackathon participants and organizers.
 
----
-
-## 🚀 Technology Stack
-
-- **Next.js** – React framework for server-side rendering and static site generation
+## Technology Stack
 - **TypeScript** – Statically typed JavaScript for better maintainability. Please refer to [Google Style Guide](https://google.github.io/styleguide/tsguide.html)
 - **ESLint** – Linter for code consistency and best practices
 - **Tailwind CSS** – Utility-first CSS framework for styling
 
----
+## Demo
+Lading Page
+![landing-page](images/landing-page.png)
+![landing-page-2](images/landing-page-2.png)
 
-## 📁 Repository Layout
+Hackathons Events
+![hackathon-events](images/hackathon-events.png)
 
-Architecture Design follow by: [Next.js Clean Architecture] (https://github.com/nikolovlazar/nextjs-clean-architecture?tab=readme-ov-file)
+Sign In/ Sign Up
+![sign-in](images/sign-in.png)
+![sign-up](images/sign-up.png)
 
-```
-• Documentation/            # Project documentation and guides
-  • Bugs Fixed Log/         # Log of bugs fixed in the project
-  • Developer Guide/        # Guides for setting up and developing the project
-    • prettier.md           # Guide for integrating code formatter into your IDE
-• public/                   # Static assets like images, icons, and fonts
-  • images/                 # Images files
-• app/                      # Frameworks & Drivers Layer - basically everything Next.js (pages, server actions, components, styles etc...) or whatever "consumes" the app's logic
-  • _components/            # Shared components directory
-    • ui/                   # UI primitives and elements
-  • page.tsx                # Website's root for navigation
-  • global.css              # Global styles
-• src/                      # The "root" of the system that store applications, entities, infrastructure and interface-adapters
-  • application             # Application Layer - holds use cases and interfaces for repositories and services
-  • entities                # Entities Layer - holds models and custom errors
-  • infrastructre           # Infrastructure Layer - holds implementations of repositories and services, and pulls in the interfaces from application
-  • interface-adapters      # Interface Adapters Layer - holds controllers that serve as an entry point to the system (used in Frameworks & Drivers layer to interact with the system)
-• tests/                    # Unit tests live here - the unit subfolder's structure matches src
-• README.md                 # This README file
-• eslint.config.mjs         # ESLint configuration
-• next.config.js            # Next.js configuration
-• next-env.d.ts             # Next.js TypeScript definitions
-• tsconfig.json             # TypeScript configuration
-• package.json              # Project dependencies and scripts
-• postcss.config.mjs        # PostCSS configuration
-```
+User Profile
+![user-profile](images/user-profile.png)
 
-Project structure strategy: stores all application code in shared folders in the root of the app directory.
 
----
+## Details Documentation (by DeepWiki)
+- For details documentation of the architecture and everything else, please check here: [DeepWiki](https://deepwiki.com/HackTBD/FrontendWeb)
 
-## 🛠 Getting Started
+## Getting Started
 
 ### 1. Install Package Manager: **pnpm**
 
@@ -104,7 +82,7 @@ This will install all necessary **node_modules** for the project.
 
 ---
 
-## 📜 Available Scripts
+## Available Scripts
 
 | Command      | Description                                                       |
 | ------------ | ----------------------------------------------------------------- |
@@ -115,7 +93,7 @@ This will install all necessary **node_modules** for the project.
 
 ---
 
-## 🎯 Development Notes
+## Development Notes
 
 - Use `pnpm` for all commands instead of `npm` or `yarn`.
 - Make sure **Node.js** and **pnpm** are installed and updated before running the project.

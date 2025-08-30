@@ -1,7 +1,6 @@
 import { DocumentNode, gql } from '@apollo/client';
 import { PAGE_INFO_MODEL_FRAGMENT } from './page-info-fields';
 import { TEAM_MEMBER_MODEL_FRAGMENT } from './team-members-fields';
-import { HACKATHON_EVENT_MODEL_FRAGMENT } from './hackathon-events-fields';
 
 export const TEAM_MODEL_FRAGMENT: DocumentNode = gql`
   fragment teamsFields on TeamsNode {
@@ -9,7 +8,10 @@ export const TEAM_MODEL_FRAGMENT: DocumentNode = gql`
     createdAt
     eventId
     hackathonEvents {
-      ...hackathonEventsFields
+      __typename
+      id
+      eventId
+      name
     }
     id
     status
@@ -31,5 +33,4 @@ export const TEAM_MODEL_FRAGMENT: DocumentNode = gql`
 
   ${PAGE_INFO_MODEL_FRAGMENT}
   ${TEAM_MEMBER_MODEL_FRAGMENT}
-  ${HACKATHON_EVENT_MODEL_FRAGMENT}
 `;

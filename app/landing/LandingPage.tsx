@@ -46,32 +46,38 @@ export default function LandingPage() {
           {/* Sign Up/Sign In buttons */}
           <div className="flex items-center space-x-3">
             <ThemeToggle className="mr-3" />
-            <Link href={ROUTES.USER_PROFILE}>
-              <Button
-                variant="outline"
-                className={`p-2 rounded-full ${isDark ? 'border-zinc-700 hover:border-zinc-600' : 'border-gray-200 hover:bg-gray-50'}`}
-                aria-label="Profile"
-              >
-                <UserIcon
-                  className={`h-5 w-5 ${isDark ? 'text-zinc-400' : 'text-gray-600'}`}
-                />
-              </Button>
+            <Link
+              href={ROUTES.USER_PROFILE}
+              aria-label="Profile"
+              className={`inline-flex items-center justify-center rounded-full font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 p-2 ${
+                isDark
+                  ? 'border border-zinc-700 hover:border-zinc-600 text-zinc-50'
+                  : 'border border-gray-200 hover:bg-gray-50 text-zinc-900'
+              }`}
+            >
+              <UserIcon
+                className={`h-5 w-5 ${isDark ? 'text-zinc-400' : 'text-gray-600'}`}
+              />
             </Link>
-            <Link href={ROUTES.LOGIN}>
-              <Button
-                variant="secondary"
-                className={`px-4 py-2 text-sm rounded-lg ${isDark ? 'border-purple-500/30 hover:border-purple-500/50' : ''}`}
-              >
-                Sign in
-              </Button>
+            <Link
+              href={ROUTES.LOGIN}
+              className={`inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 px-4 py-2 text-sm ${
+                isDark
+                  ? 'bg-zinc-800 text-zinc-50 hover:bg-zinc-700 border border-purple-500/30 hover:border-purple-500/50'
+                  : 'bg-zinc-100 text-zinc-900 hover:bg-zinc-200'
+              }`}
+            >
+              Sign in
             </Link>
-            <Link href={ROUTES.LOGIN}>
-              <Button
-                variant="primary"
-                className={`px-4 py-2 text-sm rounded-lg ${isDark ? 'bg-pink-600/80 hover:bg-pink-600' : ''}`}
-              >
-                Sign up
-              </Button>
+            <Link
+              href={ROUTES.LOGIN}
+              className={`inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 px-4 py-2 text-sm ${
+                isDark
+                  ? 'bg-pink-600/80 hover:bg-pink-600 text-white'
+                  : 'bg-[#036CA0] hover:bg-[#045F8C] text-white'
+              }`}
+            >
+              Sign up
             </Link>
           </div>
         </div>
@@ -102,17 +108,15 @@ export default function LandingPage() {
                   and goals. Collaborate to build winning projects.
                 </p>
                 <div className="flex justify-center space-x-4">
-                  <Link href={ROUTES.HACKATHONS}>
-                    <Button
-                      variant="outline"
-                      className={`px-8 py-3 rounded-lg text-theme-primary bg-transparent ${
-                        isDark
-                          ? 'border-pink-500/30 hover:border-pink-500/50 hover:bg-zinc-800'
-                          : 'border-[#036CA0]/30 hover:border-[#036CA0]/50 hover:bg-gray-50'
-                      }`}
-                    >
-                      Hackathon Events
-                    </Button>
+                  <Link
+                    href={ROUTES.HACKATHONS}
+                    className={`inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 px-8 py-3 text-theme-primary bg-transparent ${
+                      isDark
+                        ? 'border border-pink-500/30 hover:border-pink-500/50 hover:bg-zinc-800'
+                        : 'border border-[#036CA0]/30 hover:border-[#036CA0]/50 hover:bg-gray-50'
+                    }`}
+                  >
+                    Hackathon Events
                   </Link>
                 </div>
               </div>
@@ -205,17 +209,15 @@ export default function LandingPage() {
                   and goals. Collaborate to build winning projects.
                 </p>
                 <div className="flex justify-center space-x-4">
-                  <Link href={ROUTES.HACKATHONS}>
-                    <Button
-                      variant="outline"
-                      className={`px-8 py-3 rounded-lg text-theme-primary bg-transparent ${
-                        isDark
-                          ? 'border-pink-500/30 hover:border-pink-500/50 hover:bg-zinc-800'
-                          : 'border-[#036CA0]/30 hover:border-[#036CA0]/50 hover:bg-gray-50'
-                      }`}
-                    >
-                      Hackathon Events
-                    </Button>
+                  <Link
+                    href={ROUTES.HACKATHONS}
+                    className={`inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 px-8 py-3 text-theme-primary bg-transparent ${
+                      isDark
+                        ? 'border border-pink-500/30 hover:border-pink-500/50 hover:bg-zinc-800'
+                        : 'border border-[#036CA0]/30 hover:border-[#036CA0]/50 hover:bg-gray-50'
+                    }`}
+                  >
+                    Hackathon Events
                   </Link>
                 </div>
               </div>

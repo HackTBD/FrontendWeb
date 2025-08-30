@@ -1,7 +1,5 @@
 import { gql } from '@apollo/client';
 import { PAGE_INFO_MODEL_FRAGMENT } from './page-info-fields';
-import { TEAM_MODEL_FRAGMENT } from './teams-fields';
-import { USER_MODEL_FRAGMENT } from './users-fields';
 
 export const TEAM_MEMBER_MODEL_FRAGMENT = gql`
   fragment teamMembersFields on TeamMembersNode {
@@ -14,7 +12,10 @@ export const TEAM_MEMBER_MODEL_FRAGMENT = gql`
       edges {
         cursor
         node {
-          ...teamsFields
+          __typename
+          id
+          teamId
+          teamName
         }
       }
       pageInfo {
@@ -27,7 +28,11 @@ export const TEAM_MEMBER_MODEL_FRAGMENT = gql`
       edges {
         cursor
         node {
-          ...usersFields
+          __typename
+          id
+          userId
+          firstName
+          lastName
         }
       }
       pageInfo {
@@ -36,7 +41,5 @@ export const TEAM_MEMBER_MODEL_FRAGMENT = gql`
     }
   }
 
-  ${TEAM_MODEL_FRAGMENT}
-  ${USER_MODEL_FRAGMENT}
   ${PAGE_INFO_MODEL_FRAGMENT}
 `;
