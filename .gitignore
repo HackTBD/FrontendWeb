@@ -43,9 +43,6 @@ Thumbs.db
 dist/
 *.tsbuildinfo
 
-# Images for demo
-images/
-
 # Claude
 .claude/
 CLAUDE.MD
